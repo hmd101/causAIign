@@ -1,0 +1,3 @@
+Experiment,prompt_category,version,LLM-agent,temperature,verbosity,reasoning_effort
+gemini-1.5-pro,CoT,1,gemini-1.5-pro,0.0,,
+gemini-1.5-pro,numeric,1,gemini-1.5-pro,0.0,,

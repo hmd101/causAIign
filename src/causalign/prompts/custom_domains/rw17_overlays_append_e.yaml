@@ -1,0 +1,63 @@
+- domain: economy
+  variables:
+    X:
+      explanations_append_from:
+      - sociology
+    Y:
+      explanations_append_from:
+      - sociology
+    Z:
+      explanations_append_from:
+      - sociology
+  new_name: econ_ovl_e=soc
+- domain: sociology
+  variables:
+    X:
+      explanations_append_from:
+      - economy
+    Y:
+      explanations_append_from:
+      - economy
+    Z:
+      explanations_append_from:
+      - economy
+  new_name: soc_ovl_e=econ
+- domain: weather
+  variables:
+    X:
+      explanations_append_from:
+      - economy
+    Y:
+      explanations_append_from:
+      - economy
+    Z:
+      explanations_append_from:
+      - economy
+  new_name: weath_ovl_e=econ
+- domain: economy
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: econ_ovl_e=ctl
+- domain: sociology
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: soc_ovl_e=ctl
+- domain: weather
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: weath_ovl_e=ctl

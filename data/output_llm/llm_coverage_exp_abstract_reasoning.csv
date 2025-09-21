@@ -1,0 +1,11 @@
+Experiment,prompt_category,version,LLM-agent,temperature,verbosity,reasoning_effort
+abstract_reasoning,numeric-conf,2,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric-conf,3,claude-3-opus-20240229,0.0,,
+abstract_reasoning,CoT,4,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric-conf,4,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric-only,4,claude-3-opus-20240229,0.0,,
+abstract_reasoning,CoT,5,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric-conf,5,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric-only,5,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric,5,claude-3-opus-20240229,0.0,,
+abstract_reasoning,numeric,6,claude-3-opus-20240229,0.0,,

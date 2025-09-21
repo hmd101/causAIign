@@ -1,0 +1,303 @@
+id;response;reasoning_effort;verbosity;prompt_category;content_category;graph;cntbl_cond;domain;task;subject;temperature
+1;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+2;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;a;gemini-2.5-flash;0.0
+3;67;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;b;gemini-2.5-flash;0.0
+4;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+5;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;c;gemini-2.5-flash;0.0
+6;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;c;gemini-2.5-flash;0.0
+7;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;d;gemini-2.5-flash;0.0
+8;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;d;gemini-2.5-flash;0.0
+9;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+10;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;e;gemini-2.5-flash;0.0
+11;"The causal relationships are:
+1.  High u8jzPde0Ig causes powerful epfJBd0Kh8. (Let's denote this as U_high -> E_powerful)
+2.  Strong xLd6GncfBA causes powerful epfJBd0Kh8. (Let's denote this as X_strong -> E_powerful)
+
+These statements imply that if either U_high or X_strong is true, then E_powerful must be true.
+In logical terms: E_powerful is true if (U_high OR X_strong) is true.
+
+Conversely, if E_powerful is false (i.e., epfJBd0Kh8 is weak), then both U_high and X_strong must be false.
+So, E_weak implies (NOT U_high AND NOT X_strong).
+This means E_weak implies U_low AND X_weak.
+
+Now let's look at the observations:
+1.  weak epfJBd0Kh8 (E_weak)
+2.  strong xLd6GncfBA (X_strong)
+
+From observation 1 (E_weak), we deduce that U_low AND X_weak must be true.
+However, observation 2 states that X_strong is true.
+
+This creates a direct contradiction: E_weak implies X_weak, but we are observing X_strong.
+Therefore, the observed state (weak epfJBd0Kh8 AND strong xLd6GncfBA) is logically impossible under the given deterministic causal relationships.
+
+When a scenario is logically impossible, the likelihood of any specific event occurring within that scenario is 0. For example, if you observe a ""square circle,"" the likelihood of it being ""red"" is 0, because a ""square circle"" cannot exist.
+
+In this case, since the observed conditions (weak epfJBd0Kh8 and strong xLd6GncfBA) cannot coexist with the given causal rules, the likelihood of ""high u8jzPde0Ig"" being present in this impossible scenario is 0.
+
+0";N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;f;gemini-2.5-flash;0.0
+12;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+13;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;g;gemini-2.5-flash;0.0
+14;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;g;gemini-2.5-flash;0.0
+15;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;h;gemini-2.5-flash;0.0
+16;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;h;gemini-2.5-flash;0.0
+17;5;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;i;gemini-2.5-flash;0.0
+18;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;j;gemini-2.5-flash;0.0
+19;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;j;gemini-2.5-flash;0.0
+20;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_alnum_10;k;gemini-2.5-flash;0.0
+61;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+62;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;a;gemini-2.5-flash;0.0
+63;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+64;65;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;b;gemini-2.5-flash;0.0
+65;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;c;gemini-2.5-flash;0.0
+66;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;c;gemini-2.5-flash;0.0
+67;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;d;gemini-2.5-flash;0.0
+68;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+69;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;e;gemini-2.5-flash;0.0
+70;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;e;gemini-2.5-flash;0.0
+71;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+72;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;f;gemini-2.5-flash;0.0
+73;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;g;gemini-2.5-flash;0.0
+74;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;g;gemini-2.5-flash;0.0
+75;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+76;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;h;gemini-2.5-flash;0.0
+77;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;i;gemini-2.5-flash;0.0
+78;90;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;j;gemini-2.5-flash;0.0
+79;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;j;gemini-2.5-flash;0.0
+80;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_alnum_10;k;gemini-2.5-flash;0.0
+101;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+102;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;a;gemini-2.5-flash;0.0
+103;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;b;gemini-2.5-flash;0.0
+104;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;b;gemini-2.5-flash;0.0
+105;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;c;gemini-2.5-flash;0.0
+106;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;c;gemini-2.5-flash;0.0
+107;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;d;gemini-2.5-flash;0.0
+108;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;d;gemini-2.5-flash;0.0
+109;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;e;gemini-2.5-flash;0.0
+110;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;e;gemini-2.5-flash;0.0
+111;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;f;gemini-2.5-flash;0.0
+112;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;f;gemini-2.5-flash;0.0
+113;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;g;gemini-2.5-flash;0.0
+114;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;g;gemini-2.5-flash;0.0
+115;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;h;gemini-2.5-flash;0.0
+116;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;h;gemini-2.5-flash;0.0
+117;10;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;i;gemini-2.5-flash;0.0
+118;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;j;gemini-2.5-flash;0.0
+119;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;j;gemini-2.5-flash;0.0
+120;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_alnum_10;k;gemini-2.5-flash;0.0
+121;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;a;gemini-2.5-flash;0.0
+122;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+123;67;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;b;gemini-2.5-flash;0.0
+124;67;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;b;gemini-2.5-flash;0.0
+125;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;c;gemini-2.5-flash;0.0
+126;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;c;gemini-2.5-flash;0.0
+127;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;d;gemini-2.5-flash;0.0
+128;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+129;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;e;gemini-2.5-flash;0.0
+130;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;e;gemini-2.5-flash;0.0
+131;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;f;gemini-2.5-flash;0.0
+132;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+133;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;g;gemini-2.5-flash;0.0
+134;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;g;gemini-2.5-flash;0.0
+135;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;h;gemini-2.5-flash;0.0
+136;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;h;gemini-2.5-flash;0.0
+137;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;i;gemini-2.5-flash;0.0
+138;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+139;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;j;gemini-2.5-flash;0.0
+140;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_alnum_10;k;gemini-2.5-flash;0.0
+161;"Let's denote the variables as follows:
+A: High +9:~34]6.`
+B: Strong 3[$25<;4&5
+C: Powerful ^<3_7%}}`3
+
+The causal relationships are given as:
+1. A causes C (High +9:~34]6.` causes powerful ^<3_7%}}`3)
+2. B causes C (Strong 3[$25<;4&5 causes powerful ^<3_7%}}`3)
+
+This implies that if A is present, C will be present. If B is present, C will be present. Assuming A and B are the only causes mentioned, C is present if A is present OR B is present (C = A OR B).
+
+The observations are:
+- C is present (powerful ^<3_7%}}`3)
+- B is present (strong 3[$25<;4&5)
+
+We need to estimate the likelihood of A being present, given these observations. This can be written as P(A | C, B).
+
+Let's analyze the observations:
+1. We observe B is present.
+2. Since B causes C, the presence of B means C must also be present.
+3. We also observe C is present.
+
+Because B is present and B causes C, the observation that C is present does not provide any *additional* information about A. The presence of C is already fully explained by the presence of B.
+
+Therefore, the likelihood of A being present, given C and B, is the same as the likelihood of A being present, given only B.
+P(A | C, B) = P(A | B)
+
+Unless stated otherwise, we assume that A and B are independent causes. This means the presence or absence of B does not influence the likelihood of A.
+So, P(A | B) = P(A).
+
+Thus, the likelihood of A being present is simply its prior probability, P(A).
+
+The problem does not provide any information about the prior probability of A (how likely high +9:~34]6.` is in general). In such abstract reasoning tasks, when no prior probabilities are given, a neutral stance is typically assumed, meaning a 50% chance for a binary variable (present/absent).
+
+Therefore, based on the causal relationships and observations, and assuming independence of causes and a neutral prior:
+The likelihood of high +9:~34]6.` being present is 50.
+
+50";N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;a;gemini-2.5-flash;0.0
+162;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+163;67;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;b;gemini-2.5-flash;0.0
+164;67;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;b;gemini-2.5-flash;0.0
+165;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+166;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;c;gemini-2.5-flash;0.0
+167;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;d;gemini-2.5-flash;0.0
+168;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;d;gemini-2.5-flash;0.0
+169;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;e;gemini-2.5-flash;0.0
+170;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+171;5;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;f;gemini-2.5-flash;0.0
+172;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+173;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;g;gemini-2.5-flash;0.0
+174;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;g;gemini-2.5-flash;0.0
+175;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;h;gemini-2.5-flash;0.0
+176;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;h;gemini-2.5-flash;0.0
+177;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;i;gemini-2.5-flash;0.0
+178;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;j;gemini-2.5-flash;0.0
+179;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;j;gemini-2.5-flash;0.0
+180;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_num_symb_10;k;gemini-2.5-flash;0.0
+221;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+222;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;a;gemini-2.5-flash;0.0
+223;67;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;b;gemini-2.5-flash;0.0
+224;67;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;b;gemini-2.5-flash;0.0
+225;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;c;gemini-2.5-flash;0.0
+226;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;c;gemini-2.5-flash;0.0
+227;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;d;gemini-2.5-flash;0.0
+228;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;d;gemini-2.5-flash;0.0
+229;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;e;gemini-2.5-flash;0.0
+230;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;e;gemini-2.5-flash;0.0
+231;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;f;gemini-2.5-flash;0.0
+232;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+233;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;g;gemini-2.5-flash;0.0
+234;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;g;gemini-2.5-flash;0.0
+235;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;h;gemini-2.5-flash;0.0
+236;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;h;gemini-2.5-flash;0.0
+237;5;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;i;gemini-2.5-flash;0.0
+238;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;j;gemini-2.5-flash;0.0
+239;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+240;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_num_symb_10;k;gemini-2.5-flash;0.0
+261;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;a;gemini-2.5-flash;0.0
+262;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;a;gemini-2.5-flash;0.0
+263;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;b;gemini-2.5-flash;0.0
+264;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;b;gemini-2.5-flash;0.0
+265;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+266;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;c;gemini-2.5-flash;0.0
+267;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;d;gemini-2.5-flash;0.0
+268;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;d;gemini-2.5-flash;0.0
+269;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;e;gemini-2.5-flash;0.0
+270;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;e;gemini-2.5-flash;0.0
+271;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;f;gemini-2.5-flash;0.0
+272;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+273;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;g;gemini-2.5-flash;0.0
+274;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;g;gemini-2.5-flash;0.0
+275;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;h;gemini-2.5-flash;0.0
+276;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;h;gemini-2.5-flash;0.0
+277;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;i;gemini-2.5-flash;0.0
+278;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+279;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;j;gemini-2.5-flash;0.0
+280;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_num_symb_10;k;gemini-2.5-flash;0.0
+281;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;a;gemini-2.5-flash;0.0
+282;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;a;gemini-2.5-flash;0.0
+283;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+284;67;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;b;gemini-2.5-flash;0.0
+285;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;c;gemini-2.5-flash;0.0
+286;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;c;gemini-2.5-flash;0.0
+287;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;d;gemini-2.5-flash;0.0
+288;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;d;gemini-2.5-flash;0.0
+289;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;e;gemini-2.5-flash;0.0
+290;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;e;gemini-2.5-flash;0.0
+291;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+292;5;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;f;gemini-2.5-flash;0.0
+293;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+294;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;g;gemini-2.5-flash;0.0
+295;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;h;gemini-2.5-flash;0.0
+296;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;h;gemini-2.5-flash;0.0
+297;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;i;gemini-2.5-flash;0.0
+298;95;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;j;gemini-2.5-flash;0.0
+299;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_num_symb_10;j;gemini-2.5-flash;0.0
+300;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+321;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;a;gemini-2.5-flash;0.0
+322;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+323;67;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;b;gemini-2.5-flash;0.0
+324;67;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;b;gemini-2.5-flash;0.0
+325;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;c;gemini-2.5-flash;0.0
+326;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;c;gemini-2.5-flash;0.0
+327;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+328;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;d;gemini-2.5-flash;0.0
+329;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;e;gemini-2.5-flash;0.0
+330;50;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;e;gemini-2.5-flash;0.0
+331;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+332;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;ppp;;;gemini-2.5-flash;0.0
+333;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;g;gemini-2.5-flash;0.0
+334;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;g;gemini-2.5-flash;0.0
+335;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;h;gemini-2.5-flash;0.0
+336;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;h;gemini-2.5-flash;0.0
+337;0;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;i;gemini-2.5-flash;0.0
+338;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;j;gemini-2.5-flash;0.0
+339;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;j;gemini-2.5-flash;0.0
+340;100;N/A;N/A;numeric;unspecified;collider;ppp;abs_all_10;k;gemini-2.5-flash;0.0
+381;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+382;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;a;gemini-2.5-flash;0.0
+383;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+384;67;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;b;gemini-2.5-flash;0.0
+385;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;c;gemini-2.5-flash;0.0
+386;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;c;gemini-2.5-flash;0.0
+387;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;d;gemini-2.5-flash;0.0
+388;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+389;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;e;gemini-2.5-flash;0.0
+390;50;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;e;gemini-2.5-flash;0.0
+391;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;f;gemini-2.5-flash;0.0
+392;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+393;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;g;gemini-2.5-flash;0.0
+394;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;g;gemini-2.5-flash;0.0
+395;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;h;gemini-2.5-flash;0.0
+396;0;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;h;gemini-2.5-flash;0.0
+397;5;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;i;gemini-2.5-flash;0.0
+398;95;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;j;gemini-2.5-flash;0.0
+399;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;pmm;;;gemini-2.5-flash;0.0
+400;100;N/A;N/A;numeric;unspecified;collider;pmm;abs_all_10;k;gemini-2.5-flash;0.0
+421;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;a;gemini-2.5-flash;0.0
+422;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+423;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;b;gemini-2.5-flash;0.0
+424;67;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;b;gemini-2.5-flash;0.0
+425;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;c;gemini-2.5-flash;0.0
+426;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;c;gemini-2.5-flash;0.0
+427;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;d;gemini-2.5-flash;0.0
+428;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;d;gemini-2.5-flash;0.0
+429;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;e;gemini-2.5-flash;0.0
+430;50;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;e;gemini-2.5-flash;0.0
+431;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+432;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;f;gemini-2.5-flash;0.0
+433;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;g;gemini-2.5-flash;0.0
+434;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;g;gemini-2.5-flash;0.0
+435;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;h;gemini-2.5-flash;0.0
+436;0;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;h;gemini-2.5-flash;0.0
+437;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mpm;;;gemini-2.5-flash;0.0
+438;95;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;j;gemini-2.5-flash;0.0
+439;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;j;gemini-2.5-flash;0.0
+440;100;N/A;N/A;numeric;unspecified;collider;mpm;abs_all_10;k;gemini-2.5-flash;0.0
+441;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;unspecified;collider;mmp;;;gemini-2.5-flash;0.0
+442;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;a;gemini-2.5-flash;0.0
+443;67;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;b;gemini-2.5-flash;0.0
+444;67;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;b;gemini-2.5-flash;0.0
+445;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;c;gemini-2.5-flash;0.0
+446;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;c;gemini-2.5-flash;0.0
+447;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;d;gemini-2.5-flash;0.0
+448;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;d;gemini-2.5-flash;0.0
+449;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;e;gemini-2.5-flash;0.0
+450;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;e;gemini-2.5-flash;0.0
+451;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;f;gemini-2.5-flash;0.0
+452;50;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;f;gemini-2.5-flash;0.0
+453;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;g;gemini-2.5-flash;0.0
+454;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;g;gemini-2.5-flash;0.0
+455;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;h;gemini-2.5-flash;0.0
+456;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;h;gemini-2.5-flash;0.0
+457;0;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;i;gemini-2.5-flash;0.0
+458;90;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;j;gemini-2.5-flash;0.0
+459;95;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;j;gemini-2.5-flash;0.0
+460;100;N/A;N/A;numeric;unspecified;collider;mmp;abs_all_10;k;gemini-2.5-flash;0.0

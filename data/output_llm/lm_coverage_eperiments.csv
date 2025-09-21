@@ -1,0 +1,16 @@
+Experiment,prompt_category,version,LLM-agent,temperature,verbosity,reasoning_effort
+abstract_overloaded_lorem_de,numeric-conf,1,gemini-1.5-pro,0.0,,
+abstract_overloaded_lorem_de,numeric,1,gemini-1.5-pro,0.0,,
+abstract_overloaded_lorem_de,numeric-conf,1,gemini-2.5-flash,0.0,,
+abstract_overloaded_lorem_de,numeric-conf,1,gemini-2.5-flash-lite,0.0,,
+abstract_overloaded_lorem_de,numeric-conf,1,gemini-2.5-pro,0.0,,
+abstract_overloaded_lorem_de,CoT,1,gpt-5,,low,minimal
+abstract_overloaded_lorem_de,numeric-conf,1,gpt-5,,low,minimal
+abstract_overloaded_lorem_de,numeric,1,gpt-5,,low,minimal
+abstract_overloaded_lorem_de,numeric-conf,1,gpt-5-mini,,low,minimal
+abstract_overloaded_lorem_de,numeric,1,gpt-5-mini,,low,minimal
+abstract_overloaded_lorem_de,CoT,1,gpt-5-nano,,low,minimal
+abstract_overloaded_lorem_de,numeric-conf,1,gpt-5-nano,,low,minimal
+abstract_overloaded_lorem_de,numeric,1,gpt-5-nano,,low,minimal
+abstract_overloaded_lorem_de,numeric-conf,1,o1,0.0,,
+abstract_overloaded_lorem_de,numeric-conf,1,o1-mini,0.0,,

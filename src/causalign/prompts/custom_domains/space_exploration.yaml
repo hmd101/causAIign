@@ -1,0 +1,40 @@
+# Custom Domain: Space Exploration
+# Example of a custom abstract domain for LLM reasoning experiments
+
+domain_name: "space_exploration"
+
+introduction: >
+  Space mission engineers study the complex relationships between different systems 
+  that determine the success of interplanetary missions. They examine how various 
+  factors interact to influence mission outcomes in the hostile environment of space.
+
+variables:
+  X:
+    name: "propulsion efficiency"
+    detailed: "Propulsion efficiency refers to how effectively the spacecraft's engines convert fuel into thrust for navigation and maneuvering."
+    p_values:
+      "1": "optimal"
+      "0": "suboptimal"
+    m_values:
+      "1": "suboptimal" 
+      "0": "optimal"
+      
+  Y:
+    name: "communication strength"
+    detailed: "Communication strength indicates the reliability and clarity of data transmission between the spacecraft and mission control on Earth."
+    p_values:
+      "1": "strong"
+      "0": "weak"
+    m_values:
+      "1": "weak"
+      "0": "strong"
+      
+  Z:
+    name: "mission success"
+    detailed: "Mission success measures how well the spacecraft accomplishes its scientific and exploratory objectives."
+    p_values:
+      "1": "successful"
+      "0": "unsuccessful"
+    m_values:
+      "1": "unsuccessful"
+      "0": "successful"

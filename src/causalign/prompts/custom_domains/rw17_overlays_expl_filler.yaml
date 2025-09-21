@@ -1,0 +1,97 @@
+# Filler-only overlays for content-control (no cross-domain content)
+# What gets padded:
+# - Edge-only padding: Z.explanations gets filler (collider rationale), X/Y untouched.
+# - Optional detail padding: add detailed filler for all three variables (X, Y, Z).
+
+# -------------------- Economy base --------------------
+- domain: economy
+  new_name: econ_ovl_ze=filler30
+  variables:
+    Z:
+      explanations_filler_words: 30
+
+- domain: economy
+  new_name: econ_ovl_ze=filler60
+  variables:
+    Z:
+      explanations_filler_words: 60
+
+- domain: economy
+  new_name: econ_ovl_allDetailed=filler20_ze=filler30
+  variables:
+    X:
+      detailed_filler_words: 20
+    Y:
+      detailed_filler_words: 20
+    Z:
+      detailed_filler_words: 20
+      explanations_filler_words: 30
+
+# subset example (only X and Z)
+- domain: economy
+  new_name: econ_ovl_ze=filler30_subset
+  variables:
+    Z:
+      explanations_filler_words: 30
+
+# -------------------- Sociology base --------------------
+- domain: sociology
+  new_name: soc_ovl_ze=filler30
+  variables:
+    Z:
+      explanations_filler_words: 30
+
+- domain: sociology
+  new_name: soc_ovl_ze=filler60
+  variables:
+    Z:
+      explanations_filler_words: 60
+
+- domain: sociology
+  new_name: soc_ovl_allDetailed=filler20_ze=filler30
+  variables:
+    X:
+      detailed_filler_words: 20
+    Y:
+      detailed_filler_words: 20
+    Z:
+      detailed_filler_words: 20
+      explanations_filler_words: 30
+
+# subset example (only Y)
+- domain: sociology
+  new_name: soc_ovl_ze=filler30_subset
+  variables:
+    Z:
+      explanations_filler_words: 30
+
+# -------------------- Weather base --------------------
+- domain: weather
+  new_name: weath_ovl_ze=filler30
+  variables:
+    Z:
+      explanations_filler_words: 30
+
+- domain: weather
+  new_name: weath_ovl_ze=filler60
+  variables:
+    Z:
+      explanations_filler_words: 60
+
+- domain: weather
+  new_name: weath_ovl_allDetailed=filler20_ze=filler30
+  variables:
+    X:
+      detailed_filler_words: 20
+    Y:
+      detailed_filler_words: 20
+    Z:
+      detailed_filler_words: 20
+      explanations_filler_words: 30
+
+# subset example (only X and Y)
+- domain: weather
+  new_name: weath_ovl_ze=filler30_subset
+  variables:
+    Z:
+      explanations_filler_words: 30

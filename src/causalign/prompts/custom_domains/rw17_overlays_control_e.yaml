@@ -1,0 +1,27 @@
+- domain: economy
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: econ_ovl_e=ctl
+- domain: sociology
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: soc_ovl_e=ctl
+- domain: weather
+  variables:
+    X:
+      explanations_filler_words: 30
+    Y:
+      explanations_filler_words: 30
+    Z:
+      explanations_filler_words: 30
+  new_name: weath_ovl_e=ctl

@@ -1,0 +1,9 @@
+- variable: X
+  detail: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  explanation: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- variable: Y
+  detail: Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+  explanation: Laboris nisi ut aliquip ex ea commodo consequat.
+- variable: Z
+  detail: Duis aute irure dolor in reprehenderit in voluptate velit esse.
+  explanation: Cillum dolore eu fugiat nulla pariatur.

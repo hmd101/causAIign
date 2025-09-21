@@ -1,0 +1,277 @@
+id;response;reasoning_effort;verbosity;prompt_category;content_category;graph;domain;task;cntbl_cond;subject;temperature
+1;52;N/A;N/A;numeric;realistic;collider;economy;a;ppp;gemini-2.5-flash;0.0
+2;55;N/A;N/A;numeric;realistic;collider;economy;a;ppp;gemini-2.5-flash;0.0
+3;65;N/A;N/A;numeric;realistic;collider;economy;b;ppp;gemini-2.5-flash;0.0
+4;"To estimate the likelihood of ""small trade deficits"" given ""high retirement savings"", we need to analyze the provided causal relationships:
+
+1.  **Low interest rates (LIR) causes high retirement savings (HRS).**
+2.  **Small trade deficits (STD) causes high retirement savings (HRS).**
+
+We are given that the economy has high retirement savings (HRS is true). We want to find the likelihood of small trade deficits (STD).
+
+Let's assume a deterministic causal relationship, meaning if the cause is present, the effect is guaranteed. So, if LIR is true, HRS is true. If STD is true, HRS is true. This implies that HRS is true if LIR is true OR STD is true (or both).
+
+We want to calculate P(STD | HRS). Using Bayes' theorem, this is P(STD and HRS) / P(HRS).
+Since STD deterministically causes HRS, if STD is true, then HRS is also true. So, P(STD and HRS) = P(STD).
+Therefore, P(STD | HRS) = P(STD) / P(HRS).
+
+Also, P(HRS) = P(LIR or STD).
+Assuming LIR and STD are independent events, P(LIR or STD) = P(LIR) + P(STD) - P(LIR) * P(STD).
+
+The problem does not provide prior probabilities for LIR or STD. In the absence of any information to suggest otherwise, a common neutral assumption for binary events is that they have a 50% prior probability.
+Let's assume:
+*   P(LIR) = 0.5 (Low interest rates are as likely as normal interest rates)
+*   P(STD) = 0.5 (Small trade deficits are as likely as normal trade deficits)
+
+Now we can calculate P(HRS):
+P(HRS) = P(LIR) + P(STD) - P(LIR) * P(STD)
+P(HRS) = 0.5 + 0.5 - (0.5 * 0.5)
+P(HRS) = 1 - 0.25
+P(HRS) = 0.75
+
+Now, we can calculate P(STD | HRS):
+P(STD | HRS) = P(STD) / P(HRS)
+P(STD | HRS) = 0.5 / 0.75
+P(STD | HRS) = 2/3
+
+Converting this to a percentage: (2/3) * 100 = 66.66...%
+
+Rounding to the nearest whole number, the likelihood is 67.
+
+67";N/A;N/A;numeric;realistic;collider;economy;b;ppp;gemini-2.5-flash;0.0
+5;100;N/A;N/A;numeric;realistic;collider;economy;c;ppp;gemini-2.5-flash;0.0
+6;100;N/A;N/A;numeric;realistic;collider;economy;c;ppp;gemini-2.5-flash;0.0
+7;50;N/A;N/A;numeric;realistic;collider;economy;d;ppp;gemini-2.5-flash;0.0
+8;80;N/A;N/A;numeric;realistic;collider;economy;d;ppp;gemini-2.5-flash;0.0
+9;50;N/A;N/A;numeric;realistic;collider;economy;e;ppp;gemini-2.5-flash;0.0
+10;50;N/A;N/A;numeric;realistic;collider;economy;e;ppp;gemini-2.5-flash;0.0
+11;5;N/A;N/A;numeric;realistic;collider;economy;f;ppp;gemini-2.5-flash;0.0
+12;10;N/A;N/A;numeric;realistic;collider;economy;f;ppp;gemini-2.5-flash;0.0
+13;25;N/A;N/A;numeric;realistic;collider;economy;g;ppp;gemini-2.5-flash;0.0
+14;25;N/A;N/A;numeric;realistic;collider;economy;g;ppp;gemini-2.5-flash;0.0
+15;5;N/A;N/A;numeric;realistic;collider;economy;h;ppp;gemini-2.5-flash;0.0
+16;0;N/A;N/A;numeric;realistic;collider;economy;h;ppp;gemini-2.5-flash;0.0
+17;25;N/A;N/A;numeric;realistic;collider;economy;i;ppp;gemini-2.5-flash;0.0
+18;75;N/A;N/A;numeric;realistic;collider;economy;j;ppp;gemini-2.5-flash;0.0
+19;80;N/A;N/A;numeric;realistic;collider;economy;j;ppp;gemini-2.5-flash;0.0
+20;95;N/A;N/A;numeric;realistic;collider;economy;k;ppp;gemini-2.5-flash;0.0
+61;55;N/A;N/A;numeric;realistic;collider;economy;a;pmm;gemini-2.5-flash;0.0
+62;50;N/A;N/A;numeric;realistic;collider;economy;a;pmm;gemini-2.5-flash;0.0
+63;67;N/A;N/A;numeric;realistic;collider;economy;b;pmm;gemini-2.5-flash;0.0
+64;67;N/A;N/A;numeric;realistic;collider;economy;b;pmm;gemini-2.5-flash;0.0
+65;100;N/A;N/A;numeric;realistic;collider;economy;c;pmm;gemini-2.5-flash;0.0
+66;100;N/A;N/A;numeric;realistic;collider;economy;c;pmm;gemini-2.5-flash;0.0
+67;50;N/A;N/A;numeric;realistic;collider;economy;d;pmm;gemini-2.5-flash;0.0
+68;50;N/A;N/A;numeric;realistic;collider;economy;d;pmm;gemini-2.5-flash;0.0
+69;50;N/A;N/A;numeric;realistic;collider;economy;e;pmm;gemini-2.5-flash;0.0
+70;50;N/A;N/A;numeric;realistic;collider;economy;e;pmm;gemini-2.5-flash;0.0
+71;5;N/A;N/A;numeric;realistic;collider;economy;f;pmm;gemini-2.5-flash;0.0
+72;5;N/A;N/A;numeric;realistic;collider;economy;f;pmm;gemini-2.5-flash;0.0
+73;0;N/A;N/A;numeric;realistic;collider;economy;g;pmm;gemini-2.5-flash;0.0
+74;0;N/A;N/A;numeric;realistic;collider;economy;g;pmm;gemini-2.5-flash;0.0
+75;5;N/A;N/A;numeric;realistic;collider;economy;h;pmm;gemini-2.5-flash;0.0
+76;0;N/A;N/A;numeric;realistic;collider;economy;h;pmm;gemini-2.5-flash;0.0
+77;15;N/A;N/A;numeric;realistic;collider;economy;i;pmm;gemini-2.5-flash;0.0
+78;85;N/A;N/A;numeric;realistic;collider;economy;j;pmm;gemini-2.5-flash;0.0
+79;95;N/A;N/A;numeric;realistic;collider;economy;j;pmm;gemini-2.5-flash;0.0
+80;99;N/A;N/A;numeric;realistic;collider;economy;k;pmm;gemini-2.5-flash;0.0
+101;53;N/A;N/A;numeric;realistic;collider;economy;a;mpm;gemini-2.5-flash;0.0
+102;40;N/A;N/A;numeric;realistic;collider;economy;a;mpm;gemini-2.5-flash;0.0
+103;67;N/A;N/A;numeric;realistic;collider;economy;b;mpm;gemini-2.5-flash;0.0
+104;64;N/A;N/A;numeric;realistic;collider;economy;b;mpm;gemini-2.5-flash;0.0
+105;100;N/A;N/A;numeric;realistic;collider;economy;c;mpm;gemini-2.5-flash;0.0
+106;100;N/A;N/A;numeric;realistic;collider;economy;c;mpm;gemini-2.5-flash;0.0
+107;50;N/A;N/A;numeric;realistic;collider;economy;d;mpm;gemini-2.5-flash;0.0
+108;50;N/A;N/A;numeric;realistic;collider;economy;d;mpm;gemini-2.5-flash;0.0
+109;50;N/A;N/A;numeric;realistic;collider;economy;e;mpm;gemini-2.5-flash;0.0
+110;50;N/A;N/A;numeric;realistic;collider;economy;e;mpm;gemini-2.5-flash;0.0
+111;Error: Gemini API error: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 2.;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+112;9;N/A;N/A;numeric;realistic;collider;economy;f;mpm;gemini-2.5-flash;0.0
+113;10;N/A;N/A;numeric;realistic;collider;economy;g;mpm;gemini-2.5-flash;0.0
+114;0;N/A;N/A;numeric;realistic;collider;economy;g;mpm;gemini-2.5-flash;0.0
+115;10;N/A;N/A;numeric;realistic;collider;economy;h;mpm;gemini-2.5-flash;0.0
+116;0;N/A;N/A;numeric;realistic;collider;economy;h;mpm;gemini-2.5-flash;0.0
+117;0;N/A;N/A;numeric;realistic;collider;economy;i;mpm;gemini-2.5-flash;0.0
+118;50;N/A;N/A;numeric;realistic;collider;economy;j;mpm;gemini-2.5-flash;0.0
+119;90;N/A;N/A;numeric;realistic;collider;economy;j;mpm;gemini-2.5-flash;0.0
+120;99;N/A;N/A;numeric;realistic;collider;economy;k;mpm;gemini-2.5-flash;0.0
+121;55;N/A;N/A;numeric;realistic;collider;economy;a;mmp;gemini-2.5-flash;0.0
+122;50;N/A;N/A;numeric;realistic;collider;economy;a;mmp;gemini-2.5-flash;0.0
+123;67;N/A;N/A;numeric;realistic;collider;economy;b;mmp;gemini-2.5-flash;0.0
+124;67;N/A;N/A;numeric;realistic;collider;economy;b;mmp;gemini-2.5-flash;0.0
+125;100;N/A;N/A;numeric;realistic;collider;economy;c;mmp;gemini-2.5-flash;0.0
+126;100;N/A;N/A;numeric;realistic;collider;economy;c;mmp;gemini-2.5-flash;0.0
+127;50;N/A;N/A;numeric;realistic;collider;economy;d;mmp;gemini-2.5-flash;0.0
+128;50;N/A;N/A;numeric;realistic;collider;economy;d;mmp;gemini-2.5-flash;0.0
+129;50;N/A;N/A;numeric;realistic;collider;economy;e;mmp;gemini-2.5-flash;0.0
+130;50;N/A;N/A;numeric;realistic;collider;economy;e;mmp;gemini-2.5-flash;0.0
+131;5;N/A;N/A;numeric;realistic;collider;economy;f;mmp;gemini-2.5-flash;0.0
+132;5;N/A;N/A;numeric;realistic;collider;economy;f;mmp;gemini-2.5-flash;0.0
+133;15;N/A;N/A;numeric;realistic;collider;economy;g;mmp;gemini-2.5-flash;0.0
+134;0;N/A;N/A;numeric;realistic;collider;economy;g;mmp;gemini-2.5-flash;0.0
+135;0;N/A;N/A;numeric;realistic;collider;economy;h;mmp;gemini-2.5-flash;0.0
+136;1;N/A;N/A;numeric;realistic;collider;economy;h;mmp;gemini-2.5-flash;0.0
+137;0;N/A;N/A;numeric;realistic;collider;economy;i;mmp;gemini-2.5-flash;0.0
+138;100;N/A;N/A;numeric;realistic;collider;economy;j;mmp;gemini-2.5-flash;0.0
+139;100;N/A;N/A;numeric;realistic;collider;economy;j;mmp;gemini-2.5-flash;0.0
+140;95;N/A;N/A;numeric;realistic;collider;economy;k;mmp;gemini-2.5-flash;0.0
+161;50;N/A;N/A;numeric;realistic;collider;sociology;a;ppp;gemini-2.5-flash;0.0
+162;50;N/A;N/A;numeric;realistic;collider;sociology;a;ppp;gemini-2.5-flash;0.0
+163;67;N/A;N/A;numeric;realistic;collider;sociology;b;ppp;gemini-2.5-flash;0.0
+164;67;N/A;N/A;numeric;realistic;collider;sociology;b;ppp;gemini-2.5-flash;0.0
+165;100;N/A;N/A;numeric;realistic;collider;sociology;c;ppp;gemini-2.5-flash;0.0
+166;100;N/A;N/A;numeric;realistic;collider;sociology;c;ppp;gemini-2.5-flash;0.0
+167;50;N/A;N/A;numeric;realistic;collider;sociology;d;ppp;gemini-2.5-flash;0.0
+168;50;N/A;N/A;numeric;realistic;collider;sociology;d;ppp;gemini-2.5-flash;0.0
+169;50;N/A;N/A;numeric;realistic;collider;sociology;e;ppp;gemini-2.5-flash;0.0
+170;50;N/A;N/A;numeric;realistic;collider;sociology;e;ppp;gemini-2.5-flash;0.0
+171;0;N/A;N/A;numeric;realistic;collider;sociology;f;ppp;gemini-2.5-flash;0.0
+172;5;N/A;N/A;numeric;realistic;collider;sociology;f;ppp;gemini-2.5-flash;0.0
+173;5;N/A;N/A;numeric;realistic;collider;sociology;g;ppp;gemini-2.5-flash;0.0
+174;0;N/A;N/A;numeric;realistic;collider;sociology;g;ppp;gemini-2.5-flash;0.0
+175;0;N/A;N/A;numeric;realistic;collider;sociology;h;ppp;gemini-2.5-flash;0.0
+176;0;N/A;N/A;numeric;realistic;collider;sociology;h;ppp;gemini-2.5-flash;0.0
+177;0;N/A;N/A;numeric;realistic;collider;sociology;i;ppp;gemini-2.5-flash;0.0
+178;90;N/A;N/A;numeric;realistic;collider;sociology;j;ppp;gemini-2.5-flash;0.0
+179;95;N/A;N/A;numeric;realistic;collider;sociology;j;ppp;gemini-2.5-flash;0.0
+180;99;N/A;N/A;numeric;realistic;collider;sociology;k;ppp;gemini-2.5-flash;0.0
+221;50;N/A;N/A;numeric;realistic;collider;sociology;a;pmm;gemini-2.5-flash;0.0
+222;50;N/A;N/A;numeric;realistic;collider;sociology;a;pmm;gemini-2.5-flash;0.0
+223;67;N/A;N/A;numeric;realistic;collider;sociology;b;pmm;gemini-2.5-flash;0.0
+224;67;N/A;N/A;numeric;realistic;collider;sociology;b;pmm;gemini-2.5-flash;0.0
+225;100;N/A;N/A;numeric;realistic;collider;sociology;c;pmm;gemini-2.5-flash;0.0
+226;100;N/A;N/A;numeric;realistic;collider;sociology;c;pmm;gemini-2.5-flash;0.0
+227;50;N/A;N/A;numeric;realistic;collider;sociology;d;pmm;gemini-2.5-flash;0.0
+228;50;N/A;N/A;numeric;realistic;collider;sociology;d;pmm;gemini-2.5-flash;0.0
+229;50;N/A;N/A;numeric;realistic;collider;sociology;e;pmm;gemini-2.5-flash;0.0
+230;50;N/A;N/A;numeric;realistic;collider;sociology;e;pmm;gemini-2.5-flash;0.0
+231;1;N/A;N/A;numeric;realistic;collider;sociology;f;pmm;gemini-2.5-flash;0.0
+232;20;N/A;N/A;numeric;realistic;collider;sociology;f;pmm;gemini-2.5-flash;0.0
+233;0;N/A;N/A;numeric;realistic;collider;sociology;g;pmm;gemini-2.5-flash;0.0
+234;0;N/A;N/A;numeric;realistic;collider;sociology;g;pmm;gemini-2.5-flash;0.0
+235;0;N/A;N/A;numeric;realistic;collider;sociology;h;pmm;gemini-2.5-flash;0.0
+236;0;N/A;N/A;numeric;realistic;collider;sociology;h;pmm;gemini-2.5-flash;0.0
+237;0;N/A;N/A;numeric;realistic;collider;sociology;i;pmm;gemini-2.5-flash;0.0
+238;75;N/A;N/A;numeric;realistic;collider;sociology;j;pmm;gemini-2.5-flash;0.0
+239;100;N/A;N/A;numeric;realistic;collider;sociology;j;pmm;gemini-2.5-flash;0.0
+240;99;N/A;N/A;numeric;realistic;collider;sociology;k;pmm;gemini-2.5-flash;0.0
+261;30;N/A;N/A;numeric;realistic;collider;sociology;a;mpm;gemini-2.5-flash;0.0
+262;50;N/A;N/A;numeric;realistic;collider;sociology;a;mpm;gemini-2.5-flash;0.0
+263;67;N/A;N/A;numeric;realistic;collider;sociology;b;mpm;gemini-2.5-flash;0.0
+264;67;N/A;N/A;numeric;realistic;collider;sociology;b;mpm;gemini-2.5-flash;0.0
+265;100;N/A;N/A;numeric;realistic;collider;sociology;c;mpm;gemini-2.5-flash;0.0
+266;100;N/A;N/A;numeric;realistic;collider;sociology;c;mpm;gemini-2.5-flash;0.0
+267;50;N/A;N/A;numeric;realistic;collider;sociology;d;mpm;gemini-2.5-flash;0.0
+268;50;N/A;N/A;numeric;realistic;collider;sociology;d;mpm;gemini-2.5-flash;0.0
+269;50;N/A;N/A;numeric;realistic;collider;sociology;e;mpm;gemini-2.5-flash;0.0
+270;50;N/A;N/A;numeric;realistic;collider;sociology;e;mpm;gemini-2.5-flash;0.0
+271;0;N/A;N/A;numeric;realistic;collider;sociology;f;mpm;gemini-2.5-flash;0.0
+272;5;N/A;N/A;numeric;realistic;collider;sociology;f;mpm;gemini-2.5-flash;0.0
+273;0;N/A;N/A;numeric;realistic;collider;sociology;g;mpm;gemini-2.5-flash;0.0
+274;0;N/A;N/A;numeric;realistic;collider;sociology;g;mpm;gemini-2.5-flash;0.0
+275;0;N/A;N/A;numeric;realistic;collider;sociology;h;mpm;gemini-2.5-flash;0.0
+276;0;N/A;N/A;numeric;realistic;collider;sociology;h;mpm;gemini-2.5-flash;0.0
+277;0;N/A;N/A;numeric;realistic;collider;sociology;i;mpm;gemini-2.5-flash;0.0
+278;100;N/A;N/A;numeric;realistic;collider;sociology;j;mpm;gemini-2.5-flash;0.0
+279;90;N/A;N/A;numeric;realistic;collider;sociology;j;mpm;gemini-2.5-flash;0.0
+280;100;N/A;N/A;numeric;realistic;collider;sociology;k;mpm;gemini-2.5-flash;0.0
+281;50;N/A;N/A;numeric;realistic;collider;sociology;a;mmp;gemini-2.5-flash;0.0
+282;50;N/A;N/A;numeric;realistic;collider;sociology;a;mmp;gemini-2.5-flash;0.0
+283;20;N/A;N/A;numeric;realistic;collider;sociology;b;mmp;gemini-2.5-flash;0.0
+284;95;N/A;N/A;numeric;realistic;collider;sociology;b;mmp;gemini-2.5-flash;0.0
+285;100;N/A;N/A;numeric;realistic;collider;sociology;c;mmp;gemini-2.5-flash;0.0
+286;100;N/A;N/A;numeric;realistic;collider;sociology;c;mmp;gemini-2.5-flash;0.0
+287;50;N/A;N/A;numeric;realistic;collider;sociology;d;mmp;gemini-2.5-flash;0.0
+288;50;N/A;N/A;numeric;realistic;collider;sociology;d;mmp;gemini-2.5-flash;0.0
+289;50;N/A;N/A;numeric;realistic;collider;sociology;e;mmp;gemini-2.5-flash;0.0
+290;50;N/A;N/A;numeric;realistic;collider;sociology;e;mmp;gemini-2.5-flash;0.0
+291;5;N/A;N/A;numeric;realistic;collider;sociology;f;mmp;gemini-2.5-flash;0.0
+292;20;N/A;N/A;numeric;realistic;collider;sociology;f;mmp;gemini-2.5-flash;0.0
+293;0;N/A;N/A;numeric;realistic;collider;sociology;g;mmp;gemini-2.5-flash;0.0
+294;25;N/A;N/A;numeric;realistic;collider;sociology;g;mmp;gemini-2.5-flash;0.0
+295;5;N/A;N/A;numeric;realistic;collider;sociology;h;mmp;gemini-2.5-flash;0.0
+296;0;N/A;N/A;numeric;realistic;collider;sociology;h;mmp;gemini-2.5-flash;0.0
+297;0;N/A;N/A;numeric;realistic;collider;sociology;i;mmp;gemini-2.5-flash;0.0
+298;75;N/A;N/A;numeric;realistic;collider;sociology;j;mmp;gemini-2.5-flash;0.0
+299;100;N/A;N/A;numeric;realistic;collider;sociology;j;mmp;gemini-2.5-flash;0.0
+300;95;N/A;N/A;numeric;realistic;collider;sociology;k;mmp;gemini-2.5-flash;0.0
+321;50;N/A;N/A;numeric;realistic;collider;weather;a;ppp;gemini-2.5-flash;0.0
+322;30;N/A;N/A;numeric;realistic;collider;weather;a;ppp;gemini-2.5-flash;0.0
+323;67;N/A;N/A;numeric;realistic;collider;weather;b;ppp;gemini-2.5-flash;0.0
+324;67;N/A;N/A;numeric;realistic;collider;weather;b;ppp;gemini-2.5-flash;0.0
+325;100;N/A;N/A;numeric;realistic;collider;weather;c;ppp;gemini-2.5-flash;0.0
+326;100;N/A;N/A;numeric;realistic;collider;weather;c;ppp;gemini-2.5-flash;0.0
+327;50;N/A;N/A;numeric;realistic;collider;weather;d;ppp;gemini-2.5-flash;0.0
+328;50;N/A;N/A;numeric;realistic;collider;weather;d;ppp;gemini-2.5-flash;0.0
+329;50;N/A;N/A;numeric;realistic;collider;weather;e;ppp;gemini-2.5-flash;0.0
+330;50;N/A;N/A;numeric;realistic;collider;weather;e;ppp;gemini-2.5-flash;0.0
+331;5;N/A;N/A;numeric;realistic;collider;weather;f;ppp;gemini-2.5-flash;0.0
+332;0;N/A;N/A;numeric;realistic;collider;weather;f;ppp;gemini-2.5-flash;0.0
+333;1;N/A;N/A;numeric;realistic;collider;weather;g;ppp;gemini-2.5-flash;0.0
+334;0;N/A;N/A;numeric;realistic;collider;weather;g;ppp;gemini-2.5-flash;0.0
+335;0;N/A;N/A;numeric;realistic;collider;weather;h;ppp;gemini-2.5-flash;0.0
+336;0;N/A;N/A;numeric;realistic;collider;weather;h;ppp;gemini-2.5-flash;0.0
+337;0;N/A;N/A;numeric;realistic;collider;weather;i;ppp;gemini-2.5-flash;0.0
+338;95;N/A;N/A;numeric;realistic;collider;weather;j;ppp;gemini-2.5-flash;0.0
+339;95;N/A;N/A;numeric;realistic;collider;weather;j;ppp;gemini-2.5-flash;0.0
+340;100;N/A;N/A;numeric;realistic;collider;weather;k;ppp;gemini-2.5-flash;0.0
+381;50;N/A;N/A;numeric;realistic;collider;weather;a;pmm;gemini-2.5-flash;0.0
+382;55;N/A;N/A;numeric;realistic;collider;weather;a;pmm;gemini-2.5-flash;0.0
+383;67;N/A;N/A;numeric;realistic;collider;weather;b;pmm;gemini-2.5-flash;0.0
+384;67;N/A;N/A;numeric;realistic;collider;weather;b;pmm;gemini-2.5-flash;0.0
+385;100;N/A;N/A;numeric;realistic;collider;weather;c;pmm;gemini-2.5-flash;0.0
+386;100;N/A;N/A;numeric;realistic;collider;weather;c;pmm;gemini-2.5-flash;0.0
+387;50;N/A;N/A;numeric;realistic;collider;weather;d;pmm;gemini-2.5-flash;0.0
+388;50;N/A;N/A;numeric;realistic;collider;weather;d;pmm;gemini-2.5-flash;0.0
+389;50;N/A;N/A;numeric;realistic;collider;weather;e;pmm;gemini-2.5-flash;0.0
+390;50;N/A;N/A;numeric;realistic;collider;weather;e;pmm;gemini-2.5-flash;0.0
+391;9;N/A;N/A;numeric;realistic;collider;weather;f;pmm;gemini-2.5-flash;0.0
+392;25;N/A;N/A;numeric;realistic;collider;weather;f;pmm;gemini-2.5-flash;0.0
+393;0;N/A;N/A;numeric;realistic;collider;weather;g;pmm;gemini-2.5-flash;0.0
+394;0;N/A;N/A;numeric;realistic;collider;weather;g;pmm;gemini-2.5-flash;0.0
+395;0;N/A;N/A;numeric;realistic;collider;weather;h;pmm;gemini-2.5-flash;0.0
+396;0;N/A;N/A;numeric;realistic;collider;weather;h;pmm;gemini-2.5-flash;0.0
+397;10;N/A;N/A;numeric;realistic;collider;weather;i;pmm;gemini-2.5-flash;0.0
+398;80;N/A;N/A;numeric;realistic;collider;weather;j;pmm;gemini-2.5-flash;0.0
+399;100;N/A;N/A;numeric;realistic;collider;weather;j;pmm;gemini-2.5-flash;0.0
+400;100;N/A;N/A;numeric;realistic;collider;weather;k;pmm;gemini-2.5-flash;0.0
+421;56;N/A;N/A;numeric;realistic;collider;weather;a;mpm;gemini-2.5-flash;0.0
+422;30;N/A;N/A;numeric;realistic;collider;weather;a;mpm;gemini-2.5-flash;0.0
+423;60;N/A;N/A;numeric;realistic;collider;weather;b;mpm;gemini-2.5-flash;0.0
+424;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+425;100;N/A;N/A;numeric;realistic;collider;weather;c;mpm;gemini-2.5-flash;0.0
+426;100;N/A;N/A;numeric;realistic;collider;weather;c;mpm;gemini-2.5-flash;0.0
+427;50;N/A;N/A;numeric;realistic;collider;weather;d;mpm;gemini-2.5-flash;0.0
+428;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+429;50;N/A;N/A;numeric;realistic;collider;weather;e;mpm;gemini-2.5-flash;0.0
+430;50;N/A;N/A;numeric;realistic;collider;weather;e;mpm;gemini-2.5-flash;0.0
+431;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+432;15;N/A;N/A;numeric;realistic;collider;weather;f;mpm;gemini-2.5-flash;0.0
+433;0;N/A;N/A;numeric;realistic;collider;weather;g;mpm;gemini-2.5-flash;0.0
+434;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+435;0;N/A;N/A;numeric;realistic;collider;weather;h;mpm;gemini-2.5-flash;0.0
+436;0;N/A;N/A;numeric;realistic;collider;weather;h;mpm;gemini-2.5-flash;0.0
+437;1;N/A;N/A;numeric;realistic;collider;weather;i;mpm;gemini-2.5-flash;0.0
+438;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mpm;gemini-2.5-flash;0.0
+439;100;N/A;N/A;numeric;realistic;collider;weather;j;mpm;gemini-2.5-flash;0.0
+440;100;N/A;N/A;numeric;realistic;collider;weather;k;mpm;gemini-2.5-flash;0.0
+441;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mmp;gemini-2.5-flash;0.0
+442;50;N/A;N/A;numeric;realistic;collider;weather;a;mmp;gemini-2.5-flash;0.0
+443;67;N/A;N/A;numeric;realistic;collider;weather;b;mmp;gemini-2.5-flash;0.0
+444;67;N/A;N/A;numeric;realistic;collider;weather;b;mmp;gemini-2.5-flash;0.0
+445;100;N/A;N/A;numeric;realistic;collider;weather;c;mmp;gemini-2.5-flash;0.0
+446;100;N/A;N/A;numeric;realistic;collider;weather;c;mmp;gemini-2.5-flash;0.0
+447;50;N/A;N/A;numeric;realistic;collider;weather;d;mmp;gemini-2.5-flash;0.0
+448;50;N/A;N/A;numeric;realistic;collider;weather;d;mmp;gemini-2.5-flash;0.0
+449;50;N/A;N/A;numeric;realistic;collider;weather;e;mmp;gemini-2.5-flash;0.0
+450;50;N/A;N/A;numeric;realistic;collider;weather;e;mmp;gemini-2.5-flash;0.0
+451;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mmp;gemini-2.5-flash;0.0
+452;0;N/A;N/A;numeric;realistic;collider;weather;f;mmp;gemini-2.5-flash;0.0
+453;0;N/A;N/A;numeric;realistic;collider;weather;g;mmp;gemini-2.5-flash;0.0
+454;0;N/A;N/A;numeric;realistic;collider;weather;g;mmp;gemini-2.5-flash;0.0
+455;0;N/A;N/A;numeric;realistic;collider;weather;h;mmp;gemini-2.5-flash;0.0
+456;0;N/A;N/A;numeric;realistic;collider;weather;h;mmp;gemini-2.5-flash;0.0
+457;Error: Gemini API error: 504 Deadline Exceeded;N/A;N/A;numeric;realistic;collider;;;mmp;gemini-2.5-flash;0.0
+458;95;N/A;N/A;numeric;realistic;collider;weather;j;mmp;gemini-2.5-flash;0.0
+459;100;N/A;N/A;numeric;realistic;collider;weather;j;mmp;gemini-2.5-flash;0.0
+460;100;N/A;N/A;numeric;realistic;collider;weather;k;mmp;gemini-2.5-flash;0.0

@@ -1,0 +1,13 @@
+Experiment,prompt_category,version,LLM-agent,temperature,verbosity,reasoning_effort
+claude-3-opus-20240229,CoT,1,claude-3-opus-20240229,0.0,,
+claude-3-opus-20240229,numeric,1,claude-3-opus-20240229,0.0,,
+gemini-1.5-pro,CoT,1,gemini-1.5-pro,0.0,,
+gemini-1.5-pro,numeric,1,gemini-1.5-pro,0.0,,
+gpt-4o,CoT,1,gpt-4o,0.0,,
+gpt-4o,numeric,1,gpt-4o,0.0,,
+pilot_study,CoT,1,pilot_study,0.0,,
+pilot_study,numeric,1,pilot_study,0.0,,
+random_abstract,CoT,1,random_abstract,0.0,,
+random_abstract,numeric,1,random_abstract,0.0,,
+rw17_indep_causes,CoT,1,rw17_indep_causes,0.0,,
+rw17_indep_causes,numeric,1,rw17_indep_causes,0.0,,

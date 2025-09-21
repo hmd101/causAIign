@@ -1,0 +1,4 @@
+id,prompt,prompt_category,graph,domain,cntbl_cond,task
+test_001,"Does smoking cause lung cancer?",basic_causal,"smoking -> lung_cancer",health,ppp,causal_reasoning
+test_002,"What is the effect of education on income?",economic_causal,"education -> income",economics,mpm,causal_reasoning
+test_003,"Does exercise improve mental health?",health_causal,"exercise -> mental_health",health,mpp,causal_reasoning 

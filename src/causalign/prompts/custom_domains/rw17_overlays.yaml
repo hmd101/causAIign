@@ -1,0 +1,49 @@
+# RW17 Overlays: create overloaded variants of RW17 domains by appending/replacing text
+# Each entry targets a base domain (economy, sociology, weather) and produces a new domain_name
+# like sociology_overloaded with modified fields.
+
+- domain: sociology
+  new_name: sociology_overloaded
+  introduction_append: >
+    In this study, additional contextual considerations are presented to increase
+    cognitive load and assess robustness under information overload.
+  variables:
+    C1:
+      name_append: " (extended)"
+      detailed_append: >
+        The urban environment includes complex infrastructural and socio-economic
+        interdependencies that may influence outcomes indirectly.
+      explanations_append:
+        p_p: " Furthermore, dynamic migration patterns complicate the causal attribution."
+    C2:
+      detailed_append: >
+        Cultural heterogeneity and media effects may modulate religiosity signals
+        in non-linear ways depending on locality and time.
+    E:
+      detailed_append: >
+        Mobility indicators are compounded by reporting biases and measurement
+        artifacts in survey-based instruments.
+
+- domain: economy
+  new_name: economy_overloaded
+  introduction_append: >
+    Analysts further consider macroeconomic shocks, policy lags, and global
+    supply chain perturbations which can act as latent moderators.
+  variables:
+    C1:
+      explanations_append:
+        m_p: " Increased bond yields may be offset by inflation expectations."
+    C2:
+      name_append: " (balance of payments)"
+
+- domain: weather
+  new_name: weather_overloaded
+  introduction_append: >
+    Additional meteorological factors (e.g., aerosols, teleconnections like ENSO)
+    are discussed to emulate information overload conditions.
+  variables:
+    C1:
+      detailed_append: " Interactions with particulate matter further complicate effects."
+    C2:
+      explanations_append:
+        p_m: " Baroclinic instability may disrupt simple condensation narratives."

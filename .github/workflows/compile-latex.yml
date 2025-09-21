@@ -1,0 +1,47 @@
+# Workflow which compiles the tex documents to pdf and pushes them to a separate branch
+name: Build LaTeX documents
+on:
+  # Trigger the workflow on push or pull request:
+  # push:
+  #   branches:
+  #     - main
+    # ... but only if relevant files were modified
+    paths:
+      - "publication/paper/**"
+  # Trigger the workflow manually on Github under "Actions -> Build LaTeX Documents":
+  workflow_dispatch:
+
+# Cancel any builds in-progress when running this workflow for a new commit
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Compile paper
+        uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: publication/paper
+          root_file: |
+            main.tex
+          latexmk_shell_escape: true
+          extra_system_packages: "make"
+          post_compile: |
+            if test -f 'main.makefile'; then
+              make -B -f main.makefile
+              pdflatex -g main.tex
+            fi
+            latexmk -c
+            mv main.pdf ../build
+
+      - name: Push compiled documents to separate branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: compiled # The branch the action should deploy to.
+          folder: publication/build # The folder the action should deploy.
+          target-folder: build # Target folder on deployment branch to push contents into.

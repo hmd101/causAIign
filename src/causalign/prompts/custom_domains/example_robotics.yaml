@@ -1,0 +1,46 @@
+# Example Custom Domain: Robotics
+# Users can copy this template to create their own domains
+
+domain_name: "robotics"
+
+introduction: >
+  Robotics engineers study the complex relationships between different systems 
+  that enable autonomous robots to function effectively. They examine how various 
+  components interact to produce desired robotic behaviors.
+
+variables:
+  X:
+    name: "sensor accuracy"
+    detailed: "Sensor accuracy refers to how precisely the robot's sensors can detect and measure environmental conditions."
+    p_values:
+      "1": "high"
+      "0": "low"
+    m_values:
+      "1": "low" 
+      "0": "high"
+      
+  Y:
+    name: "battery level"
+    detailed: "Battery level indicates the amount of electrical energy available to power the robot's operations."
+    p_values:
+      "1": "full"
+      "0": "depleted"
+    m_values:
+      "1": "depleted"
+      "0": "full"
+      
+  Z:
+    name: "task performance"
+    detailed: "Task performance measures how successfully the robot completes its assigned objectives."
+    p_values:
+      "1": "excellent"
+      "0": "poor"
+    m_values:
+      "1": "poor" 
+      "0": "excellent"
+
+# Optional: Custom explanations for specific variable combinations
+# explanations:
+#   X_causes_Z:
+#     p_p: "High sensor accuracy leads to excellent task performance because the robot can make precise decisions."
+#     m_m: "Low sensor accuracy results in poor task performance due to imprecise environmental readings."

@@ -1,0 +1,183 @@
+- domain: economy
+  introduction_append_from: &id001
+  - sociology
+  variables:
+    X:
+      detailed_append_from: &id002
+      - sociology
+      explanations_append_from: &id007
+      - sociology
+    Y:
+      detailed_append_from: &id003
+      - weather
+      explanations_append_from: &id004
+      - economy
+    Z:
+      detailed_append_from: &id005
+      - sociology
+      explanations_append_from: &id006
+      - sociology
+  new_name: econ_overloaded_xd=soc_xe=soc_yd=weath_ye=econ_zd=soc_ze=soc
+- domain: economy
+  introduction_append_from: *id001
+  variables:
+    X:
+      detailed_append_from: *id002
+      explanations_append_from: &id009
+      - weather
+    Y:
+      detailed_append_from: *id003
+      explanations_append_from: *id004
+    Z:
+      detailed_append_from: *id005
+      explanations_append_from: *id006
+  new_name: econ_overloaded_xd=soc_xe=weath_yd=weath_ye=econ_zd=soc_ze=soc
+- domain: economy
+  introduction_append_from: &id008
+  - weather
+  variables:
+    X:
+      detailed_append_from: *id002
+      explanations_append_from: *id007
+    Y:
+      detailed_append_from: *id003
+      explanations_append_from: *id004
+    Z:
+      detailed_append_from: *id005
+      explanations_append_from: *id006
+  new_name: econ_overloaded_xd=soc_xe=soc_yd=weath_ye=econ_zd=soc_ze=soc
+- domain: economy
+  introduction_append_from: *id008
+  variables:
+    X:
+      detailed_append_from: *id002
+      explanations_append_from: *id009
+    Y:
+      detailed_append_from: *id003
+      explanations_append_from: *id004
+    Z:
+      detailed_append_from: *id005
+      explanations_append_from: *id006
+  new_name: econ_overloaded_xd=soc_xe=weath_yd=weath_ye=econ_zd=soc_ze=soc
+- domain: sociology
+  introduction_append_from: &id010
+  - economy
+  variables:
+    X:
+      detailed_append_from: &id011
+      - economy
+      explanations_append_from: &id016
+      - economy
+    Y:
+      detailed_append_from: &id012
+      - weather
+      explanations_append_from: &id013
+      - sociology
+    Z:
+      detailed_append_from: &id014
+      - economy
+      explanations_append_from: &id015
+      - weather
+  new_name: soc_overloaded_xd=econ_xe=econ_yd=weath_ye=soc_zd=econ_ze=weath
+- domain: sociology
+  introduction_append_from: *id010
+  variables:
+    X:
+      detailed_append_from: *id011
+      explanations_append_from: &id018
+      - weather
+    Y:
+      detailed_append_from: *id012
+      explanations_append_from: *id013
+    Z:
+      detailed_append_from: *id014
+      explanations_append_from: *id015
+  new_name: soc_overloaded_xd=econ_xe=weath_yd=weath_ye=soc_zd=econ_ze=weath
+- domain: sociology
+  introduction_append_from: &id017
+  - weather
+  variables:
+    X:
+      detailed_append_from: *id011
+      explanations_append_from: *id016
+    Y:
+      detailed_append_from: *id012
+      explanations_append_from: *id013
+    Z:
+      detailed_append_from: *id014
+      explanations_append_from: *id015
+  new_name: soc_overloaded_xd=econ_xe=econ_yd=weath_ye=soc_zd=econ_ze=weath
+- domain: sociology
+  introduction_append_from: *id017
+  variables:
+    X:
+      detailed_append_from: *id011
+      explanations_append_from: *id018
+    Y:
+      detailed_append_from: *id012
+      explanations_append_from: *id013
+    Z:
+      detailed_append_from: *id014
+      explanations_append_from: *id015
+  new_name: soc_overloaded_xd=econ_xe=weath_yd=weath_ye=soc_zd=econ_ze=weath
+- domain: weather
+  introduction_append_from: &id019
+  - economy
+  variables:
+    X:
+      detailed_append_from: &id020
+      - economy
+      explanations_append_from: &id021
+      - sociology
+    Y:
+      detailed_append_from: &id022
+      - sociology
+      explanations_append_from: &id023
+      - economy
+    Z:
+      detailed_append_from: &id024
+      - economy
+      explanations_append_from: &id025
+      - economy
+  new_name: weath_overloaded_xd=econ_xe=soc_yd=soc_ye=econ_zd=econ_ze=econ
+- domain: weather
+  introduction_append_from: *id019
+  variables:
+    X:
+      detailed_append_from: *id020
+      explanations_append_from: *id021
+    Y:
+      detailed_append_from: *id022
+      explanations_append_from: *id023
+    Z:
+      detailed_append_from: *id024
+      explanations_append_from: &id027
+      - sociology
+  new_name: weath_overloaded_xd=econ_xe=soc_yd=soc_ye=econ_zd=econ_ze=soc
+- domain: weather
+  introduction_append_from: &id026
+  - sociology
+  variables:
+    X:
+      detailed_append_from: *id020
+      explanations_append_from: *id021
+    Y:
+      detailed_append_from: *id022
+      explanations_append_from: *id023
+    Z:
+      detailed_append_from: *id024
+      explanations_append_from: *id025
+  new_name: weath_overloaded_xd=econ_xe=soc_yd=soc_ye=econ_zd=econ_ze=econ
+- domain: weather
+  introduction_append_from: *id026
+  variables:
+    X:
+      detailed_append_from: *id020
+      explanations_append_from: *id021
+    Y:
+      detailed_append_from: *id022
+      explanations_append_from: *id023
+    Z:
+      detailed_append_from: *id024
+      explanations_append_from: *id027
+  new_name: weath_overloaded_xd=econ_xe=soc_yd=soc_ye=econ_zd=econ_ze=soc

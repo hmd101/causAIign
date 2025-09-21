@@ -1,0 +1,10 @@
+d:
+  X:
+    detailed: "Interest rates are the rates banks charge to loan money. Some economies have low interest rates. Others have normal interest rates."
+    explanations: "Low interest rates stimulate economic growth, leading to greater prosperity overall, and allowing more money to be saved for retirement in particular."
+  Y:
+    detailed: "A country's trade deficit is the difference between the value of the goods that a country imports and the value of the goods that a country exports. Some economies have small trade deficits. Others have normal trade deficits."
+    explanations: "When the economy is good, people can cover their basic expenses and so have enough money left over to contribute to their retirement accounts."
+  Z:
+    detailed: "Retirement savings is the money people save for their retirement. Some economies have high retirement savings. Others have normal retirement savings."
+    explanations: "Retirement savings reflect the overall prosperity and stability of the economy, influenced by interest rates and trade deficits."

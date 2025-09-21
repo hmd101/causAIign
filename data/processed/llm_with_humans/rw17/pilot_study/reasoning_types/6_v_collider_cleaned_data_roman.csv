@@ -1,0 +1,481 @@
+id,prompt_category,graph,domain,task,cntbl_cond,subject,temperature,likelihood,experiment_name,human_subj_id,reasoning_type,RW17_label
+1,single_numeric_response,collider,economy,VI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+1,single_numeric_response,collider,economy,VI,ppp,humans,,67.5,pilot_study,0.0,Effect-Present Diagnostic Inference,a
+2,single_numeric_response,collider,economy,VI,ppp,humans,,67.5,pilot_study,69.0,Effect-Present Diagnostic Inference,a
+2,single_numeric_response,collider,economy,VI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+3,single_numeric_response,collider,economy,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+3,single_numeric_response,collider,economy,VII,ppp,humans,,78.75,pilot_study,58.0,Effect-Present Diagnostic Inference,b
+4,single_numeric_response,collider,economy,VII,ppp,humans,,78.75,pilot_study,58.0,Effect-Present Diagnostic Inference,b
+4,single_numeric_response,collider,economy,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+5,single_numeric_response,collider,economy,VIII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+5,single_numeric_response,collider,economy,VIII,ppp,humans,,76.875,pilot_study,25.0,Effect-Present Diagnostic Inference,c
+6,single_numeric_response,collider,economy,VIII,ppp,humans,,76.875,pilot_study,69.0,Effect-Present Diagnostic Inference,c
+6,single_numeric_response,collider,economy,VIII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+7,single_numeric_response,collider,economy,IV,ppp,humans,,57.5,pilot_study,0.0,Conditional Independence,d
+7,single_numeric_response,collider,economy,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+8,single_numeric_response,collider,economy,IV,ppp,humans,,57.5,pilot_study,69.0,Conditional Independence,d
+8,single_numeric_response,collider,economy,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+9,single_numeric_response,collider,economy,V,ppp,humans,,50.625,pilot_study,69.0,Conditional Independence,e
+9,single_numeric_response,collider,economy,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+10,single_numeric_response,collider,economy,V,ppp,humans,,50.625,pilot_study,69.0,Conditional Independence,e
+10,single_numeric_response,collider,economy,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+11,single_numeric_response,collider,economy,IX,ppp,humans,,47.5,pilot_study,0.0,Effect-Absent Diagnostic Inference,f
+11,single_numeric_response,collider,economy,IX,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+12,single_numeric_response,collider,economy,IX,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+12,single_numeric_response,collider,economy,IX,ppp,humans,,47.5,pilot_study,58.0,Effect-Absent Diagnostic Inference,f
+13,single_numeric_response,collider,economy,X,ppp,humans,,42.5,pilot_study,69.0,Effect-Absent Diagnostic Inference,g
+13,single_numeric_response,collider,economy,X,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+14,single_numeric_response,collider,economy,X,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+14,single_numeric_response,collider,economy,X,ppp,humans,,42.5,pilot_study,69.0,Effect-Absent Diagnostic Inference,g
+15,single_numeric_response,collider,economy,XI,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+15,single_numeric_response,collider,economy,XI,ppp,humans,,52.5,pilot_study,25.0,Effect-Absent Diagnostic Inference,h
+16,single_numeric_response,collider,economy,XI,ppp,humans,,52.5,pilot_study,69.0,Effect-Absent Diagnostic Inference,h
+16,single_numeric_response,collider,economy,XI,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+17,single_numeric_response,collider,economy,I,ppp,humans,,40.0,pilot_study,69.0,Predictive Inference,i
+17,single_numeric_response,collider,economy,I,ppp,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+18,single_numeric_response,collider,economy,II,ppp,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+18,single_numeric_response,collider,economy,II,ppp,humans,,80.625,pilot_study,69.0,Predictive Inference,j
+19,single_numeric_response,collider,economy,II,ppp,humans,,80.625,pilot_study,58.0,Predictive Inference,j
+19,single_numeric_response,collider,economy,II,ppp,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+20,single_numeric_response,collider,economy,III,ppp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+20,single_numeric_response,collider,economy,III,ppp,humans,,88.75,pilot_study,58.0,Predictive Inference,k
+61,single_numeric_response,collider,economy,VI,pmm,humans,,67.0,pilot_study,40.0,Effect-Present Diagnostic Inference,a
+61,single_numeric_response,collider,economy,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+62,single_numeric_response,collider,economy,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+62,single_numeric_response,collider,economy,VI,pmm,humans,,67.0,pilot_study,40.0,Effect-Present Diagnostic Inference,a
+63,single_numeric_response,collider,economy,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+63,single_numeric_response,collider,economy,VII,pmm,humans,,60.0,pilot_study,112.0,Effect-Present Diagnostic Inference,b
+64,single_numeric_response,collider,economy,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+64,single_numeric_response,collider,economy,VII,pmm,humans,,60.0,pilot_study,112.0,Effect-Present Diagnostic Inference,b
+65,single_numeric_response,collider,economy,VIII,pmm,humans,,69.5,pilot_study,133.0,Effect-Present Diagnostic Inference,c
+65,single_numeric_response,collider,economy,VIII,pmm,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+66,single_numeric_response,collider,economy,VIII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+66,single_numeric_response,collider,economy,VIII,pmm,humans,,69.5,pilot_study,133.0,Effect-Present Diagnostic Inference,c
+67,single_numeric_response,collider,economy,IV,pmm,humans,,50.5,pilot_study,119.0,Conditional Independence,d
+67,single_numeric_response,collider,economy,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+68,single_numeric_response,collider,economy,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+68,single_numeric_response,collider,economy,IV,pmm,humans,,50.5,pilot_study,13.0,Conditional Independence,d
+69,single_numeric_response,collider,economy,V,pmm,humans,,37.0,pilot_study,133.0,Conditional Independence,e
+69,single_numeric_response,collider,economy,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+70,single_numeric_response,collider,economy,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+70,single_numeric_response,collider,economy,V,pmm,humans,,37.0,pilot_study,133.0,Conditional Independence,e
+71,single_numeric_response,collider,economy,IX,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+71,single_numeric_response,collider,economy,IX,pmm,humans,,34.5,pilot_study,119.0,Effect-Absent Diagnostic Inference,f
+72,single_numeric_response,collider,economy,IX,pmm,humans,,34.5,pilot_study,112.0,Effect-Absent Diagnostic Inference,f
+72,single_numeric_response,collider,economy,IX,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+73,single_numeric_response,collider,economy,X,pmm,humans,,37.5,pilot_study,13.0,Effect-Absent Diagnostic Inference,g
+73,single_numeric_response,collider,economy,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+74,single_numeric_response,collider,economy,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+74,single_numeric_response,collider,economy,X,pmm,humans,,37.5,pilot_study,112.0,Effect-Absent Diagnostic Inference,g
+75,single_numeric_response,collider,economy,XI,pmm,humans,,25.5,pilot_study,40.0,Effect-Absent Diagnostic Inference,h
+75,single_numeric_response,collider,economy,XI,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+76,single_numeric_response,collider,economy,XI,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+76,single_numeric_response,collider,economy,XI,pmm,humans,,25.5,pilot_study,133.0,Effect-Absent Diagnostic Inference,h
+77,single_numeric_response,collider,economy,I,pmm,humans,,28.0,pilot_study,119.0,Predictive Inference,i
+77,single_numeric_response,collider,economy,I,pmm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+78,single_numeric_response,collider,economy,II,pmm,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,j
+78,single_numeric_response,collider,economy,II,pmm,humans,,58.5,pilot_study,119.0,Predictive Inference,j
+79,single_numeric_response,collider,economy,II,pmm,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+79,single_numeric_response,collider,economy,II,pmm,humans,,58.5,pilot_study,40.0,Predictive Inference,j
+80,single_numeric_response,collider,economy,III,pmm,humans,,79.0,pilot_study,40.0,Predictive Inference,k
+80,single_numeric_response,collider,economy,III,pmm,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+101,single_numeric_response,collider,economy,VI,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+101,single_numeric_response,collider,economy,VI,mpm,humans,,72.5,pilot_study,100.0,Effect-Present Diagnostic Inference,a
+102,single_numeric_response,collider,economy,VI,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+102,single_numeric_response,collider,economy,VI,mpm,humans,,72.5,pilot_study,136.0,Effect-Present Diagnostic Inference,a
+103,single_numeric_response,collider,economy,VII,mpm,humans,,69.375,pilot_study,82.0,Effect-Present Diagnostic Inference,b
+103,single_numeric_response,collider,economy,VII,mpm,gpt-4o,0.0,75.0,pilot_study,,Effect-Present Diagnostic Inference,b
+104,single_numeric_response,collider,economy,VII,mpm,humans,,69.375,pilot_study,94.0,Effect-Present Diagnostic Inference,b
+104,single_numeric_response,collider,economy,VII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+105,single_numeric_response,collider,economy,VIII,mpm,gpt-4o,0.0,75.0,pilot_study,,Effect-Present Diagnostic Inference,c
+105,single_numeric_response,collider,economy,VIII,mpm,humans,,81.25,pilot_study,82.0,Effect-Present Diagnostic Inference,c
+106,single_numeric_response,collider,economy,VIII,mpm,humans,,81.25,pilot_study,100.0,Effect-Present Diagnostic Inference,c
+106,single_numeric_response,collider,economy,VIII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+107,single_numeric_response,collider,economy,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+107,single_numeric_response,collider,economy,IV,mpm,humans,,58.125,pilot_study,82.0,Conditional Independence,d
+108,single_numeric_response,collider,economy,IV,mpm,humans,,58.125,pilot_study,100.0,Conditional Independence,d
+108,single_numeric_response,collider,economy,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+109,single_numeric_response,collider,economy,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+109,single_numeric_response,collider,economy,V,mpm,humans,,44.375,pilot_study,82.0,Conditional Independence,e
+110,single_numeric_response,collider,economy,V,mpm,humans,,44.375,pilot_study,100.0,Conditional Independence,e
+110,single_numeric_response,collider,economy,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+111,single_numeric_response,collider,economy,IX,mpm,humans,,33.75,pilot_study,100.0,Effect-Absent Diagnostic Inference,f
+111,single_numeric_response,collider,economy,IX,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+112,single_numeric_response,collider,economy,IX,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+112,single_numeric_response,collider,economy,IX,mpm,humans,,33.75,pilot_study,136.0,Effect-Absent Diagnostic Inference,f
+113,single_numeric_response,collider,economy,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+113,single_numeric_response,collider,economy,X,mpm,humans,,25.625,pilot_study,100.0,Effect-Absent Diagnostic Inference,g
+114,single_numeric_response,collider,economy,X,mpm,humans,,25.625,pilot_study,94.0,Effect-Absent Diagnostic Inference,g
+114,single_numeric_response,collider,economy,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+115,single_numeric_response,collider,economy,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+115,single_numeric_response,collider,economy,XI,mpm,humans,,15.0,pilot_study,136.0,Effect-Absent Diagnostic Inference,h
+116,single_numeric_response,collider,economy,XI,mpm,humans,,15.0,pilot_study,94.0,Effect-Absent Diagnostic Inference,h
+116,single_numeric_response,collider,economy,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+117,single_numeric_response,collider,economy,I,mpm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+117,single_numeric_response,collider,economy,I,mpm,humans,,20.0,pilot_study,82.0,Predictive Inference,i
+118,single_numeric_response,collider,economy,II,mpm,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,j
+118,single_numeric_response,collider,economy,II,mpm,humans,,76.25,pilot_study,100.0,Predictive Inference,j
+119,single_numeric_response,collider,economy,II,mpm,humans,,76.25,pilot_study,94.0,Predictive Inference,j
+119,single_numeric_response,collider,economy,II,mpm,gpt-4o,0.0,80.0,pilot_study,,Predictive Inference,j
+120,single_numeric_response,collider,economy,III,mpm,humans,,95.0,pilot_study,100.0,Predictive Inference,k
+120,single_numeric_response,collider,economy,III,mpm,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+121,single_numeric_response,collider,economy,VI,mmp,humans,,75.83333333333333,pilot_study,46.0,Effect-Present Diagnostic Inference,a
+121,single_numeric_response,collider,economy,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+122,single_numeric_response,collider,economy,VI,mmp,humans,,75.83333333333333,pilot_study,21.0,Effect-Present Diagnostic Inference,a
+122,single_numeric_response,collider,economy,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+123,single_numeric_response,collider,economy,VII,mmp,humans,,74.16666666666667,pilot_study,21.0,Effect-Present Diagnostic Inference,b
+123,single_numeric_response,collider,economy,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+124,single_numeric_response,collider,economy,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+124,single_numeric_response,collider,economy,VII,mmp,humans,,74.16666666666667,pilot_study,84.0,Effect-Present Diagnostic Inference,b
+125,single_numeric_response,collider,economy,VIII,mmp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+125,single_numeric_response,collider,economy,VIII,mmp,humans,,59.166666666666664,pilot_study,84.0,Effect-Present Diagnostic Inference,c
+126,single_numeric_response,collider,economy,VIII,mmp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+126,single_numeric_response,collider,economy,VIII,mmp,humans,,59.166666666666664,pilot_study,21.0,Effect-Present Diagnostic Inference,c
+127,single_numeric_response,collider,economy,IV,mmp,humans,,43.333333333333336,pilot_study,84.0,Conditional Independence,d
+127,single_numeric_response,collider,economy,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+128,single_numeric_response,collider,economy,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+128,single_numeric_response,collider,economy,IV,mmp,humans,,43.333333333333336,pilot_study,84.0,Conditional Independence,d
+129,single_numeric_response,collider,economy,V,mmp,humans,,40.0,pilot_study,84.0,Conditional Independence,e
+129,single_numeric_response,collider,economy,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+130,single_numeric_response,collider,economy,V,mmp,humans,,40.0,pilot_study,46.0,Conditional Independence,e
+130,single_numeric_response,collider,economy,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+131,single_numeric_response,collider,economy,IX,mmp,humans,,18.333333333333332,pilot_study,46.0,Effect-Absent Diagnostic Inference,f
+131,single_numeric_response,collider,economy,IX,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+132,single_numeric_response,collider,economy,IX,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+132,single_numeric_response,collider,economy,IX,mmp,humans,,18.333333333333332,pilot_study,21.0,Effect-Absent Diagnostic Inference,f
+133,single_numeric_response,collider,economy,X,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+133,single_numeric_response,collider,economy,X,mmp,humans,,35.0,pilot_study,84.0,Effect-Absent Diagnostic Inference,g
+134,single_numeric_response,collider,economy,X,mmp,humans,,35.0,pilot_study,46.0,Effect-Absent Diagnostic Inference,g
+134,single_numeric_response,collider,economy,X,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+135,single_numeric_response,collider,economy,XI,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+135,single_numeric_response,collider,economy,XI,mmp,humans,,32.5,pilot_study,46.0,Effect-Absent Diagnostic Inference,h
+136,single_numeric_response,collider,economy,XI,mmp,humans,,32.5,pilot_study,84.0,Effect-Absent Diagnostic Inference,h
+136,single_numeric_response,collider,economy,XI,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+137,single_numeric_response,collider,economy,I,mmp,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+137,single_numeric_response,collider,economy,I,mmp,humans,,30.0,pilot_study,46.0,Predictive Inference,i
+138,single_numeric_response,collider,economy,II,mmp,humans,,63.333333333333336,pilot_study,46.0,Predictive Inference,j
+138,single_numeric_response,collider,economy,II,mmp,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+139,single_numeric_response,collider,economy,II,mmp,humans,,63.333333333333336,pilot_study,84.0,Predictive Inference,j
+139,single_numeric_response,collider,economy,II,mmp,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+140,single_numeric_response,collider,economy,III,mmp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+140,single_numeric_response,collider,economy,III,mmp,humans,,98.33333333333333,pilot_study,84.0,Predictive Inference,k
+161,single_numeric_response,collider,weather,VI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+161,single_numeric_response,collider,weather,VI,ppp,humans,,69.0,pilot_study,22.0,Effect-Present Diagnostic Inference,a
+162,single_numeric_response,collider,weather,VI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+162,single_numeric_response,collider,weather,VI,ppp,humans,,69.0,pilot_study,22.0,Effect-Present Diagnostic Inference,a
+163,single_numeric_response,collider,weather,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+163,single_numeric_response,collider,weather,VII,ppp,humans,,61.0,pilot_study,45.0,Effect-Present Diagnostic Inference,b
+164,single_numeric_response,collider,weather,VII,ppp,humans,,61.0,pilot_study,97.0,Effect-Present Diagnostic Inference,b
+164,single_numeric_response,collider,weather,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+165,single_numeric_response,collider,weather,VIII,ppp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+165,single_numeric_response,collider,weather,VIII,ppp,humans,,65.5,pilot_study,45.0,Effect-Present Diagnostic Inference,c
+166,single_numeric_response,collider,weather,VIII,ppp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+166,single_numeric_response,collider,weather,VIII,ppp,humans,,65.5,pilot_study,22.0,Effect-Present Diagnostic Inference,c
+167,single_numeric_response,collider,weather,IV,ppp,humans,,48.5,pilot_study,97.0,Conditional Independence,d
+167,single_numeric_response,collider,weather,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+168,single_numeric_response,collider,weather,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+168,single_numeric_response,collider,weather,IV,ppp,humans,,48.5,pilot_study,109.0,Conditional Independence,d
+169,single_numeric_response,collider,weather,V,ppp,humans,,49.0,pilot_study,22.0,Conditional Independence,e
+169,single_numeric_response,collider,weather,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+170,single_numeric_response,collider,weather,V,ppp,humans,,49.0,pilot_study,109.0,Conditional Independence,e
+170,single_numeric_response,collider,weather,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+171,single_numeric_response,collider,weather,IX,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+171,single_numeric_response,collider,weather,IX,ppp,humans,,26.0,pilot_study,4.0,Effect-Absent Diagnostic Inference,f
+172,single_numeric_response,collider,weather,IX,ppp,humans,,26.0,pilot_study,97.0,Effect-Absent Diagnostic Inference,f
+172,single_numeric_response,collider,weather,IX,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+173,single_numeric_response,collider,weather,X,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+173,single_numeric_response,collider,weather,X,ppp,humans,,32.5,pilot_study,109.0,Effect-Absent Diagnostic Inference,g
+174,single_numeric_response,collider,weather,X,ppp,humans,,32.5,pilot_study,4.0,Effect-Absent Diagnostic Inference,g
+174,single_numeric_response,collider,weather,X,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+175,single_numeric_response,collider,weather,XI,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+175,single_numeric_response,collider,weather,XI,ppp,humans,,26.0,pilot_study,22.0,Effect-Absent Diagnostic Inference,h
+176,single_numeric_response,collider,weather,XI,ppp,humans,,26.0,pilot_study,4.0,Effect-Absent Diagnostic Inference,h
+176,single_numeric_response,collider,weather,XI,ppp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+177,single_numeric_response,collider,weather,I,ppp,humans,,24.0,pilot_study,45.0,Predictive Inference,i
+177,single_numeric_response,collider,weather,I,ppp,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+178,single_numeric_response,collider,weather,II,ppp,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+178,single_numeric_response,collider,weather,II,ppp,humans,,62.0,pilot_study,4.0,Predictive Inference,j
+179,single_numeric_response,collider,weather,II,ppp,gpt-4o,0.0,80.0,pilot_study,,Predictive Inference,j
+179,single_numeric_response,collider,weather,II,ppp,humans,,62.0,pilot_study,97.0,Predictive Inference,j
+180,single_numeric_response,collider,weather,III,ppp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+180,single_numeric_response,collider,weather,III,ppp,humans,,97.0,pilot_study,45.0,Predictive Inference,k
+221,single_numeric_response,collider,weather,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+221,single_numeric_response,collider,weather,VI,pmm,humans,,74.16666666666667,pilot_study,138.0,Effect-Present Diagnostic Inference,a
+222,single_numeric_response,collider,weather,VI,pmm,humans,,74.16666666666667,pilot_study,101.0,Effect-Present Diagnostic Inference,a
+222,single_numeric_response,collider,weather,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+223,single_numeric_response,collider,weather,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+223,single_numeric_response,collider,weather,VII,pmm,humans,,75.0,pilot_study,56.0,Effect-Present Diagnostic Inference,b
+224,single_numeric_response,collider,weather,VII,pmm,humans,,75.0,pilot_study,56.0,Effect-Present Diagnostic Inference,b
+224,single_numeric_response,collider,weather,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+225,single_numeric_response,collider,weather,VIII,pmm,humans,,96.66666666666667,pilot_study,101.0,Effect-Present Diagnostic Inference,c
+225,single_numeric_response,collider,weather,VIII,pmm,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+226,single_numeric_response,collider,weather,VIII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+226,single_numeric_response,collider,weather,VIII,pmm,humans,,96.66666666666667,pilot_study,101.0,Effect-Present Diagnostic Inference,c
+227,single_numeric_response,collider,weather,IV,pmm,humans,,70.0,pilot_study,56.0,Conditional Independence,d
+227,single_numeric_response,collider,weather,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+228,single_numeric_response,collider,weather,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+228,single_numeric_response,collider,weather,IV,pmm,humans,,70.0,pilot_study,56.0,Conditional Independence,d
+229,single_numeric_response,collider,weather,V,pmm,humans,,46.666666666666664,pilot_study,138.0,Conditional Independence,e
+229,single_numeric_response,collider,weather,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+230,single_numeric_response,collider,weather,V,pmm,humans,,46.666666666666664,pilot_study,138.0,Conditional Independence,e
+230,single_numeric_response,collider,weather,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+231,single_numeric_response,collider,weather,IX,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+231,single_numeric_response,collider,weather,IX,pmm,humans,,13.333333333333334,pilot_study,56.0,Effect-Absent Diagnostic Inference,f
+232,single_numeric_response,collider,weather,IX,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+232,single_numeric_response,collider,weather,IX,pmm,humans,,13.333333333333334,pilot_study,101.0,Effect-Absent Diagnostic Inference,f
+233,single_numeric_response,collider,weather,X,pmm,humans,,31.666666666666668,pilot_study,138.0,Effect-Absent Diagnostic Inference,g
+233,single_numeric_response,collider,weather,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+234,single_numeric_response,collider,weather,X,pmm,humans,,31.666666666666668,pilot_study,56.0,Effect-Absent Diagnostic Inference,g
+234,single_numeric_response,collider,weather,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+235,single_numeric_response,collider,weather,XI,pmm,humans,,35.0,pilot_study,101.0,Effect-Absent Diagnostic Inference,h
+235,single_numeric_response,collider,weather,XI,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+236,single_numeric_response,collider,weather,XI,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+236,single_numeric_response,collider,weather,XI,pmm,humans,,35.0,pilot_study,138.0,Effect-Absent Diagnostic Inference,h
+237,single_numeric_response,collider,weather,I,pmm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+237,single_numeric_response,collider,weather,I,pmm,humans,,13.333333333333334,pilot_study,138.0,Predictive Inference,i
+238,single_numeric_response,collider,weather,II,pmm,humans,,74.16666666666667,pilot_study,138.0,Predictive Inference,j
+238,single_numeric_response,collider,weather,II,pmm,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+239,single_numeric_response,collider,weather,II,pmm,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+239,single_numeric_response,collider,weather,II,pmm,humans,,74.16666666666667,pilot_study,56.0,Predictive Inference,j
+240,single_numeric_response,collider,weather,III,pmm,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+240,single_numeric_response,collider,weather,III,pmm,humans,,95.0,pilot_study,101.0,Predictive Inference,k
+261,single_numeric_response,collider,weather,VI,mpm,humans,,72.5,pilot_study,53.0,Effect-Present Diagnostic Inference,a
+261,single_numeric_response,collider,weather,VI,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+262,single_numeric_response,collider,weather,VI,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+262,single_numeric_response,collider,weather,VI,mpm,humans,,72.5,pilot_study,118.0,Effect-Present Diagnostic Inference,a
+263,single_numeric_response,collider,weather,VII,mpm,humans,,51.25,pilot_study,53.0,Effect-Present Diagnostic Inference,b
+263,single_numeric_response,collider,weather,VII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+264,single_numeric_response,collider,weather,VII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+264,single_numeric_response,collider,weather,VII,mpm,humans,,51.25,pilot_study,118.0,Effect-Present Diagnostic Inference,b
+265,single_numeric_response,collider,weather,VIII,mpm,humans,,92.5,pilot_study,118.0,Effect-Present Diagnostic Inference,c
+265,single_numeric_response,collider,weather,VIII,mpm,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+266,single_numeric_response,collider,weather,VIII,mpm,humans,,92.5,pilot_study,53.0,Effect-Present Diagnostic Inference,c
+266,single_numeric_response,collider,weather,VIII,mpm,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+267,single_numeric_response,collider,weather,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+267,single_numeric_response,collider,weather,IV,mpm,humans,,72.5,pilot_study,53.0,Conditional Independence,d
+268,single_numeric_response,collider,weather,IV,mpm,humans,,72.5,pilot_study,118.0,Conditional Independence,d
+268,single_numeric_response,collider,weather,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+269,single_numeric_response,collider,weather,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+269,single_numeric_response,collider,weather,V,mpm,humans,,30.0,pilot_study,53.0,Conditional Independence,e
+270,single_numeric_response,collider,weather,V,mpm,humans,,30.0,pilot_study,53.0,Conditional Independence,e
+270,single_numeric_response,collider,weather,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+271,single_numeric_response,collider,weather,IX,mpm,humans,,16.25,pilot_study,118.0,Effect-Absent Diagnostic Inference,f
+271,single_numeric_response,collider,weather,IX,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+272,single_numeric_response,collider,weather,IX,mpm,humans,,16.25,pilot_study,53.0,Effect-Absent Diagnostic Inference,f
+272,single_numeric_response,collider,weather,IX,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+273,single_numeric_response,collider,weather,X,mpm,humans,,16.25,pilot_study,53.0,Effect-Absent Diagnostic Inference,g
+273,single_numeric_response,collider,weather,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+274,single_numeric_response,collider,weather,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+274,single_numeric_response,collider,weather,X,mpm,humans,,16.25,pilot_study,118.0,Effect-Absent Diagnostic Inference,g
+275,single_numeric_response,collider,weather,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+275,single_numeric_response,collider,weather,XI,mpm,humans,,7.5,pilot_study,53.0,Effect-Absent Diagnostic Inference,h
+276,single_numeric_response,collider,weather,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+276,single_numeric_response,collider,weather,XI,mpm,humans,,7.5,pilot_study,118.0,Effect-Absent Diagnostic Inference,h
+277,single_numeric_response,collider,weather,I,mpm,humans,,15.0,pilot_study,53.0,Predictive Inference,i
+277,single_numeric_response,collider,weather,I,mpm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+278,single_numeric_response,collider,weather,II,mpm,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+278,single_numeric_response,collider,weather,II,mpm,humans,,87.5,pilot_study,53.0,Predictive Inference,j
+279,single_numeric_response,collider,weather,II,mpm,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,j
+279,single_numeric_response,collider,weather,II,mpm,humans,,87.5,pilot_study,118.0,Predictive Inference,j
+280,single_numeric_response,collider,weather,III,mpm,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+280,single_numeric_response,collider,weather,III,mpm,humans,,97.5,pilot_study,53.0,Predictive Inference,k
+281,single_numeric_response,collider,weather,VI,mmp,humans,,55.0,pilot_study,132.0,Effect-Present Diagnostic Inference,a
+281,single_numeric_response,collider,weather,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+282,single_numeric_response,collider,weather,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+282,single_numeric_response,collider,weather,VI,mmp,humans,,55.0,pilot_study,77.0,Effect-Present Diagnostic Inference,a
+283,single_numeric_response,collider,weather,VII,mmp,humans,,62.083333333333336,pilot_study,132.0,Effect-Present Diagnostic Inference,b
+283,single_numeric_response,collider,weather,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+284,single_numeric_response,collider,weather,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+284,single_numeric_response,collider,weather,VII,mmp,humans,,62.083333333333336,pilot_study,33.0,Effect-Present Diagnostic Inference,b
+285,single_numeric_response,collider,weather,VIII,mmp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+285,single_numeric_response,collider,weather,VIII,mmp,humans,,82.91666666666667,pilot_study,33.0,Effect-Present Diagnostic Inference,c
+286,single_numeric_response,collider,weather,VIII,mmp,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+286,single_numeric_response,collider,weather,VIII,mmp,humans,,82.91666666666667,pilot_study,132.0,Effect-Present Diagnostic Inference,c
+287,single_numeric_response,collider,weather,IV,mmp,humans,,31.666666666666668,pilot_study,72.0,Conditional Independence,d
+287,single_numeric_response,collider,weather,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+288,single_numeric_response,collider,weather,IV,mmp,humans,,31.666666666666668,pilot_study,33.0,Conditional Independence,d
+288,single_numeric_response,collider,weather,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+289,single_numeric_response,collider,weather,V,mmp,humans,,37.083333333333336,pilot_study,33.0,Conditional Independence,e
+289,single_numeric_response,collider,weather,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+290,single_numeric_response,collider,weather,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+290,single_numeric_response,collider,weather,V,mmp,humans,,37.083333333333336,pilot_study,77.0,Conditional Independence,e
+291,single_numeric_response,collider,weather,IX,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+291,single_numeric_response,collider,weather,IX,mmp,humans,,14.166666666666666,pilot_study,57.0,Effect-Absent Diagnostic Inference,f
+292,single_numeric_response,collider,weather,IX,mmp,humans,,14.166666666666666,pilot_study,3.0,Effect-Absent Diagnostic Inference,f
+292,single_numeric_response,collider,weather,IX,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+293,single_numeric_response,collider,weather,X,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+293,single_numeric_response,collider,weather,X,mmp,humans,,26.25,pilot_study,3.0,Effect-Absent Diagnostic Inference,g
+294,single_numeric_response,collider,weather,X,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+294,single_numeric_response,collider,weather,X,mmp,humans,,26.25,pilot_study,3.0,Effect-Absent Diagnostic Inference,g
+295,single_numeric_response,collider,weather,XI,mmp,humans,,16.666666666666668,pilot_study,72.0,Effect-Absent Diagnostic Inference,h
+295,single_numeric_response,collider,weather,XI,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+296,single_numeric_response,collider,weather,XI,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+296,single_numeric_response,collider,weather,XI,mmp,humans,,16.666666666666668,pilot_study,77.0,Effect-Absent Diagnostic Inference,h
+297,single_numeric_response,collider,weather,I,mmp,humans,,28.333333333333332,pilot_study,57.0,Predictive Inference,i
+297,single_numeric_response,collider,weather,I,mmp,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+298,single_numeric_response,collider,weather,II,mmp,humans,,71.25,pilot_study,57.0,Predictive Inference,j
+298,single_numeric_response,collider,weather,II,mmp,gpt-4o,0.0,80.0,pilot_study,,Predictive Inference,j
+299,single_numeric_response,collider,weather,II,mmp,humans,,71.25,pilot_study,77.0,Predictive Inference,j
+299,single_numeric_response,collider,weather,II,mmp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,j
+300,single_numeric_response,collider,weather,III,mmp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+300,single_numeric_response,collider,weather,III,mmp,humans,,93.33333333333333,pilot_study,57.0,Predictive Inference,k
+321,single_numeric_response,collider,sociology,VI,ppp,humans,,68.75,pilot_study,38.0,Effect-Present Diagnostic Inference,a
+321,single_numeric_response,collider,sociology,VI,ppp,gpt-4o,0.0,75.0,pilot_study,,Effect-Present Diagnostic Inference,a
+322,single_numeric_response,collider,sociology,VI,ppp,humans,,68.75,pilot_study,121.0,Effect-Present Diagnostic Inference,a
+322,single_numeric_response,collider,sociology,VI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+323,single_numeric_response,collider,sociology,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+323,single_numeric_response,collider,sociology,VII,ppp,humans,,70.83333333333333,pilot_study,29.0,Effect-Present Diagnostic Inference,b
+324,single_numeric_response,collider,sociology,VII,ppp,humans,,70.83333333333333,pilot_study,74.0,Effect-Present Diagnostic Inference,b
+324,single_numeric_response,collider,sociology,VII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+325,single_numeric_response,collider,sociology,VIII,ppp,gpt-4o,0.0,75.0,pilot_study,,Effect-Present Diagnostic Inference,c
+325,single_numeric_response,collider,sociology,VIII,ppp,humans,,76.66666666666667,pilot_study,38.0,Effect-Present Diagnostic Inference,c
+326,single_numeric_response,collider,sociology,VIII,ppp,humans,,76.66666666666667,pilot_study,74.0,Effect-Present Diagnostic Inference,c
+326,single_numeric_response,collider,sociology,VIII,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+327,single_numeric_response,collider,sociology,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+327,single_numeric_response,collider,sociology,IV,ppp,humans,,63.75,pilot_study,88.0,Conditional Independence,d
+328,single_numeric_response,collider,sociology,IV,ppp,humans,,63.75,pilot_study,88.0,Conditional Independence,d
+328,single_numeric_response,collider,sociology,IV,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+329,single_numeric_response,collider,sociology,V,ppp,humans,,47.5,pilot_study,29.0,Conditional Independence,e
+329,single_numeric_response,collider,sociology,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+330,single_numeric_response,collider,sociology,V,ppp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+330,single_numeric_response,collider,sociology,V,ppp,humans,,47.5,pilot_study,29.0,Conditional Independence,e
+331,single_numeric_response,collider,sociology,IX,ppp,humans,,46.25,pilot_study,10.0,Effect-Absent Diagnostic Inference,f
+331,single_numeric_response,collider,sociology,IX,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+332,single_numeric_response,collider,sociology,IX,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+332,single_numeric_response,collider,sociology,IX,ppp,humans,,46.25,pilot_study,74.0,Effect-Absent Diagnostic Inference,f
+333,single_numeric_response,collider,sociology,X,ppp,humans,,46.25,pilot_study,29.0,Effect-Absent Diagnostic Inference,g
+333,single_numeric_response,collider,sociology,X,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+334,single_numeric_response,collider,sociology,X,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+334,single_numeric_response,collider,sociology,X,ppp,humans,,46.25,pilot_study,88.0,Effect-Absent Diagnostic Inference,g
+335,single_numeric_response,collider,sociology,XI,ppp,humans,,45.833333333333336,pilot_study,38.0,Effect-Absent Diagnostic Inference,h
+335,single_numeric_response,collider,sociology,XI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+336,single_numeric_response,collider,sociology,XI,ppp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+336,single_numeric_response,collider,sociology,XI,ppp,humans,,45.833333333333336,pilot_study,29.0,Effect-Absent Diagnostic Inference,h
+337,single_numeric_response,collider,sociology,I,ppp,humans,,47.5,pilot_study,88.0,Predictive Inference,i
+337,single_numeric_response,collider,sociology,I,ppp,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,i
+338,single_numeric_response,collider,sociology,II,ppp,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+338,single_numeric_response,collider,sociology,II,ppp,humans,,68.75,pilot_study,38.0,Predictive Inference,j
+339,single_numeric_response,collider,sociology,II,ppp,humans,,68.75,pilot_study,10.0,Predictive Inference,j
+339,single_numeric_response,collider,sociology,II,ppp,gpt-4o,0.0,75.0,pilot_study,,Predictive Inference,j
+340,single_numeric_response,collider,sociology,III,ppp,humans,,95.0,pilot_study,29.0,Predictive Inference,k
+340,single_numeric_response,collider,sociology,III,ppp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+381,single_numeric_response,collider,sociology,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+381,single_numeric_response,collider,sociology,VI,pmm,humans,,47.5,pilot_study,141.0,Effect-Present Diagnostic Inference,a
+382,single_numeric_response,collider,sociology,VI,pmm,humans,,47.5,pilot_study,108.0,Effect-Present Diagnostic Inference,a
+382,single_numeric_response,collider,sociology,VI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+383,single_numeric_response,collider,sociology,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+383,single_numeric_response,collider,sociology,VII,pmm,humans,,63.75,pilot_study,141.0,Effect-Present Diagnostic Inference,b
+384,single_numeric_response,collider,sociology,VII,pmm,humans,,63.75,pilot_study,1.0,Effect-Present Diagnostic Inference,b
+384,single_numeric_response,collider,sociology,VII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+385,single_numeric_response,collider,sociology,VIII,pmm,humans,,73.125,pilot_study,1.0,Effect-Present Diagnostic Inference,c
+385,single_numeric_response,collider,sociology,VIII,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+386,single_numeric_response,collider,sociology,VIII,pmm,gpt-4o,0.0,80.0,pilot_study,,Effect-Present Diagnostic Inference,c
+386,single_numeric_response,collider,sociology,VIII,pmm,humans,,73.125,pilot_study,141.0,Effect-Present Diagnostic Inference,c
+387,single_numeric_response,collider,sociology,IV,pmm,humans,,30.625,pilot_study,141.0,Conditional Independence,d
+387,single_numeric_response,collider,sociology,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+388,single_numeric_response,collider,sociology,IV,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+388,single_numeric_response,collider,sociology,IV,pmm,humans,,30.625,pilot_study,28.0,Conditional Independence,d
+389,single_numeric_response,collider,sociology,V,pmm,humans,,35.0,pilot_study,141.0,Conditional Independence,e
+389,single_numeric_response,collider,sociology,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+390,single_numeric_response,collider,sociology,V,pmm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+390,single_numeric_response,collider,sociology,V,pmm,humans,,35.0,pilot_study,1.0,Conditional Independence,e
+391,single_numeric_response,collider,sociology,IX,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+391,single_numeric_response,collider,sociology,IX,pmm,humans,,15.625,pilot_study,28.0,Effect-Absent Diagnostic Inference,f
+392,single_numeric_response,collider,sociology,IX,pmm,humans,,15.625,pilot_study,108.0,Effect-Absent Diagnostic Inference,f
+392,single_numeric_response,collider,sociology,IX,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+393,single_numeric_response,collider,sociology,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+393,single_numeric_response,collider,sociology,X,pmm,humans,,15.625,pilot_study,28.0,Effect-Absent Diagnostic Inference,g
+394,single_numeric_response,collider,sociology,X,pmm,humans,,15.625,pilot_study,1.0,Effect-Absent Diagnostic Inference,g
+394,single_numeric_response,collider,sociology,X,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+395,single_numeric_response,collider,sociology,XI,pmm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+395,single_numeric_response,collider,sociology,XI,pmm,humans,,20.625,pilot_study,108.0,Effect-Absent Diagnostic Inference,h
+396,single_numeric_response,collider,sociology,XI,pmm,humans,,20.625,pilot_study,108.0,Effect-Absent Diagnostic Inference,h
+396,single_numeric_response,collider,sociology,XI,pmm,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+397,single_numeric_response,collider,sociology,I,pmm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+397,single_numeric_response,collider,sociology,I,pmm,humans,,42.5,pilot_study,1.0,Predictive Inference,i
+398,single_numeric_response,collider,sociology,II,pmm,humans,,79.375,pilot_study,28.0,Predictive Inference,j
+398,single_numeric_response,collider,sociology,II,pmm,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+399,single_numeric_response,collider,sociology,II,pmm,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+399,single_numeric_response,collider,sociology,II,pmm,humans,,79.375,pilot_study,28.0,Predictive Inference,j
+400,single_numeric_response,collider,sociology,III,pmm,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
+400,single_numeric_response,collider,sociology,III,pmm,humans,,92.5,pilot_study,1.0,Predictive Inference,k
+421,single_numeric_response,collider,sociology,VI,mpm,humans,,56.25,pilot_study,71.0,Effect-Present Diagnostic Inference,a
+421,single_numeric_response,collider,sociology,VI,mpm,gpt-4o,0.0,75.0,pilot_study,,Effect-Present Diagnostic Inference,a
+422,single_numeric_response,collider,sociology,VI,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+422,single_numeric_response,collider,sociology,VI,mpm,humans,,56.25,pilot_study,71.0,Effect-Present Diagnostic Inference,a
+423,single_numeric_response,collider,sociology,VII,mpm,humans,,62.5,pilot_study,71.0,Effect-Present Diagnostic Inference,b
+423,single_numeric_response,collider,sociology,VII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+424,single_numeric_response,collider,sociology,VII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+424,single_numeric_response,collider,sociology,VII,mpm,humans,,62.5,pilot_study,71.0,Effect-Present Diagnostic Inference,b
+425,single_numeric_response,collider,sociology,VIII,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+425,single_numeric_response,collider,sociology,VIII,mpm,humans,,76.25,pilot_study,71.0,Effect-Present Diagnostic Inference,c
+426,single_numeric_response,collider,sociology,VIII,mpm,humans,,76.25,pilot_study,99.0,Effect-Present Diagnostic Inference,c
+426,single_numeric_response,collider,sociology,VIII,mpm,gpt-4o,0.0,100.0,pilot_study,,Effect-Present Diagnostic Inference,c
+427,single_numeric_response,collider,sociology,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+427,single_numeric_response,collider,sociology,IV,mpm,humans,,50.0,pilot_study,71.0,Conditional Independence,d
+428,single_numeric_response,collider,sociology,IV,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+428,single_numeric_response,collider,sociology,IV,mpm,humans,,50.0,pilot_study,99.0,Conditional Independence,d
+429,single_numeric_response,collider,sociology,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+429,single_numeric_response,collider,sociology,V,mpm,humans,,50.0,pilot_study,71.0,Conditional Independence,e
+430,single_numeric_response,collider,sociology,V,mpm,humans,,50.0,pilot_study,99.0,Conditional Independence,e
+430,single_numeric_response,collider,sociology,V,mpm,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+431,single_numeric_response,collider,sociology,IX,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+431,single_numeric_response,collider,sociology,IX,mpm,humans,,31.25,pilot_study,71.0,Effect-Absent Diagnostic Inference,f
+432,single_numeric_response,collider,sociology,IX,mpm,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+432,single_numeric_response,collider,sociology,IX,mpm,humans,,31.25,pilot_study,71.0,Effect-Absent Diagnostic Inference,f
+433,single_numeric_response,collider,sociology,X,mpm,humans,,42.5,pilot_study,99.0,Effect-Absent Diagnostic Inference,g
+433,single_numeric_response,collider,sociology,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+434,single_numeric_response,collider,sociology,X,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+434,single_numeric_response,collider,sociology,X,mpm,humans,,42.5,pilot_study,71.0,Effect-Absent Diagnostic Inference,g
+435,single_numeric_response,collider,sociology,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+435,single_numeric_response,collider,sociology,XI,mpm,humans,,25.0,pilot_study,71.0,Effect-Absent Diagnostic Inference,h
+436,single_numeric_response,collider,sociology,XI,mpm,humans,,25.0,pilot_study,71.0,Effect-Absent Diagnostic Inference,h
+436,single_numeric_response,collider,sociology,XI,mpm,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+437,single_numeric_response,collider,sociology,I,mpm,humans,,0.0,pilot_study,71.0,Predictive Inference,i
+437,single_numeric_response,collider,sociology,I,mpm,gpt-4o,0.0,0.0,pilot_study,,Predictive Inference,i
+438,single_numeric_response,collider,sociology,II,mpm,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,j
+438,single_numeric_response,collider,sociology,II,mpm,humans,,62.5,pilot_study,71.0,Predictive Inference,j
+439,single_numeric_response,collider,sociology,II,mpm,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,j
+439,single_numeric_response,collider,sociology,II,mpm,humans,,62.5,pilot_study,99.0,Predictive Inference,j
+440,single_numeric_response,collider,sociology,III,mpm,humans,,100.0,pilot_study,99.0,Predictive Inference,k
+440,single_numeric_response,collider,sociology,III,mpm,gpt-4o,0.0,90.0,pilot_study,,Predictive Inference,k
+441,single_numeric_response,collider,sociology,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+441,single_numeric_response,collider,sociology,VI,mmp,humans,,80.625,pilot_study,107.0,Effect-Present Diagnostic Inference,a
+442,single_numeric_response,collider,sociology,VI,mmp,humans,,80.625,pilot_study,107.0,Effect-Present Diagnostic Inference,a
+442,single_numeric_response,collider,sociology,VI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,a
+443,single_numeric_response,collider,sociology,VII,mmp,humans,,66.875,pilot_study,39.0,Effect-Present Diagnostic Inference,b
+443,single_numeric_response,collider,sociology,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+444,single_numeric_response,collider,sociology,VII,mmp,humans,,66.875,pilot_study,39.0,Effect-Present Diagnostic Inference,b
+444,single_numeric_response,collider,sociology,VII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,b
+445,single_numeric_response,collider,sociology,VIII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+445,single_numeric_response,collider,sociology,VIII,mmp,humans,,75.625,pilot_study,137.0,Effect-Present Diagnostic Inference,c
+446,single_numeric_response,collider,sociology,VIII,mmp,humans,,75.625,pilot_study,63.0,Effect-Present Diagnostic Inference,c
+446,single_numeric_response,collider,sociology,VIII,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Present Diagnostic Inference,c
+447,single_numeric_response,collider,sociology,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+447,single_numeric_response,collider,sociology,IV,mmp,humans,,57.5,pilot_study,39.0,Conditional Independence,d
+448,single_numeric_response,collider,sociology,IV,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,d
+448,single_numeric_response,collider,sociology,IV,mmp,humans,,57.5,pilot_study,39.0,Conditional Independence,d
+449,single_numeric_response,collider,sociology,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+449,single_numeric_response,collider,sociology,V,mmp,humans,,46.25,pilot_study,63.0,Conditional Independence,e
+450,single_numeric_response,collider,sociology,V,mmp,gpt-4o,0.0,50.0,pilot_study,,Conditional Independence,e
+450,single_numeric_response,collider,sociology,V,mmp,humans,,46.25,pilot_study,39.0,Conditional Independence,e
+451,single_numeric_response,collider,sociology,IX,mmp,humans,,29.375,pilot_study,39.0,Effect-Absent Diagnostic Inference,f
+451,single_numeric_response,collider,sociology,IX,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+452,single_numeric_response,collider,sociology,IX,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,f
+452,single_numeric_response,collider,sociology,IX,mmp,humans,,29.375,pilot_study,137.0,Effect-Absent Diagnostic Inference,f
+453,single_numeric_response,collider,sociology,X,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+453,single_numeric_response,collider,sociology,X,mmp,humans,,43.125,pilot_study,39.0,Effect-Absent Diagnostic Inference,g
+454,single_numeric_response,collider,sociology,X,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,g
+454,single_numeric_response,collider,sociology,X,mmp,humans,,43.125,pilot_study,107.0,Effect-Absent Diagnostic Inference,g
+455,single_numeric_response,collider,sociology,XI,mmp,humans,,36.25,pilot_study,63.0,Effect-Absent Diagnostic Inference,h
+455,single_numeric_response,collider,sociology,XI,mmp,gpt-4o,0.0,0.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+456,single_numeric_response,collider,sociology,XI,mmp,gpt-4o,0.0,50.0,pilot_study,,Effect-Absent Diagnostic Inference,h
+456,single_numeric_response,collider,sociology,XI,mmp,humans,,36.25,pilot_study,107.0,Effect-Absent Diagnostic Inference,h
+457,single_numeric_response,collider,sociology,I,mmp,gpt-4o,0.0,50.0,pilot_study,,Predictive Inference,i
+457,single_numeric_response,collider,sociology,I,mmp,humans,,20.0,pilot_study,107.0,Predictive Inference,i
+458,single_numeric_response,collider,sociology,II,mmp,humans,,75.625,pilot_study,39.0,Predictive Inference,j
+458,single_numeric_response,collider,sociology,II,mmp,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+459,single_numeric_response,collider,sociology,II,mmp,humans,,75.625,pilot_study,107.0,Predictive Inference,j
+459,single_numeric_response,collider,sociology,II,mmp,gpt-4o,0.0,70.0,pilot_study,,Predictive Inference,j
+460,single_numeric_response,collider,sociology,III,mmp,humans,,98.75,pilot_study,107.0,Predictive Inference,k
+460,single_numeric_response,collider,sociology,III,mmp,gpt-4o,0.0,100.0,pilot_study,,Predictive Inference,k
