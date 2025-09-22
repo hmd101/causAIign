@@ -1,16 +1,17 @@
 ![MyPackage Logo](assets/logo.png)
 
 
-# CausAlign -- Contrasting Reasoning in Humans and Large Language Models On a Causal Benchmark
+# Contrasting Reasoning in Humans and Large Language Models On a Causal Benchmark
 ## Reasoning Strategies and Robustness in Language Models -- A Cognitive View
 
 ## **Overview**
 
-CausAlign is a Python package for evaluating the causal reasoning abilities and strategies of **Large Language Models (LLMs)** in comparison with humans. It provides tools to systematically assess _how_ LLMs reason about causal structures, with a particular focus on **collider** graphs, where **human biases** are especially well documented.
-A central question we investigate is whether LLMs reproduce human biases in these causal systems. Our findings suggest that, for the most part, they do not.
-The package also supports **custom prompt creation** using the same scaffolding as our benchmark, enabling direct comparison across experiments. This makes it possible to explore questions such as:
-- How do LLMs behave on tasks stripped of semantically meaningful content?
-- How easily are they distracted when irrelevant information is introduced, reducing the signal-to-noise ratio?
+
+**causAIign** is a Python toolkit for evaluating **Large Language Model (LLM) causal reasoning** across  common-effect (collider) structures and comparing it with human responses on the same set of tasks. It ships a **human benchmark** for collider tasks built to match the experimental paradigm of [Rehder&Waldmann, 2017](https://link.springer.com/article/10.3758/s13421-016-0662-3) (RW17), enabling **apples-to-apples comparisons between LLMs and humans**. Using the same task templates as the human benchmark, the package lets you **generate new causal inference prompts** that preserve the exact task pattern while (i) varying content (e.g., fully abstract, or your own fantasy/real-world common-effect stories) and (ii) systematically injecting irrelevant details to dilute the signal-to-noise ratio (overloaded). Utilities are included for collecting LLM responses based on different prompt instructions (e.g., chain-of-thought), fitting causal Bayes nets to responses, and aggregating results for transparent, reproducible comparisons across LLMs and humans (more details below).
+
+### Why collider graphs?
+Humans show biases in collider graph based reasoning tasks repeatedly shown by a plethora of studies. An important question this package facilitates in answering is whether LLMs replicate these biases. 
+
 
 ## **Installation**
 
@@ -34,13 +35,13 @@ pip install git+https://github.com/hmd101/causalign.git
 Run LLMs on prompts (writes raw outputs under data/output_llm/):
 
 ```bash
-python scripts/02_llm_and_processing/run_llm_prompts.py --delegate run_experiment -- --version 10 --experiment pilot_study --model gpt-4o
+python scripts/02_llm_and_processing/run_llm_prompts.py --delegate run_experiment -- --version 3 --experiment pilot_study --model gpt-4o
 ```
 
 Process accumulated outputs into tidy datasets (optionally merges with human data):
 
 ```bash
-python scripts/02_llm_and_processing/run_llm_prompts.py --delegate pipeline -- --experiment pilot_study --version 10
+python scripts/02_llm_and_processing/run_llm_prompts.py --delegate pipeline -- --experiment pilot_study --version 3
 ```
 
 Next steps:
@@ -48,24 +49,24 @@ Next steps:
 - Publication-ready plots and summaries: see scripts/05_downstream_and_viz/README.md
 
 
-## Results at a glance
 
-- LLMs can follow causal rules, often more rigidly than people (deterministic reasoning). Most models apply the intended causal rules in a repeatable, near-deterministic way; a minority behave more probabilistically and lean on associations.
-- Chain-of-thought mainly boosts reliability; under noise it also improves reasoning quality. Asking for intermediate steps increases consistency and, when prompts include irrelevant text, shifts behavior toward the intended causal rules.
-- Changing the knowledge domain that causal inference tasks are embedded in doesn’t matter much; _adding irrelevant text does_! Swapping real-world content for abstract placeholders leaves reasoning intact, while appended irrelevant sentences reduce consistency and increase associative behavior; CoT recovers much of this loss.
-- Two behavioral regimes emerge. A deterministic, rule-following regime (low reliance on associations) and a probabilistic, association-heavy regime. Frontier models cluster in the former; smaller/earlier models more often fall into the latter.
-- Scope and limits. Findings are behavioral. With proprietary models, we can’t ascribe mechanisms; patterns should be read as consistent behavioral trends under our tasks.
-
-What these findings measure (produced by this package):
-- Q1 Domain differences (Kruskal–Wallis + BH–FDR)
+### The following analysis pipeline is supported by the package:
+- Q1 Cover story (domain) differences (Kruskal–Wallis + multiple comparison corrections)
 - Q2 Human–LLM alignment (Spearman ρ with bootstrap CIs)
-- Q3 Normativity via CBN fits (loss/RMSE/MAE, LOOCV R²)
+- Q3 Normative reasoning: is there a set of causal Bayes net parameters that describes an agent's likelihood judgments across different causal inference tasks well? (loss/RMSE/MAE/R²)
 - Q4 Reasoning consistency (task-level LOOCV R²)
-- Q5 Cognitive strategies (EA/MV signatures; parameter patterns)
-- Q6 Robustness to content manipulations
+- Q5 Cognitive strategies (deterministic, rule-based  vs. probabilistic signatures reasoning; parameter patterns, levels of explaining away (EA) and Markov violations (MV))
+- Q6 Robustness to content (e.g. abstract) and prompt (e.g. chain-of-thougt) manipulations 
 
-### Example output plot generated with causAIign:
+### Example causAIign plots:
+####  Comparing LLM and human likelihood judgments across collider-based tasks; dashed curves indicate predictions from each agent’s fitted noisy-OR causal Bayes network
 ![Example Output Plot](assets/figures/tasks.png)
+_The red node is the query node, gray nodes are observed, and when we don't provide any information about a node in the causal task, it is represented as a dashed circle._
+
+#### Reasoning consistency across LLMs and experimental manipulations compared to human baseline (pink)
+![Example Output Plot2](assets/figures/r2_by_release.png)
+_A note on prompt-category naming: We refer to single-shot outputs (i.e., a single number for the likelihood of the query node being 1 (red node in graphs above)) as **Numeric** and contrast it to chain-of-thought (CoT)._
+
 
 ## Documentation
 
@@ -80,58 +81,12 @@ Detailed guides live under READMEs/:
 - READMEs/TESTING.md – running tests
 
 
+## Some Results at a glance
 
-## **Data and Models**
-causAlign provides support for evaluating LLMs across  causal inference tasks embedded in a collider, chain and fork graph structure. A human benchmark currently only exists for the collider graph. It is particularly apt for datasets building on experiments in  [Rehder&Waldmann, 2017](https://link.springer.com/article/10.3758/s13421-016-0662-3).
-
-
-
-
-# Package organization
-
-```
-src/causalign/
-├── prompts/                      
-│   ├── core/                    # Core prompt generation logic
-│   │   ├── domain.py           # Domain-specific logic
-│   │   ├── verbalization.py    # Story verbalization
-│   │   ├── prompt.py          # Prompt templates
-│   │   └── constants.py       # Shared constants
-│   ├── generators/             # Different graph type generators
-│   │   ├── collider.py
-│   │   ├── fork.py
-│   │   └── chain.py
-│   ├── versions/              # Different prompt versions
-│   │   ├── rw17/             # Rehder & Waldmann 2017
-│   │   ├── abstract/
-│   │   └── fantasy/
-│   └── notebooks/            # Prompt generation notebooks
-│
-├── data/                      # Data management
-│   ├── raw/                  # Raw data
-│   │   ├── human/           # Human response data
-│   │   └── llm/            # Raw LLM responses
-│   ├── processed/           # Processed data
-│   │   ├── human/          # Processed human data
-│   │   └── llm/           # Processed LLM responses
-│   └── merged/             # Merged datasets
-│       └── rw17/          # RW17 specific merged data
-│
-├── experiment/               # Experiment execution
-│   ├── api/                # API clients and configuration
-│   │   ├── base.py
-│   │   ├── openai.py
-│   │   └── anthropic.py
-│   └── config/            # Experiment configuration
-│
-└── analysis/               # Analysis and visualization
-    ├── processing/        # Data processing
-    │   ├── response_parser.py    # XML parsing of LLM output
-    │   ├── roman_numerals.py    # Roman numeral conversion
-    │   └── data_merger.py       # Merging human and LLM data
-    ├── visualization/     # Plotting and visualization
-    │   ├── line_plots.py
-    │   └── detailed_responses.py
-    └── notebooks/        # Analysis notebooks
-```
-
+- LLMs can follow causal rules, often more rigidly than people (deterministic reasoning). Most models apply the intended causal rules in a repeatable, near-deterministic way; a minority behave _more_ probabilistically  than humans and lean on associations.
+- Chain-of-thought mainly boosts reliability; under noise it also improves reasoning quality. Asking for intermediate steps increases consistency and, when prompts include irrelevant text, shifts behavior toward the intended causal rules.
+- Changing the knowledge domain that causal inference tasks are embedded in doesn’t matter much; _adding irrelevant text does_! Swapping real-world content for abstract placeholders leaves reasoning intact, while appended irrelevant sentences reduce consistency and increase associative behavior; CoT recovers much of this loss.
+- Two behavioral regimes emerge. A deterministic, rule-following regime (low reliance on associations) and a probabilistic, association-heavy regime. Frontier models cluster in the former; smaller/earlier models more often fall into the latter.
+- Chain-of-thought seems to disproportionately benefit smaller / older models.
+- Gemini-2.5-pro emerges as
+- NOTE: Deterministic reasoning is not always better. Because the real world is intrinsically noisy, it is essential to characterize LLM reasoning strategies in detail to support their safe and effective use.
