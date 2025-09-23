@@ -10,7 +10,7 @@
 **causAIign** is a Python toolkit for evaluating **Large Language Model (LLM) causal reasoning** across  common-effect (collider) structures and comparing it with human responses on the same set of tasks. It ships a **human benchmark** for collider tasks built to match the experimental paradigm of [Rehder&Waldmann, 2017](https://link.springer.com/article/10.3758/s13421-016-0662-3) (RW17), enabling **apples-to-apples comparisons between LLMs and humans**. Using the same task templates as the human benchmark, the package lets you **generate new causal inference prompts** that preserve the exact task pattern while (i) varying content (e.g., fully abstract, or your own fantasy/real-world common-effect stories) and (ii) systematically injecting irrelevant details to dilute the signal-to-noise ratio (overloaded). Utilities are included for collecting LLM responses based on different prompt instructions (e.g., chain-of-thought), fitting causal Bayes nets to responses, and aggregating results for transparent, reproducible comparisons across LLMs and humans (more details below).
 
 ### Why collider graphs?
-Humans show biases in collider graph based reasoning tasks repeatedly shown by a plethora of studies. An important question this package facilitates in answering is whether LLMs replicate these biases. 
+Humans show biases in collider graph based reasoning tasks repeatedly shown by a plethora of studies. An important question this package facilitates  answering is whether LLMs replicate these biases. Our results indicate that many LLMs tested do not replicate these biases.
 
 
 ## **Installation**
@@ -35,13 +35,13 @@ pip install git+https://github.com/hmd101/causalign.git
 Run LLMs on prompts (writes raw outputs under data/output_llm/):
 
 ```bash
-python scripts/02_llm_and_processing/run_llm_prompts.py --delegate run_experiment -- --version 3 --experiment pilot_study --model gpt-4o
+python scripts/02_llm_and_processing/run_llm_prompts.py --delegate run_experiment --version 3 --experiment pilot_study --model gpt-4o
 ```
 
 Process accumulated outputs into tidy datasets (optionally merges with human data):
 
 ```bash
-python scripts/02_llm_and_processing/run_llm_prompts.py --delegate pipeline -- --experiment pilot_study --version 3
+python scripts/02_llm_and_processing/run_llm_prompts.py --delegate pipeline  --experiment pilot_study --version 3
 ```
 
 Next steps:
