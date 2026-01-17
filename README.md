@@ -1,5 +1,6 @@
-![MyPackage Logo](assets/logo.png)
-
+<div align="center">
+    <img align="center" src="assets/logo.png"  width="500" style="padding-right: 10px; padding left: 10px;"/>
+</div>
 
 # Contrasting Reasoning in Humans and Large Language Models On a Causal Benchmark
 ## Reasoning Strategies and Robustness in Language Models -- A Cognitive View
