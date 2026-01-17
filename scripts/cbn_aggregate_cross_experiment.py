@@ -170,27 +170,36 @@ exp_name_map = {
 }
 
 # Pretty label mapping for prompt categories (publication labels)
-PC_PRINT_MAP = {"pcnum": "Num", "pccot": "CoT", "pcconf": "Num-Conf"}
+PC_PRINT_MAP = {"pcnum": "Direct", "pccot": "CoT", "pcconf": "Direct-Conf"}
 
 try:
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS, canon_prompt_category
+    from causalign.plotting.palette import (
+        COT_LABEL,
+        NUMERIC_LABEL,
+        PROMPT_CATEGORY_COLORS,
+        canon_prompt_category,
+    )
 except Exception:
     # Fallback if src/ not on path when running the script directly
     PROMPT_CATEGORY_COLORS = {
-        "numeric": (0.85, 0.60, 0.55),
+        "Direct": (0.85, 0.60, 0.55),
         "CoT": (0.00, 0.20, 0.55),
     }
+    NUMERIC_SYNS = {"pcnum", "numeric", "num", "single_numeric", "single_numeric_response"}
+    COT_SYNS = {"pccot", "cot", "chain_of_thought", "chain-of-thought", "cot_stepwise"}
     def canon_prompt_category(label: str) -> str:  # type: ignore
         t = str(label).strip().lower()
-        if t in NUMERIC_SYNS or t == "numeric":
-            return "numeric"
-        if t in COT_SYNS or t == "cot":
+        if t in NUMERIC_SYNS or t in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}:
+            return "Direct"
+        if t in COT_SYNS or t in {"cot"}:
             return "CoT"
         return str(label)
+    NUMERIC_LABEL = "Direct"
+    COT_LABEL = "CoT"
 
 # Assign colors from PROMPT_CATEGORY_COLORS
-numeric_color = PROMPT_CATEGORY_COLORS["numeric"]
-cot_color = PROMPT_CATEGORY_COLORS["CoT"]
+numeric_color = PROMPT_CATEGORY_COLORS[NUMERIC_LABEL]
+cot_color = PROMPT_CATEGORY_COLORS[COT_LABEL]
 
 from tueplots import bundles, fonts
 
@@ -341,8 +350,8 @@ def _boxplot_legend_handles():
     return [
         # Patch(facecolor="#D9998C", edgecolor="black", label="Distribution (box): pcnum"),
         # Patch(facecolor="#00338C", edgecolor="black", label="Distribution (box): pccot"),
-        Patch(facecolor=PROMPT_CATEGORY_COLORS["numeric"], edgecolor="black", label="Distribution (box): pcnum"),
-        Patch(facecolor=PROMPT_CATEGORY_COLORS["CoT"], edgecolor="black", label="Distribution (box): pccot"),
+    Patch(facecolor=PROMPT_CATEGORY_COLORS[NUMERIC_LABEL], edgecolor="black", label="Distribution (box): pcnum"),
+    Patch(facecolor=PROMPT_CATEGORY_COLORS[COT_LABEL], edgecolor="black", label="Distribution (box): pccot"),
     # prompt category colors used in human-llm alignment plots:
     #  numeric_color = (0.85, 0.60, 0.55)
     # cot_color     = (0.00, 0.20, 0.55)
@@ -357,7 +366,7 @@ def _boxplot_legend_handles():
 
 # ------------------------- Discovery & I/O -------------------------
 
-PROJECT_ROOT = Path(__file__).resolve().parents[0]
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 def find_normat_dirs(root: Path, experiments: Optional[List[str]] = None) -> List[Path]:
     """Discover all normat_analysis directories.
@@ -1152,15 +1161,64 @@ def fit_glm_three_param(master: pd.DataFrame) -> pd.DataFrame:
 
 
 
-def plot_box_R2_by_exp_pc(master: pd.DataFrame, out_path: Path) -> None:
-    """Grouped boxplot of LOOCV R^2 per experiment x prompt_category with legend.
-    Shows pcnum (numeric) and pccot (CoT) side-by-side for each experiment.
+def _canon_pc_cli(x: str) -> str:
+    t = str(x).strip().lower()
+    if t in {"pcnum", "numeric", "num", "single_numeric", "single_numeric_response", "direct"}:
+        return "pcnum"
+    if t in {"pccot", "cot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "cotstepwise", "cot-stepwise"}:
+        return "pccot"
+    return t
+
+
+def _human_baseline_from_master(master: pd.DataFrame) -> float | None:
+    """Compute human baseline from master for RW17 Direct (pcnum).
+
+    Looks for experiment == 'rw17_indep_causes', prompt_category == 'pcnum', agent == 'humans'.
+    Returns mean loocv_r2 or None if not found.
     """
     df = master.copy()
-    df = df[df["prompt_category"].isin(["pcnum", "pccot"])]
+    if df.empty or "agent" not in df.columns or "loocv_r2" not in df.columns:
+        return None
+    sel = (
+        (df["experiment"].astype(str) == "rw17_indep_causes")
+        & (df["prompt_category"].astype(str).str.lower() == "pcnum")
+        & (df["agent"].astype(str).str.lower() == "humans")
+    )
+    s = pd.to_numeric(df.loc[sel, "loocv_r2"], errors="coerce").dropna()
+    return float(s.mean()) if not s.empty else None
+
+
+def plot_box_R2_by_exp_pc(
+    master: pd.DataFrame,
+    out_path: Path,
+    *,
+    plot_experiments: list[str] | None = None,
+    plot_prompt_categories: list[str] | None = None,
+    show_human_baseline: bool = False,
+    show_token_length: bool = False,
+) -> None:
+    """Grouped boxplot of LOOCV R^2 per experiment x prompt_category with legend.
+    Shows pcnum (numeric) and pccot (CoT) side-by-side for each experiment.
+
+    Extras:
+    - Optional filtering by experiments and prompt categories.
+    - Optional human baseline (RW17 Direct) dashed line.
+    - Optional prompt token length annotations (off by default).
+    - Pads layout when only one experiment to keep width like two-experiment plots.
+    """
+    df = master.copy()
+    # Filter prompt categories to pcnum/pccot only
+    df = df[df["prompt_category"].astype(str).str.lower().isin(["pcnum", "pccot"])]
+    # Apply CLI-like filters if provided
+    if plot_prompt_categories:
+        pcs = {_canon_pc_cli(p) for p in plot_prompt_categories}
+        df = df[df["prompt_category"].astype(str).str.lower().isin(pcs)]
+    if plot_experiments:
+        allowed = set(str(e) for e in plot_experiments)
+        df = df[df["experiment"].astype(str).isin(allowed)]
     if df.empty:
         return
-    exps = sorted(df["experiment"].unique().tolist(), reverse=True)
+    exps = sorted(df["experiment"].astype(str).unique().tolist(), reverse=True)
     num_data, cot_data = [], []
     for e in exps:
         e_sub = df[df["experiment"] == e]
@@ -1171,11 +1229,11 @@ def plot_box_R2_by_exp_pc(master: pd.DataFrame, out_path: Path) -> None:
 
     # positions: grouped by experiment, adjust width between experiment box-plot pairs
     group_spacing = 1.20         # 1.20  --> 20% more horizontal distance between experiment groups
-
-    base = np.arange(len(exps)) * group_spacing    # centers at 0,1,2,...
+    layout_n = 2 if len(exps) == 1 else len(exps)
+    base = np.arange(layout_n) * group_spacing    # centers at 0,1,2,...
     pair_offset = 0.2                              # was 0.20
-    positions_num = base - pair_offset
-    positions_cot = base + pair_offset
+    positions_num = (base - pair_offset)[:len(num_data)]
+    positions_cot = (base + pair_offset)[:len(cot_data)]
     # positions_num = np.arange(len(exps)) - 0.2
     # positions_cot = np.arange(len(exps)) + 0.2
 
@@ -1183,85 +1241,101 @@ def plot_box_R2_by_exp_pc(master: pd.DataFrame, out_path: Path) -> None:
     #                  patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='green'))
     # bp2 = ax.boxplot(cot_data, positions=positions_cot, widths=0.35, 
     #                  patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='green'))
-    bp1 = ax.boxplot(num_data, positions=positions_num, widths=0.26, 
-                     patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='yellow'))
-    bp2 = ax.boxplot(cot_data, positions=positions_cot, widths=0.26, 
-                     patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='yellow'))
+    # Build boxplots only for present prompt-categories
+    has_pcnum = any((arr.size > 0) for arr in num_data)
+    has_pccot = any((arr.size > 0) for arr in cot_data)
+    bp1 = None
+    bp2 = None
+    if has_pcnum:
+        bp1 = ax.boxplot(num_data, positions=positions_num, widths=0.26,
+                         patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='yellow'))
+    if has_pccot:
+        bp2 = ax.boxplot(cot_data, positions=positions_cot, widths=0.26,
+                         patch_artist=True, showmeans=True, meanprops=dict(marker='^', markerfacecolor='yellow'))
     
-    # --- token annotations (floored) ---
+    # --- token annotations (floored) --- (optional)
     ymin, ymax = ax.get_ylim()
-    ytext = ymax - 0.03*(ymax - ymin)   # put near the top, inside the axes
-    ytext = ymin + 0.03*(ymax - ymin)   # put near the bottom, inside the axes
-
-
-    # Alternative: left/right of the tick at the bottom
     ytext = ymin - 0.05*(ymax - ymin)               # below plot area
-
-    # # Alternative: left/right of the tick at the bottom
-    # ytext = ymin - 0.05*(ymax - ymin)               # below plot area
-    # ax.set_ylim(ymin, ymax)                          # keep limits so text shows
-    # ax.text(base[i] - pair_offset, ytext, f"{int(tok_num)}", ha="center", va="top", transform=ax.transData)
-    # ax.text(base[i] + pair_offset, ytext, f"{int(tok_cot)}", ha="center", va="top", transform=ax.transData)
 
         
 
     # umeric_color = (0.85, 0.60, 0.55)  # #D9998C
     # cot_color     = (0.00, 0.20, 0.55)  # #00338C
-    for i, exp in enumerate(exps):
-        # numeric (pcnum) on the left box of the pair
-        tok_num = avg_tokens_for(exp, "pcnum")
-        if pd.notna(tok_num):
-            ax.text(positions_num[i]-0.05, ytext, f"{int(tok_num)}",
-                    ha="center", va="bottom", fontsize=9, color=PROMPT_CATEGORY_COLORS["numeric"],
-                    bbox=dict(boxstyle="round,pad=0.2", facecolor="white", alpha=.5, lw=0))
+    if show_token_length:
+        for i, exp in enumerate(exps):
+            # numeric (pcnum) on the left box of the pair
+            if has_pcnum:
+                tok_num = avg_tokens_for(exp, "pcnum")
+                if pd.notna(tok_num) and i < len(positions_num):
+                    ax.text(positions_num[i]-0.05, ytext, f"{int(tok_num)}",
+                            ha="center", va="bottom", fontsize=9, color=PROMPT_CATEGORY_COLORS[NUMERIC_LABEL],
+                            bbox=dict(boxstyle="round,pad=0.2", facecolor="white", alpha=.5, lw=0))
 
-        # CoT (pccot) on the right box of the pair
-        tok_cot = avg_tokens_for(exp, "pccot")
-        if pd.notna(tok_cot):
-            ax.text(positions_cot[i]+0.05, ytext, f"{int(tok_cot)}",
-                    ha="center", va="bottom", fontsize=9, color=PROMPT_CATEGORY_COLORS["CoT"],
-                    bbox=dict(boxstyle="round,pad=0.2", facecolor="white", alpha=.5, lw=0))
+            # CoT (pccot) on the right box of the pair
+            if has_pccot:
+                tok_cot = avg_tokens_for(exp, "pccot")
+                if pd.notna(tok_cot) and i < len(positions_cot):
+                    ax.text(positions_cot[i]+0.05, ytext, f"{int(tok_cot)}",
+                            ha="center", va="bottom", fontsize=9, color=PROMPT_CATEGORY_COLORS["CoT"],
+                            bbox=dict(boxstyle="round,pad=0.2", facecolor="white", alpha=.5, lw=0))
 
   
 
     # Colors
-    for patch in bp1['boxes']:
-        patch.set_facecolor(numeric_color)
-    for patch in bp2['boxes']:
-        patch.set_facecolor(cot_color)
+    if bp1 is not None:
+        for patch in bp1['boxes']:
+            patch.set_facecolor(numeric_color)
+    if bp2 is not None:
+        for patch in bp2['boxes']:
+            patch.set_facecolor(cot_color)
 
     # Medians
-    for median in bp1['medians']:
-        median.set_color('black')
-    for median in bp2['medians']:
-        median.set_color('black')
+    if bp1 is not None:
+        for median in bp1['medians']:
+            median.set_color('black')
+    if bp2 is not None:
+        for median in bp2['medians']:
+            median.set_color('black')
 
     # Axis labels
     ax.set_xticks(base)
-    ax.set_xticklabels([str(exp_name_map.get(e, e) or "") for e in exps], rotation=25) # 45 works well for 6
+    # Pad a blank tick when one experiment to preserve width
+    labels = exps + [""] if len(exps) == 1 else exps
+    ax.set_xticklabels([str(exp_name_map.get(e, e) or "") for e in labels], rotation=25)
     ax.set_xlabel('Experiment', labelpad=6)  # Move x-label further down, 24 works well for 6
 
     # Move xtick labels further down by adjusting bottom margin
     ax.tick_params(axis='x', pad=14)  # Increase padding below ticks
 
-    ax.set_ylabel('LOOCV $R^2$')
+    ax.set_ylabel('Reasoning consistency')
     # ax.set_title('Normativity by Content x Prompt-category')
-    ax.set_title('Reasoning Consistency by Experiment')
+    ax.set_title('')
 
 
-    # Legend handles
-    legend_patches = [
-        Patch(facecolor=numeric_color, label='Numeric'),
-        Patch(facecolor=cot_color, label='CoT')
-    ]
-    import matplotlib.lines as mlines
-    mean_marker = mlines.Line2D([], [], color='yellow', marker='^', linestyle='None', label='Mean')
-    triangle_frame = mlines.Line2D([], [], color='green', marker='^', linestyle='None', markeredgecolor='green', markerfacecolor='yellow', markersize=10, label='Mean (green frame)')
-    median_line = mlines.Line2D([], [], color='black', linestyle='-', label='Median')
+    # Optional human baseline
+    hb_line = None
+    if show_human_baseline:
+        hb = _human_baseline_from_master(master)
+        if hb is not None and np.isfinite(hb):
+            hb_line = ax.axhline(y=hb, color=(1.0, 0.4, 0.7), linestyle='--', linewidth=1.5)
 
-    # Combine into one legend
-    ax.legend(handles=legend_patches + [mean_marker, median_line],
-              loc='best', frameon=True, ncol=2, title="Prompt Category")
+    # Legend: single row above, no title
+    legend_patches = []
+    if has_pcnum:
+        legend_patches.append(Patch(facecolor=numeric_color, edgecolor='black', label=NUMERIC_LABEL))
+    if has_pccot:
+        legend_patches.append(Patch(facecolor=cot_color, edgecolor='black', label=COT_LABEL))
+    mean_marker = Line2D([], [], color='yellow', marker='^', linestyle='None', markeredgecolor='black', label='Mean')
+    median_line = Line2D([], [], color='black', linestyle='-', label='Median')
+    handles = [*legend_patches, mean_marker, median_line]
+    if hb_line is not None:
+        handles.append(Line2D([0, 1], [0, 0], color=(1.0, 0.4, 0.7), linestyle='--', lw=1.5, label=f"Humans (RW17 {NUMERIC_LABEL})"))
+    fig.tight_layout(rect=(0, 0, 1, 0.86))
+    # Force a two-row legend layout where possible
+    import math as _math
+    n_items = len(handles)
+    ncol = max(1, _math.ceil(n_items / 2))  # roughly two rows
+    ax.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, 1.14), frameon=False, ncol=ncol)
 
     ax.grid(axis='y', linestyle=':', alpha=0.4)
     # --- CSV: per-group summary and outliers ---
@@ -2084,7 +2158,10 @@ def plot_combined_slopes_pcnum_to_pccot(W: pd.DataFrame, out_path: Path) -> None
     n_agents = int(W["agent"].nunique())
     # Reduce whitespace above the title by pushing the suptitle closer to the top.
     # Knob: suptitle y -> raise toward 1.00 to reduce white space above the title.
-    fig.suptitle(f"Experiment {exp_pretty}: Numeric → CoT; N={n_agents} matched agents", y=0.985)
+    fig.suptitle(
+        f"Experiment {exp_pretty}: {NUMERIC_LABEL} → {COT_LABEL}; N={n_agents} matched agents",
+        y=0.985,
+    )
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     # Layout knobs for spacing and reserved margins:
@@ -2437,7 +2514,7 @@ def plot_box_params_by_experiment_and_pc(master: pd.DataFrame, out_dest: Path) -
     handles = [Patch(facecolor=numeric_color), Patch(facecolor=cot_color),
                Line2D([], [], color='yellow', marker='^', linestyle='None'),
                Line2D([], [], color='black', linestyle='-')]
-    labels = ['Numeric', 'CoT', 'Mean', 'Median']
+    labels = [NUMERIC_LABEL, COT_LABEL, 'Mean', 'Median']
     fig.legend(handles, labels, loc='upper center', ncol=4, frameon=True)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     # Write CSVs next to the figure
@@ -2537,7 +2614,7 @@ def plot_param_delta_violin_exp_pair(
         pc_val = str(W.get("prompt_category", pd.Series([None])).iloc[0] or "")
     except Exception:
         pc_val = ""
-    _pc_pretty = {"pcnum": "Numeric", "pccot": "CoT", "pcconf": "Numeric-Conf"}
+    _pc_pretty = {"pcnum": NUMERIC_LABEL, "pccot": COT_LABEL, "pcconf": f"{NUMERIC_LABEL}-Conf"}
     pc_pretty = _pc_pretty.get(pc_val.lower(), pc_val)
 
     fig.suptitle(f"{labelB} vs {labelA}: N={n_agents} common agents in {pc_pretty}")
@@ -2657,7 +2734,7 @@ def plot_param_delta_violin_pcnum_to_pccot(W: pd.DataFrame, out_path: Path) -> N
         ax.set_xticks([0])
         ax.set_xticklabels([_pretty_param_label(p)])
         if c == 0:
-            ax.set_ylabel("Delta (CoT - Numeric)")
+            ax.set_ylabel(f"Delta ({COT_LABEL} - {NUMERIC_LABEL})")
 
     # Hide unused subplots
     for j in range((i + 1) if i >= 0 else 0, nrows * ncols):
@@ -2672,7 +2749,7 @@ def plot_param_delta_violin_pcnum_to_pccot(W: pd.DataFrame, out_path: Path) -> N
     exp_pretty = str(exp_name_map.get(exp_raw, exp_raw) or exp_raw)
     n_agents = int(W["agent"].nunique())
 
-    fig.suptitle(f"{exp_pretty}: N={n_agents} common agents in CoT and Numeric")
+    fig.suptitle(f"{exp_pretty}: N={n_agents} common agents in {COT_LABEL} and {NUMERIC_LABEL}")
 
     # Add a clear figure-level legend for markers
     legend_handles = [
@@ -2762,12 +2839,12 @@ def plot_slope_params_pcnum_to_pccot(W: pd.DataFrame, out_dir: Path,
         medB = float(np.nanmedian(X["B"].to_numpy()))
         ax.plot([xA, xB], [medA, medB], color="red", lw=3.0, alpha=0.9, label="Median change")
 
-        ax.set_xticks([xA, xB], ["Numeric", "CoT"])
+        ax.set_xticks([xA, xB], [NUMERIC_LABEL, COT_LABEL])
         ax.set_ylabel(_pretty_param_label(param))
         # parameters are probabilities per user note
         ax.set_ylim(0.0, 1.0)
         n = X["agent"].nunique()
-        ax.set_title(f"{_pretty_param_label(param)}: pcnum → pccot; N={n} agents")
+        ax.set_title(f"{_pretty_param_label(param)}: {NUMERIC_LABEL} → {COT_LABEL}; N={n} agents")
 
         handles = [Line2D([0], [0], color="red", lw=3.0, label="Median change")]
         for a in special:
@@ -2819,7 +2896,7 @@ def tex_per_condition_medians(master: pd.DataFrame, out_path: Path) -> None:
     #     "rw17_overloaded_d": "RW17-Over-D",
     #     "rw17_overloaded_e": "RW17-Over-E",
     # }
-    pc_print_map = {"pccot": "CoT", "pcnum": "Numeric", "pcconf": "Numeric-Conf"}
+    pc_print_map = {"pccot": COT_LABEL, "pcnum": NUMERIC_LABEL, "pcconf": f"{NUMERIC_LABEL}-Conf"}
 
     # --- rows ---
     rows = []
@@ -2879,7 +2956,7 @@ def tex_per_condition_medians(master: pd.DataFrame, out_path: Path) -> None:
     # --- print labels & order ---
     T["exp_print"] = T["experiment"].map(exp_name_map).fillna(T["experiment"])
     T["prompt_print"] = T["prompt_category"].map(pc_print_map).fillna(T["prompt_category"])
-    T["prompt_order"] = T["prompt_print"].map({"Numeric": 0, "CoT": 1}).fillna(9)
+    T["prompt_order"] = T["prompt_print"].map({NUMERIC_LABEL: 0, COT_LABEL: 1}).fillna(9)
     T = T.sort_values(["exp_print", "prompt_order"])
 
     # --- helpers for styling ---
@@ -2901,7 +2978,7 @@ def tex_per_condition_medians(master: pd.DataFrame, out_path: Path) -> None:
         "\\caption{Per-condition medians, average tokens, and 3-par share "
         "denoting the number of agents whose selected model uses 3 parameters, "
         "over the total number of agents in that condition. "
-        "Only RW17 Numeric includes human data (counted as one agent)."
+    f"Only RW17 {NUMERIC_LABEL} includes human data (counted as one agent)."
         "For CBN-parameters and $R^2$, we report most normative median values per experiment \\underline{underlined} and overall \\textbf{bolded}."
         "}\n"
     )
@@ -3408,6 +3485,12 @@ def parse_args() -> argparse.Namespace:
                     help="Output root for aggregated artifacts. Default: <root>/cbn_agg")
     ap.add_argument("--export-tex", action="store_true", help="Write LaTeX tables for key summaries.")
     ap.add_argument("--plots", action="store_true", help="Write PDF plots for summaries and paired comparisons.")
+    # R^2 overview boxplot controls (beautiful): filters and toggles
+    ap.add_argument("--r2-plot-experiments", nargs="*", default=None, help="Experiments to include in the R^2 overview plot (box_R2_by_experiment_and_pc_beautiful). If omitted, include all discovered.")
+    ap.add_argument("--r2-plot-prompt-categories", nargs="*", default=None, help="Prompt categories to include in the R^2 overview plot (e.g., numeric cot). If omitted, include both.")
+    ap.add_argument("--r2-show-human-baseline", action="store_true", help="Show dashed human baseline (RW17 Direct) in the R^2 overview plot.")
+    ap.add_argument("--r2-show-token-length", action="store_true", help="Annotate prompt token lengths for each experiment×prompt-category in the R^2 overview plot.")
+    ap.add_argument("--box-plot-only", action="store_true", help="Only generate the R^2 overview box plot (box_R2_by_experiment_and_pc_beautiful*). Skip other outputs.")
     return ap.parse_args()
 
 
@@ -3439,6 +3522,34 @@ def main() -> int:
         print("[WARN] No data discovered. Check --root.")
         return 0
 
+    # Short-circuit: only render the R^2 overview box plot
+    if args.box_plot_only:
+        exp_suffix = None
+        if args.r2_plot_experiments:
+            exp_suffix = "exp-" + "+".join([str(e) for e in args.r2_plot_experiments])
+        pc_suffix = None
+        if args.r2_plot_prompt_categories:
+            pcs = [str(p) for p in args.r2_plot_prompt_categories]
+            try:
+                from causalign.plotting.palette import canon_prompt_category as _canon
+                pc_suffix = "pc-" + "+".join([_canon(p) for p in pcs])
+            except Exception:
+                pc_suffix = "pc-" + "+".join(pcs)
+        suffix_parts = [s for s in [exp_suffix, pc_suffix] if s]
+        suffix = ("_" + "__".join(suffix_parts)) if suffix_parts else ""
+        out_pdf = out_root / f"box_R2_by_experiment_and_pc_beautiful{suffix}.pdf"
+        plot_box_R2_by_exp_pc(
+            master,
+            out_pdf,
+            plot_experiments=args.r2_plot_experiments,
+            plot_prompt_categories=args.r2_plot_prompt_categories,
+            show_human_baseline=args.r2_show_human_baseline,
+            show_token_length=args.r2_show_token_length,
+        )
+        print(f"Saved plot: {out_pdf}")
+        return 0
+
+    # Persist master when running full pipeline
     master_path = out_root / "master_table.csv"
     master.to_csv(master_path, index=False)
     print(f"Saved master table: {master_path}")
@@ -3666,8 +3777,31 @@ def main() -> int:
 
     # 6) High-level plots (R^2 distributions)
     if args.plots:
-        plot_box_R2_by_exp_pc(master, out_root / "box_R2_by_experiment_and_pc_beautiful.pdf")
-        print(f"Saved plot: {out_root / 'box_R2_by_experiment_and_pc_beautiful.pdf'}")
+        # Build filename suffix to reflect selected experiments and prompt-categories
+        exp_suffix = None
+        if args.r2_plot_experiments:
+            exp_suffix = "exp-" + "+".join([str(e) for e in args.r2_plot_experiments])
+        pc_suffix = None
+        if args.r2_plot_prompt_categories:
+            pcs = [str(p) for p in args.r2_plot_prompt_categories]
+            # Canonicalize to labels like Direct/CoT for readability
+            try:
+                from causalign.plotting.palette import canon_prompt_category as _canon
+                pc_suffix = "pc-" + "+".join([_canon(p) for p in pcs])
+            except Exception:
+                pc_suffix = "pc-" + "+".join(pcs)
+        suffix_parts = [s for s in [exp_suffix, pc_suffix] if s]
+        suffix = ("_" + "__".join(suffix_parts)) if suffix_parts else ""
+        out_pdf = out_root / f"box_R2_by_experiment_and_pc_beautiful{suffix}.pdf"
+        plot_box_R2_by_exp_pc(
+            master,
+            out_pdf,
+            plot_experiments=args.r2_plot_experiments,
+            plot_prompt_categories=args.r2_plot_prompt_categories,
+            show_human_baseline=args.r2_show_human_baseline,
+            show_token_length=args.r2_show_token_length,
+        )
+        print(f"Saved plot: {out_pdf}")
 
         # plot_box_R2_by_experiment_and_pc(master, out_root / "box_R2_by_experiment_and_pc_new.pdf")
         # OLD: plot_box_R2_by_experiment_and_pc(master, out_root / "box_R2_by_experiment_and_pc_new.pdf")

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Normative metric vs. EA/MV/R² scatter — per agent
-=================================================
+Normative metric vs. EA/MV/RMSE/R² scatter — per agent
+=====================================================
 
-For each agent, generate one figure with three subplots (EA, MV, R² on x-axis; normative_metric on y-axis),
-including all available experiments and prompt categories. Colors encode prompt category, and markers encode
-experiment type:
+For each agent, generate one figure with four subplots (EA, MV, RMSE, R² on x-axis; normative_metric on y-axis),
+arranged as a 2×2 grid: EA and MV on the top row; RMSE and R² on the bottom row. Colors encode prompt category,
+and markers encode experiment type:
 
 - Abstract: small diamond
 - Abstract-Overloaded: large diamond
@@ -34,23 +34,31 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# Palette and category canon
+# Palette and category canon — mirror plot_fit_metric_distributions.py behavior
 try:
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS, canon_prompt_category
+    from causalign.plotting.palette import (
+        COT_LABEL,
+        NUMERIC_LABEL,
+        PROMPT_CATEGORY_COLORS,
+        canon_prompt_category,
+    )
 except Exception:
+    # Fallback if src/ not on path when running the script directly — use CAblue/CAlightblue
+    CAblue = (10/255, 80/255, 110/255)
+    CAlightblue = (58/255, 160/255, 171/255)
     PROMPT_CATEGORY_COLORS = {
-        "numeric": (0.85, 0.60, 0.55),
-        "CoT": (0.00, 0.20, 0.55),
+        "Direct": CAlightblue,
+        "CoT": CAblue,
     }
-
     def canon_prompt_category(label: str) -> str:  # type: ignore
-        t = str(label).strip()
-        tl = t.lower()
-        if tl in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}:
-            return "numeric"
-        if tl in {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "cot", "CoT".lower()}:
+        t = str(label).strip().lower()
+        if t in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"} or t == "numeric":
+            return "Direct"
+        if t in {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "CoT".lower()} or t == "cot":
             return "CoT"
-        return t
+        return str(label)
+    NUMERIC_LABEL = "Direct"
+    COT_LABEL = "CoT"
 
 
 EXP_FAMILIES: Dict[str, str] = {
@@ -86,7 +94,8 @@ def _ensure_tueplots(usetex: bool = False) -> None:
     except Exception:
         mpl.rcParams.update({"figure.dpi": 120, "savefig.dpi": 300, "font.size": 12})
         return
-    cfg = bundles.neurips2023(nrows=1, ncols=3, rel_width=0.95, usetex=usetex, family="serif")
+    # Configure for a 2x2 layout
+    cfg = bundles.neurips2023(nrows=2, ncols=2, rel_width=0.95, usetex=usetex, family="serif")
     cfg["legend.title_fontsize"] = 12
     cfg["font.size"] = 13
     cfg["axes.labelsize"] = 13
@@ -110,11 +119,16 @@ def _parse_args() -> argparse.Namespace:
     )
     p.add_argument("--experiments", nargs="+", help="Experiments to include; omit to include all")
     p.add_argument("--tag", help="Optional tag filter (CSV column 'tag')")
-    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: numeric & CoT)")
+    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: Direct & CoT)")
     p.add_argument("--usetex", action="store_true", help="Use LaTeX rendering (requires LaTeX installed)")
     p.add_argument("--fig-width", type=float, default=12.0)
     p.add_argument("--fig-height", type=float, default=4.0)
     p.add_argument("--output-dir", default="results/plots/normative_scatter")
+    p.add_argument(
+        "--error-metrics-csv",
+        default="results/parameter_analysis/cbn_fit_metric_analysis/long_by_experiment_prompt_agent.csv",
+        help="CSV containing error metrics (rmse, loocv_rmse, loocv_r2) by experiment/prompt/agent",
+    )
     p.add_argument("--show-ci", action="store_true", help="Draw horizontal CI whiskers on x where available")
     p.add_argument(
         "--share-axes",
@@ -155,6 +169,10 @@ def _parse_args() -> argparse.Namespace:
         help="Hide the big suptitle, but keep the small per-figure subtitle (unless --no-subtitle is also set).",
     )
     return p.parse_args()
+# Global lookup for RMSE AND MAE loaded from error-metrics CSV 
+# _RMSE_LOOKUP: Dict[Tuple[str, str, str], float] = {}
+_MAE_LOOKUP: Dict[Tuple[str, str, str], float] = {}
+
 
 
 def _load_data(path: Path) -> pd.DataFrame:
@@ -174,18 +192,81 @@ def _metric_cols(metric: str) -> Tuple[str, Optional[str], Optional[str], str]:
         return ("EA_raw", "EA_raw_lo", "EA_raw_hi", r"Explaining-away (EA)-level")
     if m == "mv":
         return ("MV_raw", "MV_raw_lo", "MV_raw_hi", r"Markov violation (MV)-level")
-    return ("loocv_r2", None, None, r"LOOCV $R^2$")
+    # if m == "rmse":
+    #     # We'll resolve exact RMSE column name dynamically in _get_x_value/_series_for_metric
+    #     return ("RMSE", None, None, r"RMSE")
+    if m == "mae":
+        # We'll resolve exact MAE column name dynamically in _get_x_value/_series_for_metric
+        return ("MAE", None, None, r"MAE")
+    # LOOCV R²
+    return ("loocv_r2", None, None, "Reasoning Consistency")
 
 
 def _get_x_value(row: pd.Series, x_col: str) -> float:
     if x_col == "EA_raw":
-        if "EA_raw_mean" in row and pd.notna(row["EA_raw_mean"]):
-            return float(row["EA_raw_mean"])
+        v_ea = row.get("EA_raw_mean", np.nan)
+        if pd.notna(v_ea):
+            try:
+                return float(v_ea)  # type: ignore[call-overload]
+            except Exception:
+                pass
     if x_col == "MV_raw":
-        if "MV_raw_mean" in row and pd.notna(row["MV_raw_mean"]):
-            return float(row["MV_raw_mean"])
+        v_mv = row.get("MV_raw_mean", np.nan)
+        if pd.notna(v_mv):
+            try:
+                return float(v_mv)  # type: ignore[call-overload]
+            except Exception:
+                pass
+    # Handle RMSE via external lookup when available
+    # if x_col.upper() == "RMSE":
+    #     exp = str(row.get("experiment", ""))
+    #     pc = canon_prompt_category(str(row.get("prompt_category", "")))
+    #     ag = str(row.get("agent", ""))
+    #     key = (exp, pc, ag)
+    #     v = _RMSE_LOOKUP.get(key, np.nan)
+    #     if pd.notna(v) and np.isfinite(v):
+    #         return float(v)
+    #     # Fallback: handle possible RMSE column variants (rare in masters CSV)
+    #     candidates = ["rmse_mean", "RMSE_mean", "fit_rmse_mean", "rmse", "RMSE", "fit_rmse"]
+    #     for c in candidates:
+    #         vv = row.get(c, np.nan)
+    #         if pd.notna(vv):
+    #             try:
+    #                 return float(vv)  # type: ignore[call-overload]
+    #             except Exception:
+    #                 continue
+    # v = row.get(x_col, np.nan)
+    # try:
+    #     return float(v) if pd.notna(v) else float("nan")
+    # except Exception:
+    #     return float("nan")
+    
+    # Handle MAE via external lookup when available
+    if x_col.upper() == "MAE":
+        exp = str(row.get("experiment", ""))
+        pc = canon_prompt_category(str(row.get("prompt_category", "")))
+        ag = str(row.get("agent", ""))
+        key = (exp, pc, ag)
+        v = _MAE_LOOKUP.get(key, np.nan)
+        if pd.notna(v) and np.isfinite(v):
+            return float(v)
+        # Fallback: handle possible MAE column variants (rare in masters CSV)
+        candidates = ["mae_mean", "MAE_mean", "fit_mae_mean", "mae", "MAE", "fit_mae"]
+        for c in candidates:
+            vv = row.get(c, np.nan)
+            if pd.notna(vv):
+                try:
+                    return float(vv)  # type: ignore[call-overload]
+                except Exception:
+                    continue
+
     v = row.get(x_col, np.nan)
-    return float(v) if pd.notna(v) else float("nan")
+    try:
+        return float(v) if pd.notna(v) else float("nan")
+    except Exception:
+        return float("nan")
+
+    
 
 
 def _series_for_metric(df: pd.DataFrame, metric: str) -> pd.Series:
@@ -199,6 +280,22 @@ def _series_for_metric(df: pd.DataFrame, metric: str) -> pd.Series:
         s = pd.to_numeric(df["MV_raw_mean"], errors="coerce")
         s = s.fillna(pd.to_numeric(df["MV_raw"], errors="coerce"))
         return s
+    # # RMSE from external lookup
+    # if x_col.upper() == "RMSE":
+    #     def _lookup(row: pd.Series) -> float:
+    #         key = (str(row.get("experiment", "")), canon_prompt_category(str(row.get("prompt_category", ""))), str(row.get("agent", "")))
+    #         v = _RMSE_LOOKUP.get(key, np.nan)
+    #         return float(v) if np.isfinite(v) else float("nan")
+    #     return df.apply(_lookup, axis=1)
+    # return pd.to_numeric(df[x_col], errors="coerce")
+
+    # MAE from external lookup
+    if x_col.upper() == "MAE":
+        def _lookup(row: pd.Series) -> float:
+            key = (str(row.get("experiment", "")), canon_prompt_category(str(row.get("prompt_category", ""))), str(row.get("agent", "")))
+            v = _MAE_LOOKUP.get(key, np.nan)
+            return float(v) if np.isfinite(v) else float("nan")
+        return df.apply(_lookup, axis=1)
     return pd.to_numeric(df[x_col], errors="coerce")
 
 
@@ -213,7 +310,7 @@ def _get_rw17_human_baselines(df_all: pd.DataFrame) -> dict:
     mask = (
         d["agent"].astype(str).str.lower().str.contains("human")
         & d["experiment"].astype(str).eq("rw17_indep_causes")
-        & d["prompt_category"].astype(str).eq("numeric")
+        & d["prompt_category"].astype(str).eq(NUMERIC_LABEL)
     )
     sub = d[mask].copy()
     if sub.empty:
@@ -257,7 +354,7 @@ def _get_rw17_human_baseline_ci(df_all: pd.DataFrame) -> dict:
     mask = (
         d["agent"].astype(str).str.lower().str.contains("human")
         & d["experiment"].astype(str).eq("rw17_indep_causes")
-        & d["prompt_category"].astype(str).eq("numeric")
+        & d["prompt_category"].astype(str).eq(NUMERIC_LABEL)
     )
     sub = d[mask].copy()
     if sub.empty:
@@ -346,7 +443,7 @@ def main() -> int:
         keep_cats = {canon_prompt_category(c) for c in args.prompt_categories}
         df = df[df["prompt_category"].astype(str).isin(keep_cats)].copy()
     else:
-        df = df[df["prompt_category"].astype(str).isin(["numeric", "CoT"])].copy()
+        df = df[df["prompt_category"].astype(str).isin([NUMERIC_LABEL, COT_LABEL])].copy()
 
     # Require normative_metric
     if "normative_metric" not in df.columns:
@@ -360,17 +457,90 @@ def main() -> int:
             df = pooled
 
     out_root = Path(args.output_dir) / (args.tag or "all")
+
+    # Load error metrics CSV for RMSE lookup
+    err_csv_path = Path(args.error_metrics_csv)
+    human_rmse: Optional[float] = None
+    human_mae: Optional[float] = None
+    if err_csv_path.exists():
+        df_err = pd.read_csv(err_csv_path)
+        # Canonicalize prompt_category
+        if "prompt_category" in df_err.columns:
+            df_err["prompt_category"] = df_err["prompt_category"].astype(str).map(canon_prompt_category)
+        # Apply same filters
+        if args.experiments:
+            keep = set(map(str, args.experiments))
+            df_err = df_err[df_err["experiment"].astype(str).isin(keep)].copy()
+        if args.prompt_categories:
+            keep_cats = {canon_prompt_category(c) for c in args.prompt_categories}
+            df_err = df_err[df_err["prompt_category"].astype(str).isin(keep_cats)].copy()
+        # Tag filter or prefer the lexicographically max tag per key
+        if args.tag and "tag" in df_err.columns:
+            df_err = df_err[df_err["tag"].astype(str) == str(args.tag)].copy()
+        elif "tag" in df_err.columns:
+            df_err = (
+                df_err.sort_values("tag")
+                .groupby(["experiment", "prompt_category", "agent", "metric"], as_index=False)
+                .tail(1)
+            )
+        # Build RMSE lookup
+        # df_rmse = df_err[df_err["metric"].astype(str).str.lower() == "rmse"].copy()
+        # _RMSE_LOOKUP.clear()
+        # for _, r in df_rmse.iterrows():
+        #     key = (str(r["experiment"]), str(r["prompt_category"]), str(r["agent"]))
+        #     val = pd.to_numeric(pd.Series([r.get("value", np.nan)]), errors="coerce").iloc[0]
+        #     if np.isfinite(val):
+        #         _RMSE_LOOKUP[key] = float(val)
+        # Build MAE lookup
+        df_mae = df_err[df_err["metric"].astype(str).str.lower() == "mae"].copy()
+        _MAE_LOOKUP.clear()
+        for _, r in df_mae.iterrows():
+            key = (str(r["experiment"]), str(r["prompt_category"]), str(r["agent"]))
+            val = pd.to_numeric(pd.Series([r.get("value", np.nan)]), errors="coerce").iloc[0]
+            if np.isfinite(val):
+                _MAE_LOOKUP[key] = float(val)
+        # print(f"[debug] Loaded {len(_RMSE_LOOKUP)} RMSE entries
+        # Extract human RMSE baseline (RW17 numeric) if available
+        try:
+            df_h = df_rmse[
+                (df_rmse["agent"].astype(str).str.lower().str.contains("human"))
+                & (df_rmse["experiment"].astype(str) == "rw17_indep_causes")
+                & (df_rmse["prompt_category"].astype(str).isin([NUMERIC_LABEL, "numeric"]))
+            ]
+            if not df_h.empty:
+                # If multiple, take last (already tag-sorted above when no tag provided)
+                val = pd.to_numeric(pd.Series([df_h.iloc[-1].get("value", np.nan)]), errors="coerce").iloc[0]
+                if np.isfinite(val):
+                    human_rmse = float(val)
+                    human_mae = float(val)
+        except Exception:
+            pass
+    # Create filename suffix based on CLI filters when provided; otherwise from filtered df
+    exp_list = sorted(map(str, args.experiments)) if args.experiments else sorted(df["experiment"].astype(str).unique().tolist())
+    pc_list = []
+    if args.prompt_categories:
+        pc_list = sorted({canon_prompt_category(c) for c in args.prompt_categories})
+    elif "prompt_category" in df.columns:
+        pc_list = sorted(df["prompt_category"].astype(str).unique().tolist())
+    suffix = ""
+    if exp_list:
+        suffix += "_exp-" + "+".join(exp_list)
+    if pc_list:
+        suffix += "__pc-" + "+".join(pc_list)
+    print(f"[info] Plot filters -> experiments: {exp_list} | prompt-categories: {pc_list} | suffix: '{suffix}'")
     agents = sorted(df["agent"].astype(str).unique().tolist())
 
     # Legends (shared handles)
     cat_handles, cat_labels, exp_handles, exp_labels = _build_legends()
+    _base_cat_len = len(cat_handles)
 
     # Optionally compute shared axis limits across all agents
     shared_y_by_metric: Dict[str, Tuple[float, float]] = {}
     shared_x: Dict[str, Tuple[float, float]] = {}
     if args.share_axes:
         # per-metric y-limits based on rows with available x-values
-        for mkey in ("ea", "mv", "r2"):
+        for mkey in ("ea", "mv", "mae", "r2"):
+        # for mkey in ("ea", "mv", "rmse", "r2"):
             s_all = _series_for_metric(df, mkey)
             mask = pd.to_numeric(s_all, errors="coerce").notna()
             yvals_m = pd.to_numeric(df.loc[mask, "normative_metric"], errors="coerce")
@@ -386,7 +556,8 @@ def main() -> int:
                     ymax += step
                 shared_y_by_metric[mkey] = (ymin, ymax)
         # per-metric x-limits as before
-        for mkey in ("ea", "mv", "r2"):
+        for mkey in ("ea", "mv", "mae", "r2"):
+        # for mkey in ("ea", "mv", "rmse", "r2"):
             s = _series_for_metric(df, mkey)
             s = s[np.isfinite(s)]
             if not s.empty:
@@ -394,15 +565,22 @@ def main() -> int:
                 xmax = float(np.ceil(s.max() * 10.0) / 10.0)
                 shared_x[mkey] = (xmin, xmax)
 
-    # Optional human baseline (RW17, numeric)
+    # Optional human baseline (RW17, Direct)
     loaded_all = _load_data(csv_path)
     human_baselines = _get_rw17_human_baselines(loaded_all) if args.show_human_baseline else {}
+    # Augment with RMSE from error-metrics CSV when available
+    # if args.show_human_baseline and human_rmse is not None:
+    #     human_baselines["rmse"] = human_rmse
+    # # human_baselines = _get_rw17_human_baselines(df) if args.show_human_baseline else {}   if args.show_human_baseline and human_rmse is not None:
+    #     human_baselines["rmse"] = human_rmse
+    if args.show_human_baseline and human_mae is not None:
+        human_baselines["mae"] = human_mae
     human_ci = _get_rw17_human_baseline_ci(loaded_all) if args.show_human_baseline else {}
     human_star_handle = None
     if args.show_human_baseline and human_baselines.get("y") is not None:
         human_star_handle = Line2D([0], [0], marker='*', color='hotpink', markerfacecolor='hotpink', markeredgecolor='black', markersize=10, linestyle='None')
         cat_handles = cat_handles + [human_star_handle]
-        cat_labels = cat_labels + ["human baseline (RW17, numeric)"]
+        cat_labels = cat_labels + [f"human baseline (RW17, {NUMERIC_LABEL})"]
     # Add CI proxy line to legend if requested
     if args.show_ci:
         ci_handle = Line2D([0, 1], [0, 0], color="0.3", lw=1.0, alpha=0.45)
@@ -421,9 +599,20 @@ def main() -> int:
         if sub.empty:
             continue
 
-        fig, axes = plt.subplots(1, 3, figsize=(args.fig_width, args.fig_height), sharey=True)
-        # Order: R² (left), EA (middle), MV (right)
-        metrics = [("r2", axes[0]), ("ea", axes[1]), ("mv", axes[2])]
+        # 2x2 layout: top row EA, MV; bottom row RMSE, R²
+        # Keep per-panel size same as original 1x3 layout by scaling width and height
+        per_w = args.fig_width / 3.0
+        per_h = args.fig_height
+        fig_w2 = per_w * 2.0
+        fig_h2 = per_h * 2.0
+        fig, axes = plt.subplots(2, 2, figsize=(fig_w2, fig_h2), sharey="col")
+        metrics = [
+            ("ea", axes[0, 0]),
+            ("mv", axes[0, 1]),
+            # ("rmse", axes[1, 0]),
+            ("mae", axes[1, 0]),
+            ("r2", axes[1, 1]),
+        ]
         axes_by_metric = {k: ax for k, ax in metrics}
 
         # Plot each metric
@@ -549,6 +738,12 @@ def main() -> int:
                     ax.set_xlim(*shared_x[metric_key])
             # x ticks at 0.1 increments (auto-range based on (possibly shared) limits)
             xmin, xmax = ax.get_xlim()
+            # MAE is bounded below by 0; clamp left edge to 0 unless plotting sentinel for missing x
+            if metric_key == "mae" and not args.plot_missing_x:
+
+                if xmin < 0:
+                    xmin = 0.0
+                    ax.set_xlim(left=0.0)
             # ensure sentinel is visible when used and axes not shared
             if args.plot_missing_x and used_sentinel and metric_key not in shared_x:
                 xmin = min(xmin, args.missing_x_sentinel - 0.02)
@@ -559,10 +754,12 @@ def main() -> int:
             if len(ticks) > 1:
                 ax.set_xticks(ticks)
 
-        axes[0].set_ylabel("Leak-Adjusted Determinacy $\\mathrm{LAD}$")
+        # Y-axis labeled on both rows (left column axes)
+        axes[0, 0].set_ylabel("Leak-Adjusted Determinacy $\\mathrm{LAD}$")
+        axes[1, 0].set_ylabel("Leak-Adjusted Determinacy $\\mathrm{LAD}$")
         # axes[0].set_ylabel("Normativity-level: $\\overline{m}-b$ higher is more normative")
 
-        title_prefix = "Leak-Adjusted Determinacy ($\\mathrm{LAD}=\\overline{m}-b$) vs $R^2$/EA/MV "
+        title_prefix = "Leak-Adjusted Determinacy ($\\mathrm{LAD}=\\overline{m}-b$) vs EA/MV/MAE/$R^2$ "
         title = title_prefix
         subtitle = f"LLM: {agent}"
         if not args.no_title:
@@ -572,17 +769,32 @@ def main() -> int:
             fig.text(0.5, 0.85, subtitle, ha='center', va='center', fontsize=12, color='black')
 
         # Compose legends: EA subplot for categories, R² subplot for experiments
-        leg1 = axes_by_metric["ea"].legend(cat_handles, cat_labels, title="Prompt category", loc="best", frameon=True, framealpha=0.8)
+        # Filter categories to those present for this agent
+        present_cats = set(sub["prompt_category"].astype(str).unique().tolist())
+        cat_handles_local = [h for h, lab in zip(cat_handles[:_base_cat_len], cat_labels[:_base_cat_len]) if lab in present_cats]
+        cat_labels_local = [lab for lab in cat_labels[:_base_cat_len] if lab in present_cats]
+        leg1 = axes_by_metric["ea"].legend(cat_handles_local, cat_labels_local, title="Prompt category", loc="best", frameon=True, framealpha=0.8)
         axes_by_metric["ea"].add_artist(leg1)
-        axes_by_metric["r2"].legend(exp_handles, exp_labels, title="Experiment", loc="best", frameon=True, framealpha=0.8)
+        # Filter experiment legend to only present families for this agent
+        present_fams = set(_infer_exp_family(str(e)) for e in sub["experiment"].astype(str).unique().tolist())
+        exp_items = [
+            ("Abstract", "abstract"),
+            ("Abstract-Overloaded", "abstract_overloaded"),
+            ("RW17", "rw17"),
+            ("RW17-Overloaded", "rw17_overloaded"),
+        ]
+        exp_keep_idx = [i for i, (_, fam) in enumerate(exp_items) if fam in present_fams]
+        exp_handles_local = [exp_handles[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_handles)
+        exp_labels_local = [exp_labels[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_labels)
+        axes_by_metric["r2"].legend(exp_handles_local, exp_labels_local, title="Experiment", loc="best", frameon=True, framealpha=0.8)
 
         fig.tight_layout(rect=(0.0, 0.02, 1.0, 0.94))
 
         agent_dir = out_root / agent
         agent_dir.mkdir(parents=True, exist_ok=True)
-        base = f"normative_scatter_{agent}"
-        fig.savefig(agent_dir / f"{base}.pdf", bbox_inches="tight")
-        fig.savefig(agent_dir / f"{base}.png", dpi=300, bbox_inches="tight")
+        base = f"normative_scatter_{agent}{suffix}"
+        fig.savefig(str(agent_dir / f"{base}.pdf"), bbox_inches="tight")
+        fig.savefig(str(agent_dir / f"{base}.png"), dpi=300, bbox_inches="tight")
         if args.show and not args.no_show:
             plt.show()
         plt.close(fig)

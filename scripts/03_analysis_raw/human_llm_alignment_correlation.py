@@ -23,18 +23,23 @@ import seaborn as sns
 try:
     # Shared palette for prompt categories
     from causalign.plotting.palette import (
+        COT_LABEL as _COT,
+        NUMERIC_LABEL as _NUM,
+        PROMPT_CATEGORY_COLORS as _PCOL,
+    )
+    from causalign.plotting.palette import (
         canon_prompt_category as _canon_pcat,  # type: ignore[assignment]
     )
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS as _PCOL
 except Exception:
-    _PCOL = {"numeric": (0.85, 0.60, 0.55), "CoT": (0.00, 0.20, 0.55)}
+    _PCOL = {"Direct": (0.85, 0.60, 0.55), "CoT": (0.00, 0.20, 0.55)}
     def _canon_pcat(s: str) -> str:
         t = str(s).strip().lower()
         if t in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}:
-            return "numeric"
+            return "Direct"
         if t in {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "CoT"}:
             return "CoT"
         return str(s)
+    _NUM, _COT = "Direct", "CoT"
 from tueplots import bundles, fonts
 
 # NeurIPS-like, LaTeX, serif
@@ -311,8 +316,8 @@ def plot_alignment(res: pd.DataFrame, out_dir: Path, domain_spec: str) -> None:
 
         fn_suffix = (domain_spec if domain_spec != "all" else "all").replace(",", "+").replace(" ", "")
         fig.savefig(out_dir / f"alignment_spearman_{pcat}_dom_{fn_suffix}.pdf", bbox_inches="tight")
-        if domain_spec == "all" and pcat == "numeric":
-            fig.savefig(out_dir / "alignment_spearman_numeric.pdf", bbox_inches="tight")
+        if domain_spec == "all" and pcat == _NUM:
+            fig.savefig(out_dir / f"alignment_spearman_{_NUM.lower()}.pdf", bbox_inches="tight")
         plt.close(fig)
 
 
@@ -320,13 +325,13 @@ def plot_overlay_pooled_categories(res: pd.DataFrame, out_dir: Path, domain_spec
     out_dir.mkdir(parents=True, exist_ok=True)
     pooled = res[res["domain"].astype(str) == "all"].copy()
     pooled["prompt_category"] = pooled["prompt_category"].astype(str).map(_canon_pcat)
-    pooled = pooled[pooled["prompt_category"].isin(["numeric", "CoT"])]
+    pooled = pooled[pooled["prompt_category"].isin([_NUM, _COT])]
     if pooled.empty:
         return
-    numeric = pooled[pooled["prompt_category"] == "numeric"].sort_values("rho", ascending=False)
+    numeric = pooled[pooled["prompt_category"] == _NUM].sort_values("rho", ascending=False)
     order = numeric["agent"].tolist()[::-1]
-    numeric_color = _PCOL.get("numeric", (0.85, 0.60, 0.55))
-    cot_color = _PCOL.get("CoT", (0.00, 0.20, 0.55))
+    numeric_color = _PCOL.get(_NUM, (0.85, 0.60, 0.55))
+    cot_color = _PCOL.get(_COT, (0.00, 0.20, 0.55))
     color_map = _PCOL
     n = len(order)
     base_w = mpl.rcParams["figure.figsize"][0]
@@ -335,8 +340,8 @@ def plot_overlay_pooled_categories(res: pd.DataFrame, out_dir: Path, domain_spec
     for i in range(1, n, 2):
         ax.axhline(i, color="0.88", lw=0.8, alpha=0.6, zorder=0)
     minmax_info: dict[str, tuple[float, float]] = {}
-    y_offsets = {"numeric": -0.08, "CoT": +0.08}
-    for pcat in ["numeric", "CoT"]:
+    y_offsets = {_NUM: -0.08, _COT: +0.08}
+    for pcat in [_NUM, _COT]:
         sub = pooled[pooled["prompt_category"] == pcat].set_index("agent").reindex(order).reset_index()
         color = color_map[pcat]
         y = np.arange(n) + y_offsets[pcat]
@@ -354,26 +359,26 @@ def plot_overlay_pooled_categories(res: pd.DataFrame, out_dir: Path, domain_spec
         ax.axvline(xmin, color=color, lw=1.0, ls=":", zorder=1)
         if xmax != xmin:
             ax.axvline(xmax, color=color, lw=1.0, ls=":", zorder=1)
-    if "numeric" in minmax_info:
-        _draw_minmax_lines(*minmax_info["numeric"], color=numeric_color)
-    if "CoT" in minmax_info:
-        _draw_minmax_lines(*minmax_info["CoT"], color=cot_color)
+    if _NUM in minmax_info:
+        _draw_minmax_lines(*minmax_info[_NUM], color=numeric_color)
+    if _COT in minmax_info:
+        _draw_minmax_lines(*minmax_info[_COT], color=cot_color)
     ax.set_yticks(np.arange(n))
     ax.set_yticklabels(order)
     ax.set_xlabel(r"Human-LLM alignment (Spearman $\rho$)")
     ax.set_ylabel("LLM agent")
     ax.set_xlim(-0.13, 1.00)
-    ax.set_title("Human--LLM Alignment by Prompt-Category")
+    # ax.set_title("Human--LLM Alignment by Prompt-Category")
     handles = [
-        mlines.Line2D([], [], color=numeric_color, lw=2, label="Numeric (all)"),
-        mlines.Line2D([], [], color=cot_color, lw=2, label="CoT (all)"),
+    mlines.Line2D([], [], color=numeric_color, lw=2, label=f"{_NUM} (all)"),
+    mlines.Line2D([], [], color=cot_color, lw=2, label=f"{_COT} (all)"),
     ]
-    if "numeric" in minmax_info:
-        nmin, nmax = minmax_info["numeric"]
-        handles.append(mlines.Line2D([], [], color=numeric_color, lw=1.5, ls=":", label=f"Numeric min/max: {nmin:.2f} / {nmax:.2f}"))
-    if "CoT" in minmax_info:
-        cmin, cmax = minmax_info["CoT"]
-        handles.append(mlines.Line2D([], [], color=cot_color, lw=1.5, ls=":", label=f"CoT min/max: {cmin:.2f} / {cmax:.2f}"))
+    if _NUM in minmax_info:
+        nmin, nmax = minmax_info[_NUM]
+        handles.append(mlines.Line2D([], [], color=numeric_color, lw=1.5, ls=":", label=f"{_NUM} min/max: {nmin:.2f} / {nmax:.2f}"))
+    if _COT in minmax_info:
+        cmin, cmax = minmax_info[_COT]
+        handles.append(mlines.Line2D([], [], color=cot_color, lw=1.5, ls=":", label=f"{_COT} min/max: {cmin:.2f} / {cmax:.2f}"))
     leg = ax.legend(handles=handles, title="Prompt Category (Domains):", loc="upper left", frameon=False, ncol=1, handlelength=1.5)
     try:
         leg.get_title().set_fontweight("bold")
@@ -541,6 +546,12 @@ def main():
         out_path = tables_dir / f"alignment_{pcat}_wide_dom_{csv_suffix}.csv"
         pd.DataFrame(out_rows).to_csv(out_path, index=False, header=False)
 
+    export_latex_tables(res, args.experiment, domain_spec)
+    print(f"Saved outputs to: {out_dir}")
+
+
+if __name__ == "__main__":
+    main()
     export_latex_tables(res, args.experiment, domain_spec)
     print(f"Saved outputs to: {out_dir}")
 

@@ -63,7 +63,8 @@ mpl.rcParams.update(config)
 # --- constants / styles -------------------------------------------------------
 
 # Pretty label mapping for prompt categories (publication labels)
-PC_PRINT_MAP = {"pcnum": "Num", "pccot": "CoT", "pcconf": "Num-Conf"}
+# Use centralized naming: "Direct" instead of "Numeric"/"Num".
+PC_PRINT_MAP = {"pcnum": "Direct", "pccot": "CoT", "pcconf": "Direct-Conf"}
 
 # Experiment pretty names
 exp_name_map = {
@@ -78,12 +79,23 @@ exp_name_map = {
 
 # Global palette for prompt categories
 try:
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS, canon_prompt_category
+    from causalign.plotting.palette import (
+        COT_COLOR,
+        COT_LABEL,
+        NUMERIC_COLOR,
+        NUMERIC_LABEL,
+        PROMPT_CATEGORY_COLORS,
+        canon_prompt_category,
+    )
 except Exception:
     # Fallback if src/ not on path when running the script directly
+    NUMERIC_LABEL = "Direct"
+    COT_LABEL = "CoT"
+    NUMERIC_COLOR = (58/255, 160/255, 171/255)  # light blue (CAlightblue)
+    COT_COLOR = (10/255, 80/255, 110/255)       # deep blue (CAblue)
     PROMPT_CATEGORY_COLORS = {
-        "numeric": (0.85, 0.60, 0.55),
-        "CoT": (0.00, 0.20, 0.55),
+        NUMERIC_LABEL: NUMERIC_COLOR,
+        COT_LABEL: COT_COLOR,
     }
 
     def canon_prompt_category(label: str) -> str:  # type: ignore
@@ -91,14 +103,14 @@ except Exception:
         _NUMERIC_SYNS = {"pcnum", "numeric", "num", "single_numeric", "single_numeric_response"}
         _COT_SYNS = {"pccot", "cot", "chain_of_thought", "chain-of-thought", "cot_stepwise"}
         if t in _NUMERIC_SYNS or t == "numeric":
-            return "numeric"
+            return NUMERIC_LABEL
         if t in _COT_SYNS or t == "cot":
-            return "CoT"
+            return COT_LABEL
         return str(label)
 
 # Assign colors from PROMPT_CATEGORY_COLORS
-numeric_color = PROMPT_CATEGORY_COLORS["numeric"]
-cot_color = PROMPT_CATEGORY_COLORS["CoT"]
+numeric_color = PROMPT_CATEGORY_COLORS[NUMERIC_LABEL]
+cot_color = PROMPT_CATEGORY_COLORS[COT_LABEL]
 
 
 # --- helpers -----------------------------------------------------------------
@@ -137,9 +149,9 @@ def _to_bool(series: pd.Series) -> pd.Series:
 def _prompt_label(pc: str) -> str:
     t = (pc or "").strip().lower()
     if t == "pcnum" or t == "numeric":
-        return "Numeric"
+        return NUMERIC_LABEL
     if t == "pccot" or t == "cot":
-        return "CoT"
+        return COT_LABEL
     return pc or ""
 
 
@@ -584,7 +596,7 @@ def plot_violin_params_by_experiment_and_pc(master: pd.DataFrame, out_dest: Path
         Line2D([], [], color='yellow', marker='^', linestyle='None'),
         Line2D([], [], color='black', linestyle='-'),
     ]
-    labels = ['Numeric', 'CoT', 'Mean', 'Median']
+    labels = [NUMERIC_LABEL, COT_LABEL, 'Mean', 'Median']
     fig.legend(handles, labels, loc='upper center', ncol=4, frameon=True)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     fig.savefig(out_path, dpi=200)
@@ -644,7 +656,7 @@ def plot_loocv_r2_by_experiment_and_pc(master: pd.DataFrame, out_dest: Path, nor
         Line2D([], [], color='yellow', marker='^', linestyle='None'),
         Line2D([], [], color='black', linestyle='-'),
     ]
-    labels = ['Numeric', 'CoT', 'Mean', 'Median']
+    labels = [NUMERIC_LABEL, COT_LABEL, 'Mean', 'Median']
     fig.legend(handles, labels, loc='upper center', ncol=4, frameon=True)
     fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(out_path, dpi=200)

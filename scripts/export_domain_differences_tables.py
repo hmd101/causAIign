@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+
 import pandas as pd
 
 
@@ -128,6 +129,19 @@ def save_top_pairs(df: pd.DataFrame, domain: str, out_path: Path, top_n: int = 1
     out_path.write_text("".join(lines))
 
 
+def canon_prompt_category(label: str) -> str:
+    try:
+        from causalign.plotting.palette import canon_prompt_category as _canon
+        return _canon(label)
+    except Exception:
+        t = str(label).strip().lower()
+        if t in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}:
+            return "Direct"
+        if t in {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise"}:
+            return "CoT"
+        return str(label)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiment", default="rw17_indep_causes")
@@ -135,15 +149,17 @@ def main():
     ap.add_argument("--results-dir", default="results/domain_differences")
     ap.add_argument("--tables-dir", default="publication/thesis/tuebingen_thesis_msc/tables")
     ap.add_argument("--top-n", type=int, default=12)
-    ap.add_argument("--prompt_category", default="numeric", help="Focus prompt_category (default: numeric)")
+    # Use centralized naming: "Direct" instead of "Numeric".
+    ap.add_argument("--prompt_category", default="Direct", help="Focus prompt_category (default: Direct)")
 
     args = ap.parse_args()
 
     root = Path(__file__).resolve().parents[1]
-    res_dir = root / args.results_dir / args.experiment / args.prompt_category
+    pc = canon_prompt_category(args.prompt_category)
+    res_dir = root / args.results_dir / args.experiment / pc
     # Place tables under a subfolder named after the experiment, e.g., tables/<experiment>/...
     out_dir_base = root / args.tables_dir
-    out_dir = out_dir_base / args.experiment / args.prompt_category
+    out_dir = out_dir_base / args.experiment / pc
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Load CSVs
@@ -163,4 +179,5 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
     main()

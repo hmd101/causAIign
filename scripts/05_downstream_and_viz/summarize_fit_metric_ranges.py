@@ -3,8 +3,8 @@
 Summarize error metric ranges from winners.csv across experiments and tags.
 
 This script discovers winners.csv files produced by export_cbn_best_fits.py under
-results/parameter_analysis/<experiment>/<tag>/winners.csv (mirroring the
-discovery approach used by cross-experiment aggregation utilities) and computes:
+results/parameter_analysis/<experiment>/<tag>/winners.csv for a specific --tag
+across all provided --experiments, and computes:
 
 Outputs
 -------
@@ -12,8 +12,7 @@ Outputs
    - One row per (tag, experiment, prompt_category)
    - For each available metric, three columns: <metric>_min, <metric>_median, <metric>_max.
 
-2) summary_by_experiment_prompt.tex
-   - A LaTeX tabular summarizing min/median/max per metric for each (experiment, prompt_category), grouped by tag.
+2) (removed) LaTeX table output is no longer produced.
 
 3) long_by_experiment_prompt_agent.csv
    - Long-form rows per (tag, experiment, prompt_category, agent, metric)
@@ -21,7 +20,7 @@ Outputs
 
 Notes
 -----
-- If multiple tags match --tag-glob, all are included; outputs include a `tag` column to disambiguate.
+- A single exact --tag is used; outputs include a `tag` column.
 - Metrics are detected from numeric columns typically emitted in winners.csv
   (e.g., mae, rmse, loss, loocv_r2, loocv_rmse, r2, r2_task, rmse_task, cv_r2). Non-numeric/ID columns are ignored.
 - Domain is not part of the grouping; if winners.csv contains per-domain rows, they will be pooled across agents within
@@ -29,11 +28,11 @@ Notes
 
 Example
 -------
-python scripts/summarize_fit_cbn_fit_metric_analysis.py \
-  --experiments rw17_indep_causes random_abstract \
-  --tag-glob "v2_noisy_or_*" \
-  --prompt-categories numeric cot \
-  --output-dir results/parameter_analysis/cbn_fit_metric_analysis
+python scripts/05_downstream_and_viz/summarize_fit_metric_ranges.py \
+    --experiments rw17_indep_causes random_abstract \
+    --tag v2_noisy_or_2025_09_30 \
+    --prompt-categories numeric cot \
+    --output-dir results/parameter_analysis/cbn_fit_metric_analysis
 """
 from __future__ import annotations
 
@@ -49,23 +48,49 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
-def find_winner_dirs(experiments: List[str], tag_glob: str) -> list[Path]:
-    """Discover tag directories containing winners.csv for the given experiments.
+# Canonicalization of prompt categories to ensure consistent filtering
+_NUMERIC_SYNS = {
+    "numeric",
+    "num",
+    "pcnum",
+    "single_numeric",
+    "single_numeric_response",
+    "direct",
+}
+_COT_SYNS = {
+    "cot",
+    "pccot",
+    "chain_of_thought",
+    "chain-of-thought",
+    "cot_stepwise",
+}
 
-    Looks under results/parameter_analysis/<experiment>/<tag_glob>/winners.csv.
+
+def _canon_prompt_category(label: str) -> str:
+    """Map various prompt label aliases to canonical values: 'numeric' or 'cot'.
+
+    Unknown labels are returned lower-cased unchanged.
+    """
+    t = str(label).strip().lower()
+    if t in _NUMERIC_SYNS:
+        return "numeric"
+    if t in _COT_SYNS:
+        return "cot"
+    return t
+
+
+def find_winner_dirs_for_tag(experiments: List[str], tag: str) -> list[Path]:
+    """Discover tag directories containing winners.csv for the given experiments and exact tag.
+
+    Looks under results/parameter_analysis/<experiment>/<tag>/winners.csv.
     Returns list of tag directories (Path objects) where winners.csv exists.
     """
     found: list[Path] = []
     base = PROJECT_ROOT / "results" / "parameter_analysis"
     for exp in experiments:
-        exp_dir = base / exp
-        if not exp_dir.exists():
-            continue
-        for tag_dir in exp_dir.glob(tag_glob):
-            if not tag_dir.is_dir():
-                continue
-            if (tag_dir / "winners.csv").exists():
-                found.append(tag_dir)
+        tag_dir = base / exp / tag
+        if tag_dir.is_dir() and (tag_dir / "winners.csv").exists():
+            found.append(tag_dir)
     return found
 
 
@@ -192,56 +217,22 @@ def make_long(df: pd.DataFrame, metrics: list[str]) -> pd.DataFrame:
     return out.sort_values(sort_cols).reset_index(drop=True)
 
 
-def to_latex_table(summary_df: pd.DataFrame, metrics: list[str]) -> str:
-    """Render a LaTeX table string with subcolumns (min/med/max) per metric.
-
-    Columns: Tag, Experiment, Prompt, then for each metric: (min, med, max).
-    """
-    if summary_df.empty:
-        return "% No data to render"
-    # Build header (booktabs recommended)
-    # Column spec: 3 for meta + 3 per metric (r columns)
-    col_spec = "l l l " + " ".join(["r r r" for _ in metrics])
-    lb = " \\"  # LaTeX line break
-    lines: list[str] = []
-    lines.append("\\begin{tabular}{" + col_spec + "}")
-    lines.append("\\toprule")
-    # First header row: metric spans
-    first = ["", "", ""]
-    for m in metrics:
-        first.append(f"\\multicolumn{{3}}{{c}}{{\\texttt{{{m}}}}}")
-    lines.append(" & ".join(first) + lb)
-    # Second header row: min/med/max labels
-    second = ["\\textbf{Tag}", "\\textbf{Experiment}", "\\textbf{Prompt}"]
-    for _ in metrics:
-        second.extend(["min", "med", "max"])
-    lines.append(" & ".join(second) + lb)
-    lines.append("\\midrule")
-    # Body
-    for _, rr in summary_df.iterrows():
-        vals = [str(rr.get("tag", "")), str(rr.get("experiment", "")), str(rr.get("prompt_category", ""))]
-        for m in metrics:
-            vals.append(_fmt_num(rr.get(f"{m}_min")))
-            vals.append(_fmt_num(rr.get(f"{m}_median")))
-            vals.append(_fmt_num(rr.get(f"{m}_max")))
-        lines.append(" & ".join(vals) + lb)
-    lines.append("\\bottomrule")
-    lines.append("\\end{tabular}")
-    return "\n".join(lines)
+# LaTeX output removed
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="Summarize range (min/median/max) of winners.csv metrics across experiments and tags")
     ap.add_argument("--experiments", nargs="*", required=True, help="Experiments to include (e.g., rw17_indep_causes random_abstract)")
-    ap.add_argument("--tag-glob", default="*", help="Glob to select tag directories under results/parameter_analysis/<experiment> (default: * )")
+    ap.add_argument("--tag", required=True, help="Exact tag under results/parameter_analysis/<experiment>/ to include")
     ap.add_argument("--prompt-categories", nargs="*", default=["numeric", "cot"], help="Prompt categories to include (filter on winners.csv column)")
     ap.add_argument("--output-dir", default="results/parameter_analysis/cbn_fit_metric_analysis", help="Directory to write outputs")
+    ap.add_argument("--include-baseline", action="store_true", help="Also compute baseline medians & 95%% CI from random_init_metrics.parquet if available")
     args = ap.parse_args(argv)
 
     out_dir = PROJECT_ROOT / args.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    tag_dirs = find_winner_dirs(args.experiments, args.tag_glob)
+    tag_dirs = find_winner_dirs_for_tag(args.experiments, args.tag)
     if not tag_dirs:
         print("[warn] No tag directories with winners.csv found for the given scope.")
         return 0
@@ -258,18 +249,17 @@ def main(argv: Optional[List[str]] = None) -> int:
         if "agent" not in df.columns:
             print(f"[warn] Missing 'agent' in {winners_path}; skipping")
             continue
-        # Filter experiments/prompt categories if present
-        # Infer experiment from parent directory name
+        # Infer experiment from parent directory name and attach tag/experiment
         experiment = tag_dir.parent.name
-        tag = tag_dir.name
+        tag_value = tag_dir.name
         df["experiment"] = experiment
-        df["tag"] = tag
-        # Normalize and filter prompt categories case-insensitively (e.g., "CoT" -> "cot")
+        df["tag"] = tag_value
+        # Normalize and filter prompt categories with canonicalization
         if "prompt_category" in df.columns and args.prompt_categories:
-            df["prompt_category"] = df["prompt_category"].astype(str).str.strip().str.lower()
-            wanted = {str(x).strip().lower() for x in args.prompt_categories}
+            df["prompt_category"] = df["prompt_category"].astype(str).map(_canon_prompt_category)
+            wanted = {_canon_prompt_category(str(x)) for x in args.prompt_categories}
             df = df[df["prompt_category"].isin(wanted)].copy()
-        # Keep only minimal columns plus metrics; gather rows
+        # Gather rows
         rows.append(df)
 
     if not rows:
@@ -286,27 +276,96 @@ def main(argv: Optional[List[str]] = None) -> int:
     # Build compact working set
     keep_cols = [c for c in ["tag", "experiment", "prompt_category", "agent"] if c in full.columns]
     keep_cols += metrics
-    full_w = full[keep_cols].copy()
+    full_w: pd.DataFrame = pd.DataFrame(full.loc[:, keep_cols]).copy()
 
     # Summary by (tag, experiment, prompt)
     summary_df = summarize(full_w, metrics)
     # Long per-agent with group ranges
     long_df = make_long(full_w, metrics)
 
-    # Write CSVs
+    # Write/append CSVs for winners summaries
     p_summary_csv = out_dir / "summary_by_experiment_prompt.csv"
     p_long_csv = out_dir / "long_by_experiment_prompt_agent.csv"
-    summary_df.to_csv(p_summary_csv, index=False)
-    long_df.to_csv(p_long_csv, index=False)
-    print(f"[ok] Wrote {p_summary_csv}")
-    print(f"[ok] Wrote {p_long_csv}")
+    if p_summary_csv.exists():
+        prev = pd.read_csv(p_summary_csv)
+        summary_out = pd.concat([prev, summary_df], ignore_index=True).drop_duplicates()
+    else:
+        summary_out = summary_df
+    if p_long_csv.exists():
+        prev_long = pd.read_csv(p_long_csv)
+        long_out = pd.concat([prev_long, long_df], ignore_index=True).drop_duplicates()
+    else:
+        long_out = long_df
+    summary_out.to_csv(p_summary_csv, index=False)
+    long_out.to_csv(p_long_csv, index=False)
+    print(f"[ok] Updated {p_summary_csv}")
+    print(f"[ok] Updated {p_long_csv}")
 
-    # Write LaTeX table
-    tex_str = to_latex_table(summary_df, metrics)
-    p_summary_tex = out_dir / "summary_by_experiment_prompt.tex"
-    with open(p_summary_tex, "w", encoding="utf-8") as f:
-        f.write(tex_str + "\n")
-    print(f"[ok] Wrote {p_summary_tex}")
+    # Optionally compute baseline medians and 95% CI from random baselines
+    if args.include_baseline:
+        baseline_rows = []
+        for exp in args.experiments:
+            baseline_path = PROJECT_ROOT / "results" / "model_fitting" / exp / "random_baseline" / "random_init_metrics.parquet"
+            if not baseline_path.exists():
+                print(f"[warn] Baseline not found for {exp}: {baseline_path}")
+                continue
+            try:
+                bdf = pd.read_parquet(baseline_path)
+            except Exception as e:
+                print(f"[warn] Failed to read baseline for {exp}: {e}")
+                continue
+            # Normalize prompt categories and filter
+            if "prompt_category" in bdf.columns and args.prompt_categories:
+                bdf = bdf.copy()
+                bdf["prompt_category"] = bdf["prompt_category"].astype(str).map(_canon_prompt_category)
+                wanted = {_canon_prompt_category(str(x)) for x in args.prompt_categories}
+                bdf = bdf[bdf["prompt_category"].isin(wanted)]
+            # Determine candidate baseline metrics (skip ids)
+            exclude = {"agent", "prompt_category", "experiment", "version", "link", "params_tying", "loss_name", "draw_index", "seed", "included_domains", "run_timestamp", "n"}
+            candidates = [c for c in bdf.columns if c not in exclude]
+            # Keep metrics overlapping with winners first
+            base_metrics = [m for m in metrics if m in candidates]
+            # And include any other numeric candidates at the end
+            for c in candidates:
+                if c not in base_metrics:
+                    # ensure numeric
+                    s = pd.to_numeric(bdf[c], errors="coerce")
+                    if s.notna().any():
+                        base_metrics.append(c)
+            # Group by experiment/prompt
+            group_cols = [c for c in ["prompt_category"] if c in bdf.columns]
+            if not group_cols:
+                # No prompt column; compute a single pooled row
+                bdf = bdf.copy()
+                bdf["prompt_category"] = ""
+                group_cols = ["prompt_category"]
+            for keys, g in bdf.groupby(group_cols):
+                prompt_val = keys if isinstance(keys, str) else keys[0]
+                row = {"experiment": exp, "prompt_category": prompt_val}
+                for m in base_metrics:
+                    s = pd.to_numeric(g[m], errors="coerce").dropna()
+                    if s.empty:
+                        row[f"baseline_{m}_median"] = float("nan")
+                        row[f"baseline_{m}_ci_low"] = float("nan")
+                        row[f"baseline_{m}_ci_high"] = float("nan")
+                    else:
+                        # Median and 95% CI (2.5, 97.5 percentiles)
+                        row[f"baseline_{m}_median"] = float(np.median(s))
+                        row[f"baseline_{m}_ci_low"] = float(np.percentile(s, 2.5))
+                        row[f"baseline_{m}_ci_high"] = float(np.percentile(s, 97.5))
+                baseline_rows.append(row)
+        if baseline_rows:
+            bdf_out = pd.DataFrame(baseline_rows)
+            p_base_csv = out_dir / "baseline_by_experiment_prompt.csv"
+            if p_base_csv.exists():
+                prev_b = pd.read_csv(p_base_csv)
+                base_out = pd.concat([prev_b, bdf_out], ignore_index=True).drop_duplicates()
+            else:
+                base_out = bdf_out
+            base_out.to_csv(p_base_csv, index=False)
+            print(f"[ok] Updated {p_base_csv}")
+        else:
+            print("[warn] No baseline rows produced.")
 
     return 0
 

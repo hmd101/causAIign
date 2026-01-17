@@ -6,42 +6,43 @@ from pathlib import Path
 from typing import List, Optional, Tuple, cast
 
 import matplotlib as mpl
-from matplotlib import patches as mpatches, transforms as mtransforms
-from matplotlib.legend_handler import HandlerTuple
-from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FormatStrFormatter
 import numpy as np
 import pandas as pd
+from matplotlib import patches as mpatches
+from matplotlib import transforms as mtransforms
+from matplotlib.legend_handler import HandlerTuple
+from matplotlib.lines import Line2D
+from matplotlib.ticker import FormatStrFormatter
 
 # This file is the canonical location for EA/MV/R² overlays.
 # Content moved from scripts/plot_ea_mv_levels.py unchanged.
 
 
 
-# Prompt-category synonyms (case-insensitive)
-NUMERIC_SYNS = {
-    "numeric", "pcnum", "num", "single_numeric", "single_numeric_response",
-}
-COT_SYNS = {
-    "cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "CoT",
-}
-
-# Global palette for prompt categories
 try:
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS, canon_prompt_category
+    from causalign.plotting.palette import (
+        COT_LABEL,
+        NUMERIC_LABEL,
+        PROMPT_CATEGORY_COLORS,
+        canon_prompt_category,
+    )
 except Exception:
     # Fallback if src/ not on path when running the script directly
+    NUMERIC_LABEL = "Direct"
+    COT_LABEL = "CoT"
     PROMPT_CATEGORY_COLORS = {
-        "numeric": (0.85, 0.60, 0.55),
-        "CoT": (0.00, 0.20, 0.55),
+        NUMERIC_LABEL: (58/255, 160/255, 171/255),  # light blue
+        COT_LABEL: (10/255, 80/255, 110/255),       # dark blue
     }
+    _NUMERIC_SYNS = {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}
+    _COT_SYNS = {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise", "CoT"}
     def canon_prompt_category(label: str) -> str:  # type: ignore
         t = str(label).strip().lower()
-        if t in NUMERIC_SYNS or t == "numeric":
-            return "numeric"
-        if t in COT_SYNS or t == "cot":
-            return "CoT"
+        if t in _NUMERIC_SYNS or t == "numeric":
+            return NUMERIC_LABEL
+        if t in _COT_SYNS or t == "cot":
+            return COT_LABEL
         return str(label)
 
 # Experiment pretty names
@@ -55,12 +56,8 @@ exp_name_map = {
 }
 
 def _canon_prompt(p: str) -> str:
-    t = str(p).strip().lower()
-    if t in NUMERIC_SYNS or t == "numeric":
-        return "numeric"
-    if t in COT_SYNS or t == "cot":
-        return "CoT"
-    return str(p)
+    # Canonicalize to global labels (Direct/CoT)
+    return canon_prompt_category(p)
 
 
 def _parse_args() -> argparse.Namespace:
@@ -79,7 +76,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--experiments", nargs="+", help="Experiments to include; omit to plot all in CSV")
     p.add_argument("--tag", help="Optional tag filter (CSV column 'tag')")
     p.add_argument("--by-domain", action="store_true", help="If set, emit one plot per domain instead of pooled")
-    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: overlay numeric & CoT)")
+    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: overlay Direct & CoT)")
     p.add_argument(
         "--threshold",
         default=None,
@@ -101,6 +98,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--fig-height", type=float, default=6.0)
     p.add_argument("--usetex", action="store_true", help="Use LaTeX rendering (requires LaTeX installed)")
     p.add_argument("--output-dir", default="results/plots/ea_mv_levels")
+    p.add_argument("--no-title", dest="no_title", action="store_true", help="Do not draw a plot title")
     # CI/Bootstrap options for mean + whiskers
     p.add_argument("--show-ci", action="store_true", help="Draw horizontal CI whiskers and use mean as marker")
     p.add_argument("--bootstrap", type=int, default=2000, help="Bootstrap samples for CI over domains")
@@ -155,7 +153,7 @@ def _ensure_tueplots(usetex: bool = False) -> None:
 
 def _load_data(path: Path) -> pd.DataFrame:
     df = pd.read_csv(path)
-    # Canonicalize prompt_category into {numeric, CoT} when applicable
+    # Canonicalize prompt_category into {Direct, CoT} when applicable
     if "prompt_category" in df.columns:
         df["prompt_category"] = df["prompt_category"].astype(str).map(canon_prompt_category)
     return df
@@ -178,7 +176,7 @@ def _get_rw17_human_baseline(df_all: pd.DataFrame, metric: str) -> Optional[floa
     mask = (
         d["agent"].astype(str).str.lower().str.contains("human") &
         d["experiment"].astype(str).str.lower().eq("rw17_indep_causes") &
-        d["prompt_category"].astype(str).eq("numeric")
+        d["prompt_category"].astype(str).eq(NUMERIC_LABEL)
     )
     sub = d[mask].copy()
     if sub.empty:
@@ -208,12 +206,12 @@ def _pick_domains(df: pd.DataFrame, by_domain: bool) -> List[str]:
 
 
 def _agents_order(df: pd.DataFrame, metric: str) -> List[str]:
-    # Order agents by numeric category if available; fallback to mean across categories
+    # Order agents by Direct category if available; fallback to mean across categories
     mk = _canon_metric_key(metric)
     metric_col = (
         "EA_raw" if mk == "ea" else ("MV_raw" if mk == "mv" else ("loocv_r2" if mk == "r2" else "normative_metric"))
     )
-    num = df[df["prompt_category"].astype(str) == "numeric"][ ["agent", metric_col] ].copy()
+    num = df[df["prompt_category"].astype(str) == NUMERIC_LABEL][ ["agent", metric_col] ].copy()
     if not num.empty and num[metric_col].notna().any():
         order_series = num.groupby("agent")[metric_col].mean()
     else:
@@ -253,13 +251,15 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
                   source_all_domains: Optional[pd.DataFrame] = None,
                   shared_xlim: Optional[Tuple[float, float]] = None,
                   shared_xticks: Optional[np.ndarray] = None,
-                  shade_r2: bool = True) -> None:
+                  shade_r2: bool = True,
+                  filename_suffix: Optional[str] = None,
+                  no_title: bool = False) -> None:
     mk = _canon_metric_key(metric)
     metric_col = (
         "EA_raw" if mk == "ea" else ("MV_raw" if mk == "mv" else ("loocv_r2" if mk == "r2" else "normative_metric"))
     )
-    # Filter to selected categories (numeric/CoT only present after canonization)
-    cats_present = [c for c in ["numeric", "CoT"] if c in sub["prompt_category"].unique().tolist()]
+    # Filter to selected categories (Direct/CoT only present after canonization)
+    cats_present = [c for c in [NUMERIC_LABEL, COT_LABEL] if c in sub["prompt_category"].unique().tolist()]
     if not cats_present:
         return
     order = _agents_order(sub[sub["prompt_category"].isin(cats_present)], metric)
@@ -268,7 +268,7 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
 
     # Colors from global palette
     color_map = PROMPT_CATEGORY_COLORS
-    y_offsets = {"numeric": -0.08, "CoT": +0.08}
+    y_offsets = {NUMERIC_LABEL: -0.08, COT_LABEL: +0.08}
 
     fig, ax = plt.subplots(figsize=fig_size)
 
@@ -343,9 +343,9 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
 
         vals = np.array(means, dtype=float)
         y = np.arange(n) + y_offsets.get(cat, 0.0)
-        # Draw lines for numeric; CoT as dots only (no connecting line)
+        # Draw lines for Direct; CoT as dots only (no connecting line)
         # Suppress connecting line entirely for MV plots.
-        if cat == "numeric" and mk != "mv":
+        if cat == NUMERIC_LABEL and mk != "mv":
             ax.plot(vals, y, color=color_map.get(cat, "gray"), lw=1.8, alpha=0.9, zorder=2)
         # CI whiskers using precomputed bounds only
         if show_ci:
@@ -404,11 +404,11 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
         ax.add_patch(rect)
         shaded_ea = True
 
-    # Optional human baseline line (always uses RW17 numeric baseline)
+    # Optional human baseline line (always uses RW17 Direct baseline)
     if show_human and mk in ("ea", "mv", "r2", "norm") and human_baseline is not None and np.isfinite(human_baseline):
         # popping magenta
         ax.axvline(float(human_baseline), color=(0.8, 0.0, 0.8), ls=(0, (4, 2)), lw=1.8, alpha=0.95,
-                   label="human baseline (RW17, numeric)")
+                   label=f"human baseline (RW17, {NUMERIC_LABEL})")
 
     ax.set_yticks(np.arange(n))
     ax.set_yticklabels(order)
@@ -433,7 +433,8 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
     # raw experiment name and domains
     # default_title = f"{xlbl} by agent — {experiment} — {dom_title}" 
 
-    ax.set_title(title_override or default_title)
+    if not no_title:
+        ax.set_title(title_override or default_title)
     # Build legend, injecting a proxy patch for the no-MV shaded band when present
     handles, labels = ax.get_legend_handles_labels()
     if shaded_no_mv:
@@ -459,7 +460,7 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
         ci_dot = Line2D([0.5], [0], marker="o", linestyle="None", color="0.3", markersize=5)
         ci_line_right = Line2D([0.8, 1], [0, 0], color="0.3", lw=1.6)
         handles.append((ci_line_left, ci_dot, ci_line_right))  # type: ignore[arg-type]
-        labels.append(f"{ci:g}% CI")
+        labels.append(f"{ci:g}\% CI")
     # Place legend; for MV we prefer upper right to avoid overlaps
     legend_loc_use = "upper right" if mk == "mv" else legend_loc
     ax.legend(
@@ -488,6 +489,8 @@ def _plot_overlay(sub: pd.DataFrame, *, metric: str, experiment: str, domain: st
 
     out_dir.mkdir(parents=True, exist_ok=True)
     base = f"{metric}_levels_overlay_{experiment}_{domain.replace(',', '+').replace(' ', '')}"
+    if filename_suffix:
+        base = f"{base}_{filename_suffix}"
     fig.savefig(out_dir / f"{base}.pdf", bbox_inches="tight")
     fig.savefig(out_dir / f"{base}.png", dpi=300, bbox_inches="tight")
     if show:
@@ -512,12 +515,24 @@ def main() -> int:
         df = df[df["experiment"].astype(str).isin(keep)].copy()
 
     # Determine prompt categories
+    filename_suffix: Optional[str] = None
     if args.prompt_categories:
         keep_cats = {_canon_prompt(c) for c in args.prompt_categories}
         df = df[df["prompt_category"].astype(str).isin(keep_cats)].copy()
+        # Build filename suffix from explicit prompt categories (e.g., "direct", "cot", "direct+cot")
+        labels = []
+        for c in sorted(keep_cats):
+            if c == NUMERIC_LABEL:
+                labels.append("direct")
+            elif c == COT_LABEL:
+                labels.append("cot")
+            else:
+                labels.append(str(c).strip().lower().replace(" ", ""))
+        if labels:
+            filename_suffix = "+".join(labels)
     else:
-        # default overlay of numeric & CoT only
-        df = df[df["prompt_category"].astype(str).isin(["numeric", "CoT"])].copy()
+        # default overlay of Direct & CoT only
+        df = df[df["prompt_category"].astype(str).isin([NUMERIC_LABEL, COT_LABEL])].copy()
 
     # Pick metric column and drop rows without it
     mk = _canon_metric_key(args.metric)
@@ -606,6 +621,8 @@ def main() -> int:
                 shared_xlim=shared_xlim,
                 shared_xticks=shared_ticks,
                 shade_r2=(not args.no_r2_shade),
+                filename_suffix=filename_suffix,
+                no_title=args.no_title,
             )
 
     return 0

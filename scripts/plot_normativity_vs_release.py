@@ -28,29 +28,36 @@ from pathlib import Path
 from typing import Dict, Optional, Tuple
 
 import matplotlib as mpl
-from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import yaml
+from matplotlib.lines import Line2D
+from matplotlib.patches import Rectangle
 
 # Palette and category canon
 try:
-    from causalign.plotting.palette import PROMPT_CATEGORY_COLORS, canon_prompt_category
+    from causalign.plotting.palette import (
+        COT_LABEL,
+        NUMERIC_LABEL,
+        PROMPT_CATEGORY_COLORS,
+        canon_prompt_category,
+    )
 except Exception:
+    NUMERIC_LABEL = "Direct"
+    COT_LABEL = "CoT"
     PROMPT_CATEGORY_COLORS = {
-        "numeric": (0.85, 0.60, 0.55),
-        "CoT": (0.00, 0.20, 0.55),
+        NUMERIC_LABEL: (58/255, 160/255, 171/255),
+        COT_LABEL: (10/255, 80/255, 110/255),
     }
 
     def canon_prompt_category(label: str) -> str:  # type: ignore
         t = str(label).strip()
         tl = t.lower()
         if tl in {"numeric", "pcnum", "num", "single_numeric", "single_numeric_response"}:
-            return "numeric"
+            return NUMERIC_LABEL
         if tl in {"cot", "pccot", "chain_of_thought", "chain-of-thought", "cot_stepwise"}:
-            return "CoT"
+            return COT_LABEL
         return t
 
 
@@ -173,7 +180,7 @@ def _parse_args() -> argparse.Namespace:
     )
     p.add_argument("--experiments", nargs="+", help="Experiments to include; omit to include all")
     p.add_argument("--tag", help="Optional tag filter (CSV column 'tag')")
-    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: numeric & CoT)")
+    p.add_argument("--prompt-categories", nargs="+", help="Prompt categories to include (default: Direct & CoT)")
     p.add_argument("--usetex", action="store_true", help="Use LaTeX rendering (requires LaTeX installed)")
     p.add_argument("--fig-width", type=float, default=8.5)
     p.add_argument("--fig-height", type=float, default=4.8)
@@ -214,7 +221,7 @@ def _get_rw17_human_baselines(df_all: pd.DataFrame) -> dict:
     mask = (
         d["agent"].astype(str).str.lower().str.contains("human")
         & d["experiment"].astype(str).eq("rw17_indep_causes")
-        & d["prompt_category"].astype(str).eq("numeric")
+        & d["prompt_category"].astype(str).eq(NUMERIC_LABEL)
     )
     sub = d[mask].copy()
     if sub.empty:
@@ -273,8 +280,8 @@ def main() -> int:
         keep_cats = {canon_prompt_category(c) for c in args.prompt_categories}
         df = df[df["prompt_category"].astype(str).isin(keep_cats)].copy()
     else:
-        # default: numeric & CoT
-        df = df[df["prompt_category"].astype(str).isin(["numeric", "CoT"])].copy()
+        # default: Direct & CoT
+        df = df[df["prompt_category"].astype(str).isin([NUMERIC_LABEL, COT_LABEL])].copy()
 
     # Require normative_metric
     if "normative_metric" not in df.columns:
@@ -307,6 +314,8 @@ def main() -> int:
 
     # Legends (shared handles)
     cat_handles, cat_labels, exp_handles, exp_labels = _build_legends()
+    # Track base category legend length before optional extras (e.g., human baseline) later
+    _base_cat_len = len(cat_handles)
 
     # Build grouped x positions: group by release_date, within group by agent
     # Create an ordered mapping: [(date, [agents...]) ...]
@@ -329,7 +338,7 @@ def main() -> int:
             idx += 1.0
         idx += gap
 
-    # Compute human baselines from the unfiltered CSV (RW17, numeric)
+    # Compute human baselines from the unfiltered CSV (RW17, Direct)
     loaded_all = _load_data(csv_path)
     human_baselines = _get_rw17_human_baselines(loaded_all)
 
@@ -387,14 +396,19 @@ def main() -> int:
         hb_map = {"norm": "y", "ea": "ea", "mv": "mv", "r2": "r2"}
         hb_key = hb_map.get(metric_key)
         hb_val = human_baselines.get(hb_key) if hb_key is not None else None
+
         # Compose legends (category + human baseline) and draw baseline
-        cat_handles_local = list(cat_handles)
-        cat_labels_local = list(cat_labels)
+        # Start from only the prompt-categories present in the filtered data
+        present_cats = set(df["prompt_category"].astype(str).unique().tolist())
+        cat_handles_local = [
+            h for h, lab in zip(cat_handles[:_base_cat_len], cat_labels[:_base_cat_len]) if lab in present_cats
+        ]
+        cat_labels_local = [lab for lab in cat_labels[:_base_cat_len] if lab in present_cats]
         if hb_val is not None and np.isfinite(hb_val):
             ax.axhline(hb_val, color="hotpink", lw=1.6, ls="--", alpha=0.9, zorder=2)
             hb_handle = Line2D([0, 1], [0, 0], color="hotpink", lw=1.6, ls="--")
             cat_handles_local.append(hb_handle)
-            cat_labels_local.append("human baseline (RW17, numeric)")
+            cat_labels_local.append(f"human baseline (RW17, {NUMERIC_LABEL})")
 
         # Legends: for MV move legends to top positions; otherwise use bottom placement
         if metric_key == "mv":
@@ -407,7 +421,18 @@ def main() -> int:
                 framealpha=0.6,
             )
             ax.add_artist(cat_legend)
-            ax.legend(exp_handles, exp_labels, title="Experiment", loc="upper center", frameon=True, framealpha=0.6)
+            # Filter experiment legend to only present families
+            present_fams = set(_infer_exp_family(str(e)) for e in df["experiment"].astype(str).unique().tolist())
+            exp_items = [
+                ("Abstract", "abstract"),
+                ("Abstract-Overloaded", "abstract_overloaded"),
+                ("RW17", "rw17"),
+                ("RW17-Overloaded", "rw17_overloaded"),
+            ]
+            exp_keep_idx = [i for i, (_, fam) in enumerate(exp_items) if fam in present_fams]
+            exp_handles_local = [exp_handles[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_handles)
+            exp_labels_local = [exp_labels[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_labels)
+            ax.legend(exp_handles_local, exp_labels_local, title="Experiment", loc="upper center", frameon=True, framealpha=0.6)
         else:
             # default placement
             cat_legend = ax.legend(
@@ -419,17 +444,44 @@ def main() -> int:
                 framealpha=0.6,
             )
             ax.add_artist(cat_legend)
-            ax.legend(exp_handles, exp_labels, title="Experiment", loc="lower center", frameon=True, framealpha=0.6)
-        
+            # Filter experiment legend to only present families
+            present_fams = set(_infer_exp_family(str(e)) for e in df["experiment"].astype(str).unique().tolist())
+            exp_items = [
+                ("Abstract", "abstract"),
+                ("Abstract-Overloaded", "abstract_overloaded"),
+                ("RW17", "rw17"),
+                ("RW17-Overloaded", "rw17_overloaded"),
+            ]
+            exp_keep_idx = [i for i, (_, fam) in enumerate(exp_items) if fam in present_fams]
+            exp_handles_local = [exp_handles[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_handles)
+            exp_labels_local = [exp_labels[i] for i in exp_keep_idx] if exp_keep_idx else list(exp_labels)
+            ax.legend(exp_handles_local, exp_labels_local, title="Experiment", loc="lower center", frameon=True, framealpha=0.6)
 
+        # Finalize and save
         fig.tight_layout()
-
-        out_pdf = out_dir / f"{out_base}.pdf"
-        out_png = out_dir / f"{out_base}.png"
-        fig.savefig(out_pdf)
-        fig.savefig(out_png, dpi=300)
+        out_pdf = (out_dir / f"{out_base}.pdf").resolve()
+        out_png = (out_dir / f"{out_base}.png").resolve()
+        print(f"[debug] Saving PDF to: {out_pdf}")
+        print(f"[debug] Saving PNG to: {out_png}")
+        fig.savefig(str(out_pdf))
+        fig.savefig(str(out_png), dpi=300)
         plt.close(fig)
         print(f"[ok] Saved: {out_pdf} and {out_png}")
+
+
+    # Build filename suffix from CLI filters when provided; otherwise from filtered df
+    exp_list = sorted(map(str, args.experiments)) if args.experiments else sorted(df["experiment"].astype(str).unique().tolist())
+    pc_list = []
+    if args.prompt_categories:
+        pc_list = sorted({canon_prompt_category(c) for c in args.prompt_categories})
+    elif "prompt_category" in df.columns:
+        pc_list = sorted(df["prompt_category"].astype(str).unique().tolist())
+    suffix = ""
+    if exp_list:
+        suffix += "_exp-" + "+".join(exp_list)
+    if pc_list:
+        suffix += "__pc-" + "+".join(pc_list)
+    print(f"[info] Plot filters -> experiments: {exp_list} | prompt-categories: {pc_list} | suffix: '{suffix}'")
 
     # Prepare series for each metric
     norm_series = pd.to_numeric(df["normative_metric"], errors="coerce")
@@ -446,10 +498,10 @@ def main() -> int:
     r2_series = pd.to_numeric(df.get("loocv_r2", pd.Series(np.nan, index=df.index)), errors="coerce")
 
     # Plot and save figures
-    _plot_single(norm_series, "Leak-Adjusted Determinacy ", "normativity_vs_release", "norm")
-    _plot_single(ea_series, "Explaining-away (EA)-level", "ea_vs_release", "ea")
-    _plot_single(mv_series, "Markov violation (MV)-level", "mv_vs_release", "mv")
-    _plot_single(r2_series, "LOOCV $R^2$", "loocv_r2_vs_release", "r2")
+    _plot_single(norm_series, "Leak-Adjusted Determinacy ", f"normativity_vs_release{suffix}", "norm")
+    _plot_single(ea_series, "Explaining-away (EA)-level", f"ea_vs_release{suffix}", "ea")
+    _plot_single(mv_series, "Markov violation (MV)-level", f"mv_vs_release{suffix}", "mv")
+    _plot_single(r2_series, "Reasoning Consistency (LOOCV $R^2$)", f"loocv_r2_vs_release{suffix}", "r2")
 
     # Optional interactive show
     if args.show and not args.no_show:

@@ -26,25 +26,25 @@ results/plots/agent_vs_cbn_publication/<experiment>/<tag>/
 from __future__ import annotations
 
 import argparse
+import hashlib
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Set, Tuple
-import numpy as np
+import re
+from typing import Any, Dict, List, Optional, Set, Tuple
 
+import matplotlib as mpl
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+import matplotlib.pyplot as plt
+from matplotlib.transforms import blended_transform_factory
+import numpy as np
 import pandas as pd
 import torch
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from matplotlib.axes import Axes
-from matplotlib.figure import Figure
-from matplotlib.transforms import blended_transform_factory
-
+from causalign.analysis.model_fitting.data import load_processed_data, prepare_dataset
 from causalign.analysis.model_fitting.tasks import roman_task_to_probability
 from causalign.config.paths import PathManager
-from causalign.analysis.model_fitting.data import load_processed_data, prepare_dataset
-
 
 # Optional: TeX-like styling if available, but don't require LaTeX
 try:
@@ -301,6 +301,9 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--agents", nargs="+", help="Agents to include; use 'all' to include all agents in manifest")
     p.add_argument("--exclude-agents", nargs="+", help="Agents to exclude")
     p.add_argument("--prompt-categories", nargs="+", default=["numeric"], help="Prompt categories to include (e.g., numeric, cot)")
+    # Control plotting of CBN predictions
+    p.add_argument("--plot-cbn", action=argparse.BooleanOptionalAction, default=True, help="Plot CBN predictions (default: True). Use --no-plot-cbn to hide.")
+    p.add_argument("--agents-only", action="store_true", help="Alias for --no-plot-cbn; do not plot CBN predictions.")
     p.add_argument("--humans-mode", choices=["all", "aggregated", "pooled", "individual"], default="all",
                    help="How to handle humans in selection (non-human agents always included)")
     p.add_argument("--same-plot", action=argparse.BooleanOptionalAction, default=True,
@@ -324,6 +327,10 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--uncertainty", action=argparse.BooleanOptionalAction, default=True, help="Show uncertainty bands for Agent lines (default: True)")
     p.add_argument("--uncertainty-level", type=float, default=95.0, help="Confidence level for bands (default: 95)")
     p.add_argument("--uncertainty-alpha", type=float, default=0.2, help="Alpha for uncertainty shading (default: 0.2)")
+    # Jitter to reduce overlap of identical Agent values
+    p.add_argument("--jitter", action=argparse.BooleanOptionalAction, default=True, help="Apply small horizontal jitter to Agent traces to reduce overlap (default: True)")
+    p.add_argument("--jitter-magnitude", type=float, default=0.08, help="Max absolute x-offset applied to Agent traces (default: 0.08)")
+    p.add_argument("--jitter-seed", type=int, default=None, help="Optional seed to vary jitter deterministically; same subject gets same offset")
     # Per-reasoning-category plots
     p.add_argument("--by_reason_cat", action="store_true", help="Create a separate figure per reasoning category (I–III, IV–V, VI–VIII, IX–XI)")
     # Control which per-category figure(s) show a legend
@@ -376,32 +383,67 @@ def main() -> int:
     log = logging.getLogger(__name__)
 
     paths = PathManager()
-    winners_csv, tag = _resolve_manifest_path(paths, args.experiment, args.winners_manifest)
-    if not winners_csv.exists():
-        log.error(f"winners_with_params.csv not found: {winners_csv}")
-        return 2
-
-    winners_df = pd.read_csv(winners_csv)
-    # Ensure essential columns exist (infer link if needed)
-    if "link" not in winners_df.columns:
-        inferred = None
-        tl = str(tag).lower()
-        if "noisy_or" in tl or "noisyor" in tl:
-            inferred = "noisy_or"
-        elif "logistic" in tl:
-            inferred = "logistic"
-        if inferred is None and all(c in winners_df.columns for c in ["b", "m1", "m2", "pC1", "pC2"]):
-            inferred = "noisy_or"
-        if inferred is None:
-            log.error("Could not infer 'link' from manifest/tag; add 'link' column or include 'noisy_or'/'logistic' in tag.")
+    plot_cbn: bool = (not getattr(args, "agents_only", False)) and bool(getattr(args, "plot_cbn", True))
+    if plot_cbn:
+        if not args.winners_manifest:
+            log.error("--winners-manifest is required when plotting CBN predictions. Provide a tag or CSV path, or use --no-plot-cbn/--agents-only to hide CBN.")
             return 2
-        winners_df["link"] = inferred
-
-    # Only use noisy_or winners (matches thesis figure focus)
-    winners_df = winners_df[winners_df["link"] == "noisy_or"].copy()
-    if winners_df.empty:
-        log.error("No noisy_or winners in manifest after filtering")
-        return 2
+        winners_csv, tag = _resolve_manifest_path(paths, args.experiment, args.winners_manifest)
+        if not winners_csv.exists():
+            log.error(f"winners_with_params.csv not found: {winners_csv}")
+            return 2
+        winners_df = pd.read_csv(winners_csv)
+        # Ensure essential columns exist (infer link if needed)
+        if "link" not in winners_df.columns:
+            inferred = None
+            tl = str(tag).lower()
+            if "noisy_or" in tl or "noisyor" in tl:
+                inferred = "noisy_or"
+            elif "logistic" in tl:
+                inferred = "logistic"
+            if inferred is None and all(c in winners_df.columns for c in ["b", "m1", "m2", "pC1", "pC2"]):
+                inferred = "noisy_or"
+            if inferred is None:
+                log.error("Could not infer 'link' from manifest/tag; add 'link' column or include 'noisy_or'/'logistic' in tag.")
+                return 2
+            winners_df["link"] = inferred
+        # Only use noisy_or winners (matches thesis figure focus)
+        winners_df = winners_df[winners_df["link"] == "noisy_or"].copy()
+        if winners_df.empty:
+            log.error("No noisy_or winners in manifest after filtering")
+            return 2
+    else:
+        # Agents-only mode: no manifest required; synthetic winners_df and tag
+        tag = "agents_only"
+        # Determine agents list if not provided
+        if not args.agents or any(str(a).lower() == "all" for a in args.agents):
+            try:
+                df_all = load_processed_data(
+                    paths,
+                    version=args.version,
+                    experiment_name=args.experiment,
+                    graph_type="collider",
+                    use_roman_numerals=True,
+                    use_aggregated=True,
+                    pipeline_mode="llm_with_humans",
+                )
+                # Use 'subject' column for agent identifiers in processed data
+                subj_col = "subject" if "subject" in df_all.columns else None
+                if subj_col is None:
+                    all_agents = []
+                else:
+                    all_agents = sorted(df_all[subj_col].dropna().astype(str).unique().tolist())
+            except Exception:
+                all_agents = []
+        else:
+            all_agents = [str(a) for a in args.agents]
+        # Build a minimal winners_df with requested prompt categories for agent selection/grouping
+        pcs = args.prompt_categories or ["numeric"]
+        winners_df = pd.DataFrame({
+            "agent": all_agents,
+            "prompt_category": [pcs[0]] * len(all_agents) if len(pcs) == 1 else np.resize([str(p) for p in pcs], len(all_agents)),
+            "domain": [None] * len(all_agents),
+        })
 
     # Prompt-category filter via synonyms
     if "prompt_category" not in winners_df.columns:
@@ -410,7 +452,8 @@ def main() -> int:
     if syns:
         winners_df = winners_df[winners_df["prompt_category"].astype(str).str.lower().isin(syns)].copy()
     if winners_df.empty:
-        log.error("No rows match the requested prompt-categories in manifest")
+        where = "manifest" if plot_cbn else "selection"
+        log.error(f"No rows match the requested prompt-categories in {where}. Try adjusting --prompt-categories or specify --agents explicitly.")
         return 2
 
     # Agent selection
@@ -436,6 +479,17 @@ def main() -> int:
     # Output directory
     base_out = Path(args.output_dir) if args.output_dir else (paths.base_dir / "results" / "plots" / "agent_vs_cbn_publication")
     out_dir = base_out / args.experiment / tag
+    # In agents-only mode, add a subfolder indicating agents (or 'all')
+    if not plot_cbn:
+        def _sanitize_for_path(s: str) -> str:
+            s = str(s).strip().replace(" ", "_").replace("/", "-")
+            return re.sub(r"[^A-Za-z0-9._+-]", "_", s)
+        if not args.agents or any(str(a).lower() == "all" for a in args.agents):
+            agents_label = "all"
+        else:
+            # Use the filtered list of agents we will actually plot
+            agents_label = "-".join(_sanitize_for_path(a) for a in agents_to_plot) if 'agents_to_plot' in locals() else "specified"
+        out_dir = out_dir / agents_label
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Collapse across domains for same-plot overlay per prompt-category
@@ -505,7 +559,7 @@ def main() -> int:
                     row_pooled = sel[sel["domain"].isna()] if "domain" in sel.columns else sel
                     use_row = row_pooled.iloc[0] if not row_pooled.empty else (sel.iloc[0] if not sel.empty else None)
                     model_df = pd.DataFrame([])
-                    if use_row is not None:
+                    if plot_cbn and use_row is not None:
                         params = {k: float(use_row[k]) for k in ["b", "m1", "m2", "pC1", "pC2"] if k in use_row and pd.notna(use_row[k])}
                         preds = _predict_noisy_or_tasks(params, tasks_present)
                         mrows: List[Dict[str, Any]] = []
@@ -571,7 +625,7 @@ def main() -> int:
                     use_row = row_exact.iloc[0] if not row_exact.empty else (row_pooled.iloc[0] if not row_pooled.empty else None)
 
                     model_df = pd.DataFrame([])
-                    if use_row is not None:
+                    if plot_cbn and use_row is not None:
                         params = {k: float(use_row[k]) for k in ["b", "m1", "m2", "pC1", "pC2"] if k in use_row and pd.notna(use_row[k])}
                         preds = _predict_noisy_or_tasks(params, tasks_present)
                         mrows: List[Dict[str, Any]] = []
@@ -681,6 +735,16 @@ def main() -> int:
             return 1.96
         z = _z_for_level(args.uncertainty_level)
 
+        # Deterministic jitter per subject to reduce overlay of identical values
+        def _subject_jitter(subject: str) -> float:
+            if not args.jitter:
+                return 0.0
+            key = f"{args.jitter_seed}:{subject}" if args.jitter_seed is not None else str(subject)
+            h = hashlib.md5(key.encode("utf-8")).hexdigest()
+            # Map hex to [0, 1)
+            u = (int(h[:8], 16) / float(0xFFFFFFFF))  # first 32 bits
+            return (u - 0.5) * 2.0 * float(args.jitter_magnitude)
+
         # Per-reasoning-category figures
         group_defs = [
             ("Predictive Inference", "predictive", (0, 2)),
@@ -696,8 +760,11 @@ def main() -> int:
                     color = subject_colors.get(subject, (0.2, 0.2, 0.2))
                     style = style_map.get(ptype, {"linestyle": "-", "marker": "o", "alpha": 0.8, "markersize": 5})
                     xs = list(range(0, (b - a + 1)))
+                    # Apply horizontal jitter only to Agent traces
+                    j = _subject_jitter(subject) if ptype == "Agent" else 0.0
+                    jxs = [x + j for x in xs]
                     ys = [vals[i] if vals[i] is not None else float('nan') for i in range(a, b + 1)]
-                    ax.plot(xs, np.array(ys, dtype=float), label=f"{subject} ({ptype})", color=color, **style)
+                    ax.plot(jxs, np.array(ys, dtype=float), label=f"{subject} ({ptype})", color=color, **style)
                     if args.uncertainty and ptype == "Agent" and (subject, ptype) in series_se:
                         se_vals = series_se.get((subject, ptype), [])
                         se_seg = [se_vals[i] if (i < len(se_vals) and se_vals[i] is not None) else float('nan') for i in range(a, b + 1)]
@@ -705,7 +772,7 @@ def main() -> int:
                         searr = np.array(se_seg, dtype=float)
                         lower = yarr - z * searr
                         upper = yarr + z * searr
-                        ax.fill_between(xs, lower, upper, color=color, alpha=float(args.uncertainty_alpha), linewidth=0)
+                        ax.fill_between(jxs, lower, upper, color=color, alpha=float(args.uncertainty_alpha), linewidth=0)
 
                 # Axes formatting per category
                 cat_tick_labels = (
@@ -770,8 +837,11 @@ def main() -> int:
             segments = [(0, 2), (3, 4), (5, 7), (8, 10)]
             for seg_idx, (a, b) in enumerate(segments):
                 xs = list(range(a, b + 1))
+                # Apply horizontal jitter only to Agent traces
+                j = _subject_jitter(subject) if ptype == "Agent" else 0.0
+                jxs = [x + j for x in xs]
                 ys = [vals[i] if vals[i] is not None else float('nan') for i in xs]
-                ax.plot(xs, np.array(ys, dtype=float), label=(f"{subject} ({ptype})" if seg_idx == 0 else "_nolegend_"), color=color, **style)
+                ax.plot(jxs, np.array(ys, dtype=float), label=(f"{subject} ({ptype})" if seg_idx == 0 else "_nolegend_"), color=color, **style)
                 if args.uncertainty and ptype == "Agent" and (subject, ptype) in series_se:
                     se_vals = series_se.get((subject, ptype), [])
                     se_seg = [se_vals[i] if (i < len(se_vals) and se_vals[i] is not None) else float('nan') for i in xs]
@@ -779,7 +849,7 @@ def main() -> int:
                     searr = np.array(se_seg, dtype=float)
                     lower = yarr - z * searr
                     upper = yarr + z * searr
-                    ax.fill_between(xs, lower, upper, color=color, alpha=float(args.uncertainty_alpha), linewidth=0)
+                    ax.fill_between(jxs, lower, upper, color=color, alpha=float(args.uncertainty_alpha), linewidth=0)
 
         ax.set_xlim(-0.5, len(ROMAN_ORDER)-0.5)
         ax.set_ylim(0, 100)
@@ -817,4 +887,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
     raise SystemExit(main())
