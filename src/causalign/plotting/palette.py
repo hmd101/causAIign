@@ -12,7 +12,7 @@ from __future__ import annotations
 from typing import Dict
 
 # Central, canonical labels for prompt categories used in plots
-NUMERIC_LABEL = "numeric"
+NUMERIC_LABEL = "Direct"
 COT_LABEL = "CoT"
 
 # Default color scheme (RGB 0..1 tuples) — colorblind-friendly and print-safe
@@ -26,8 +26,8 @@ CAblue = (10/255, 80/255, 110/255)       # (0.039, 0.314, 0.431)
 # CAlightblue: RGB (58, 160, 171)
 CAlightblue = (58/255, 160/255, 171/255) # (0.227, 0.627, 0.671)
 
-NUMERIC_COLOR = CAlightblue  
-COT_COLOR = CAblue      
+NUMERIC_COLOR = CAlightblue
+COT_COLOR = CAblue
 
 PROMPT_CATEGORY_COLORS: Dict[str, tuple[float, float, float]] = {
     NUMERIC_LABEL: NUMERIC_COLOR,

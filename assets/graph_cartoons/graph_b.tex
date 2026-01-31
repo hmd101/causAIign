@@ -1,0 +1,29 @@
+
+\documentclass[tikz,border=2mm]{standalone}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{xcolor}
+\begin{document}
+\definecolor{tuebingenred}{RGB}{126,18,24}
+\definecolor{tuebingengray}{RGB}{88,89,91}
+\definecolor{darkgray}{RGB}{46,46,46}
+\definecolor{observed}{HTML}{AAAAAA} %C6C6C6
+\definecolor{inference}{HTML}{FF5B59} % FF5B59 FFB9B8
+
+\tikzset{
+    observed/.style={circle, draw, fill=observed, minimum size=12mm, text width=12mm, text=black, align=center},
+    unobserved/.style={circle, draw, fill=white, minimum size=12mm, text width=12mm, align=center, dashed, very thick},
+    inference/.style={circle, draw, fill=inference, minimum size=12mm, text width=12 mm, text=black, align=center},
+    arrow/.style={-{Latex[length=4mm, width=4mm]}, line width=1.2mm},
+}
+
+
+
+
+\begin{tikzpicture}
+\node[inference] (C1) at (0, 2.2) {\Large${\mathbf{C_i :1}}$};
+\node[unobserved] (C2) at (2, 2.2) {\Large${\mathbf{C_2}}$};
+\node[observed] (E) at (1, 0.2) {\Large${\mathbf{E:1}}$};  
+\draw[arrow] (C1) -- (E);
+\draw[arrow] (C2) -- (E);
+\end{tikzpicture}
+\end{document}
