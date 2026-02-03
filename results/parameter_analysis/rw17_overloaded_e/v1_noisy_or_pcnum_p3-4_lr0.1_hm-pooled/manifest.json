@@ -1,0 +1,27 @@
+{
+  "experiment": "rw17_overloaded_e",
+  "tag": "v1_noisy_or_pcnum_p3-4_lr0.1_hm-pooled",
+  "versions": [
+    "1"
+  ],
+  "models": [
+    "noisy_or"
+  ],
+  "prompt_categories": [
+    "numeric"
+  ],
+  "param_counts": [
+    "3",
+    "4"
+  ],
+  "lr": [
+    "0.1"
+  ],
+  "include_domains": [
+    "all"
+  ],
+  "exclude_humans": false,
+  "include_readout_weights": true,
+  "pooled_domain_label": "all",
+  "humans_mode": "pooled"
+}

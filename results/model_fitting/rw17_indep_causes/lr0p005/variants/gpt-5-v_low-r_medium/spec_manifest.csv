@@ -1,0 +1,13 @@
+spec_hash,short_spec_hash,friendly_name,link,params_tying,optimizer,lr,epochs,restarts,loss,primary_metric,selection_rule,cv_enabled,timestamp_first_seen
+3850dcce73667b474dde4e339e543c9f7adb75765839ae9acb2fc98f4b4c6e5a,3850dcce7366,logistic-p3-lbfgs-lr0.005-e300-r5-huber-cv,logistic,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T20:41:25.805624+00:00
+3a4e03bde3d10c5d3d16d4e8eafd761fe64a3400e580001415d3fd36c5004d48,3a4e03bde3d1,logistic-p3-lbfgs-lr0.005-e300-r5-huber-cv,logistic,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T20:47:13.435564+00:00
+adcba4807ce2a622f5d0f8231d812178fccc65727a090e2b8b46f1af01412c29,adcba4807ce2,logistic-p4-lbfgs-lr0.005-e300-r5-huber-cv,logistic,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:01:56.600092+00:00
+13bcb33d2911b7d5a45fdfdb727c347f64405ca0669bc51bc3e1bd54d65c17c4,13bcb33d2911,logistic-p4-lbfgs-lr0.005-e300-r5-huber-cv,logistic,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:08:54.103419+00:00
+1ba3884f6c2f526a5c464a880492b03389f1e698b25fd339c94d55fbf1e66875,1ba3884f6c2f,logistic-p5-lbfgs-lr0.005-e300-r5-huber-cv,logistic,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:27:10.786005+00:00
+1033d8d793ceb427e0ad3da4fcd2f0cb11d29a805e211c995a99452e613f0d7a,1033d8d793ce,logistic-p5-lbfgs-lr0.005-e300-r5-huber-cv,logistic,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:35:41.580733+00:00
+e69e3dd64548d097ae0a288594381212ddebf41317f8d8adc1888ff7ac1c65bb,e69e3dd64548,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:48:49.640987+00:00
+ccf41e7a710737fcfd8be701dd28ce8db442e428b0d41964e097e0a24f4deccc,ccf41e7a7107,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T21:53:47.174048+00:00
+b4c85d3ab17f73b5f92a84811e60ccbb0a0fdb7db92de2bfca7a00644ff8a3e3,b4c85d3ab17f,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T22:11:16.569242+00:00
+cfbd224b9cd06d694bf607eca729f1eae2a2144381c85c2f2c6d41c3bc3f1a70,cfbd224b9cd0,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T22:18:20.858728+00:00
+65528a01a4cc0274778138e48d75fab2d5f7abdff47920971c935652e3a6f328,65528a01a4cc,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T22:41:19.293750+00:00
+c9f69250c6fafb822f271ab91b5d9b749995c1ecf164bd3eb785623f2cb99eaf,c9f69250c6fa,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-25T22:51:13.984694+00:00

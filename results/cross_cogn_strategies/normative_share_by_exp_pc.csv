@@ -1,0 +1,11 @@
+experiment,prompt_category,prompt_label,ea_diff_threshold,mv_diff_threshold,loocv_r2_threshold,n_total,n_normative,frac_normative,pct_normative
+abstract_overloaded_lorem_de,CoT,CoT,0.0995,0.1,0.937,14,5,0.35714285714285715,35.714285714285715
+abstract_overloaded_lorem_de,numeric,numeric,0.0995,0.1,0.937,14,3,0.21428571428571427,21.428571428571427
+random_abstract,CoT,CoT,0.0995,0.1,0.937,27,14,0.5185185185185185,51.85185185185185
+random_abstract,numeric,numeric,0.0995,0.1,0.937,30,14,0.4666666666666667,46.666666666666664
+random_abstract,single_numeric_response,single_numeric_response,0.0995,0.1,0.937,1,0,0.0,0.0
+rw17_indep_causes,CoT,CoT,0.0995,0.1,0.937,26,13,0.5,50.0
+rw17_indep_causes,numeric,numeric,0.0995,0.1,0.937,29,12,0.41379310344827586,41.37931034482759
+rw17_indep_causes,single_numeric_response,single_numeric_response,0.0995,0.1,0.937,1,0,0.0,0.0
+rw17_overloaded_e,CoT,CoT,0.0995,0.1,0.937,21,11,0.5238095238095238,52.38095238095239
+rw17_overloaded_e,numeric,numeric,0.0995,0.1,0.937,20,5,0.25,25.0

@@ -1,0 +1,10 @@
+spec_hash,short_spec_hash,friendly_name,link,params_tying,optimizer,lr,epochs,restarts,loss,primary_metric,selection_rule,cv_enabled,timestamp_first_seen
+9cec2f4b2423b6520320f2d0de6a321186704df0b81cb25375bd559b182f9240,9cec2f4b2423,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:41:39.044055+00:00
+054e343ab8431ee82c32790b536db9a821a2ed8105f627e1d4102f0ccba40640,054e343ab843,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:45:36.089670+00:00
+8d9e3eb69742132c96a7135112ad2761fcd488a9a40c89a5d397e546a6352fa7,8d9e3eb69742,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:47:43.283832+00:00
+5d7bcc1c03b615575b74374d14f83f5323b1b3a01fbf78c06871e3a09a0d73cb,5d7bcc1c03b6,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:50:23.092388+00:00
+9720ef75cee9e52e6a35d949106d2b93d6f4ebfa2e25f00d4f91b190869f89db,9720ef75cee9,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:55:33.571734+00:00
+31ac7143d3524b3600910ddc0eae95990df493d2071acd1860e0733d29e12497,31ac7143d352,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:58:21.498486+00:00
+36c529562fc700d55650ccfda6b97ce1926bc9b5363087ea6f7e1fbd0bf0775c,36c529562fc7,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T23:01:43.379067+00:00
+c74ea1f8fe4c8c316f8bcd501eddfbe3158e05a42ab8b162b07e8a70640cdcb8,c74ea1f8fe4c,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T23:08:13.364013+00:00
+1d3c0bb7b9366e9be10475876d100c3c5085e4ba50bfc3e80198e92a21542561,1d3c0bb7b936,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T23:12:10.729885+00:00

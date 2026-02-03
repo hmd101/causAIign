@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.2.0",
+  "spec_hash": "95dccd593ca797c16556a50f61fe100b577eec122f704c16211c419163c567ae",
+  "short_spec_hash": "95dccd593ca7",
+  "group_hash": "22d5ee408cb8da3e40a88e4b3a049174f0b01b43965b0ac4d825d63ec5c4f107",
+  "short_group_hash": "22d5ee408cb8",
+  "spec": {
+    "model": {
+      "link": "noisy_or",
+      "params_tying": 3,
+      "param_bounds": null,
+      "notes": null
+    },
+    "optimizer": {
+      "name": "lbfgs",
+      "lr": 0.1,
+      "epochs": 1,
+      "restarts": 1,
+      "weight_decay": null,
+      "tolerance_grad": null,
+      "tolerance_change": null,
+      "max_eval": null
+    },
+    "loss": {
+      "name": "mse",
+      "params": null
+    },
+    "ranking": {
+      "primary_metric": "aic",
+      "fallbacks": [
+        "rmse",
+        "loss",
+        "bic"
+      ],
+      "tie_breakers": [
+        "params_tying",
+        "loss",
+        "seed_used"
+      ],
+      "selection_rule": "best_loss"
+    },
+    "run": {
+      "seed": 0,
+      "device": "auto",
+      "enable_loocv": false,
+      "schema_version": "1.2.0"
+    },
+    "cv": {
+      "enabled": false,
+      "method": "kfold",
+      "k": null,
+      "repeats": 1,
+      "stratify_on": null
+    },
+    "data_filters": {
+      "agents": [
+        "human-1"
+      ],
+      "domains": null,
+      "prompt_categories": [
+        "single_numeric_response"
+      ],
+      "reasoning_types": null,
+      "tasks": null,
+      "temperature": 0.0,
+      "prompt_content_type": null
+    }
+  },
+  "group_key": {
+    "agent": "human-1",
+    "prompt_category": "single_numeric_response",
+    "domain": null,
+    "experiment": "rw17_indep_causes",
+    "version": "2"
+  },
+  "data_spec": {
+    "num_rows": 6,
+    "columns": [
+      "RW17_label",
+      "agent_variant",
+      "cntbl_cond",
+      "confidence",
+      "content_category",
+      "domain",
+      "experiment_name",
+      "graph",
+      "human_subj_id",
+      "id",
+      "likelihood",
+      "prompt_category",
+      "reasoning",
+      "reasoning_effort",
+      "reasoning_type",
+      "response",
+      "subject",
+      "task",
+      "temperature",
+      "verbosity"
+    ],
+    "data_hash": "0338111c26431f64ab8740f5bdf12530023acf39b49293317f66be3dd1d8ee37",
+    "short_data_hash": "0338111c2643"
+  },
+  "restarts": [
+    {
+      "restart_index": 0,
+      "seed": 0,
+      "loss_final": 0.016116758808493614,
+      "params": {
+        "pC1": 0.5200269818305969,
+        "pC2": 0.5200269818305969,
+        "b": 0.48341256380081177,
+        "m1": 0.5484799146652222,
+        "m2": 0.5484799146652222
+      },
+      "init_params": {
+        "pC1": 0.49146708846092224,
+        "pC2": 0.49146708846092224,
+        "b": 0.5082626938819885,
+        "m1": 0.5230321884155273,
+        "m2": 0.5230321884155273
+      },
+      "curve": [
+        0.016116758808493614,
+        0.01579318381845951,
+        0.01383062731474638
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    }
+  ],
+  "best_restart_index": 0,
+  "best_params": {
+    "pC1": 0.5200269818305969,
+    "pC2": 0.5200269818305969,
+    "b": 0.48341256380081177,
+    "m1": 0.5484799146652222,
+    "m2": 0.5484799146652222
+  },
+  "metrics": {
+    "mae": 0.10634612292051315,
+    "rmse": 0.11760368198156357,
+    "r2": 0.698818425375518,
+    "r2_task": 0.6615616232172282,
+    "rmse_task": 0.1330236921037707,
+    "ece_10bin": 0.07381381094455719,
+    "sse": 0.08298375457525253,
+    "sst": 0.27552732825279236,
+    "aic": -19.68521932547896,
+    "bic": -20.309940917794798,
+    "loss": 0.016116758808493614
+  },
+  "ranking": {
+    "primary_metric": "aic",
+    "fallbacks": [
+      "rmse",
+      "loss",
+      "bic"
+    ],
+    "selection_rule": "best_loss",
+    "cv_scope": "none"
+  },
+  "uncertainty": null,
+  "environment": {
+    "python": "3.12.9",
+    "platform": "macOS-15.6-arm64-arm-64bit",
+    "pytorch_version": "2.8.0"
+  },
+  "provenance": {
+    "legacy_adapter_phase": 2,
+    "num_restarts_captured": 1
+  },
+  "restart_summary": {
+    "count": 1,
+    "loss_mean": 0.016116758808493614,
+    "loss_median": 0.016116758808493614,
+    "loss_var": null,
+    "loss_std": null,
+    "loss_iqr": null,
+    "loss_min": 0.016116758808493614,
+    "loss_max": 0.016116758808493614,
+    "loss_range": 0.0
+  }
+}

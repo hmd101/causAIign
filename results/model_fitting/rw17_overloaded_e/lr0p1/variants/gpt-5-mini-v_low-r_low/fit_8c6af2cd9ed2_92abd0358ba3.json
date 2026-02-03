@@ -1,0 +1,362 @@
+{
+  "schema_version": "1.2.0",
+  "spec_hash": "8c6af2cd9ed236b72822c63915909b2fe0800c75020764bab4e63ba06d92f743",
+  "short_spec_hash": "8c6af2cd9ed2",
+  "group_hash": "92abd0358ba3a0b6c9ac256a5343244e9cbd7ff22abe450f86838f1c85b78f00",
+  "short_group_hash": "92abd0358ba3",
+  "spec": {
+    "model": {
+      "link": "noisy_or",
+      "params_tying": 3,
+      "param_bounds": null,
+      "notes": null
+    },
+    "optimizer": {
+      "name": "lbfgs",
+      "lr": 0.1,
+      "epochs": 300,
+      "restarts": 5,
+      "weight_decay": null,
+      "tolerance_grad": null,
+      "tolerance_change": null,
+      "max_eval": null
+    },
+    "loss": {
+      "name": "huber",
+      "params": null
+    },
+    "ranking": {
+      "primary_metric": "aic",
+      "fallbacks": [
+        "rmse",
+        "loss",
+        "bic"
+      ],
+      "tie_breakers": [
+        "params_tying",
+        "loss",
+        "seed_used"
+      ],
+      "selection_rule": "best_loss"
+    },
+    "run": {
+      "seed": 0,
+      "device": "auto",
+      "enable_loocv": true,
+      "schema_version": "1.2.0"
+    },
+    "cv": {
+      "enabled": true,
+      "method": "loocv",
+      "k": null,
+      "repeats": 1,
+      "stratify_on": null
+    },
+    "data_filters": {
+      "agents": [
+        "gpt-5-mini-v_low-r_low"
+      ],
+      "domains": null,
+      "prompt_categories": [
+        "numeric-conf"
+      ],
+      "reasoning_types": null,
+      "tasks": null,
+      "temperature": 0.0,
+      "prompt_content_type": null
+    }
+  },
+  "group_key": {
+    "agent": "gpt-5-mini-v_low-r_low",
+    "prompt_category": "numeric-conf",
+    "domain": null,
+    "experiment": "rw17_overloaded_e",
+    "version": "1"
+  },
+  "data_spec": {
+    "num_rows": 480,
+    "columns": [
+      "RW17_label",
+      "agent_variant",
+      "cntbl_cond",
+      "confidence",
+      "content_category",
+      "domain",
+      "experiment_name",
+      "graph",
+      "human_subj_id",
+      "id",
+      "likelihood",
+      "prompt_category",
+      "reasoning",
+      "reasoning_effort",
+      "reasoning_type",
+      "response",
+      "subject",
+      "task",
+      "temperature",
+      "verbosity"
+    ],
+    "data_hash": "91dfc877dc9c7ea53584e6ecb84a921f4e98372bc1654fb6a074a1e0a0e4c8d1",
+    "short_data_hash": "91dfc877dc9c"
+  },
+  "restarts": [
+    {
+      "restart_index": 0,
+      "seed": 0,
+      "loss_final": 0.015144082717597485,
+      "params": {
+        "pC1": 0.3909103572368622,
+        "pC2": 0.3909103572368622,
+        "b": 0.14921650290489197,
+        "m1": 0.740024983882904,
+        "m2": 0.740024983882904
+      },
+      "init_params": {
+        "pC1": 0.49146708846092224,
+        "pC2": 0.49146708846092224,
+        "b": 0.5082626938819885,
+        "m1": 0.5230321884155273,
+        "m2": 0.5230321884155273
+      },
+      "curve": [
+        0.015144082717597485,
+        0.014881565235555172,
+        0.012978008948266506,
+        0.009981902316212654,
+        0.007279690820723772,
+        0.004733215551823378,
+        0.004517485853284597,
+        0.004478293005377054,
+        0.004477424547076225,
+        0.00447657098993659,
+        0.004476453643292189,
+        0.004476450849324465
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    },
+    {
+      "restart_index": 1,
+      "seed": 1,
+      "loss_final": 0.014584275893867016,
+      "params": {
+        "pC1": 0.3909114599227905,
+        "pC2": 0.3909114599227905,
+        "b": 0.1492213010787964,
+        "m1": 0.7400192618370056,
+        "m2": 0.7400192618370056
+      },
+      "init_params": {
+        "pC1": 0.4715025722980499,
+        "pC2": 0.4715025722980499,
+        "b": 0.49464190006256104,
+        "m1": 0.4953719675540924,
+        "m2": 0.4953719675540924
+      },
+      "curve": [
+        0.014584275893867016,
+        0.014392150565981865,
+        0.012958168983459473,
+        0.009817861951887608,
+        0.006745356600731611,
+        0.004632618743926287,
+        0.004501632880419493,
+        0.004479230381548405,
+        0.004478329326957464,
+        0.0044765472412109375,
+        0.004476453643292189,
+        0.004476451314985752
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    },
+    {
+      "restart_index": 2,
+      "seed": 2,
+      "loss_final": 0.015222539193928242,
+      "params": {
+        "pC1": 0.39091333746910095,
+        "pC2": 0.39091333746910095,
+        "b": 0.14921928942203522,
+        "m1": 0.7400210499763489,
+        "m2": 0.7400210499763489
+      },
+      "init_params": {
+        "pC1": 0.4699035882949829,
+        "pC2": 0.4699035882949829,
+        "b": 0.5169669389724731,
+        "m1": 0.4875771999359131,
+        "m2": 0.4875771999359131
+      },
+      "curve": [
+        0.015222539193928242,
+        0.01503683440387249,
+        0.013638841919600964,
+        0.010241045616567135,
+        0.006768280174583197,
+        0.004608871415257454,
+        0.004494537133723497,
+        0.004478064831346273,
+        0.004477533511817455,
+        0.004476601257920265,
+        0.004476455971598625,
+        0.004476451314985752
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    },
+    {
+      "restart_index": 3,
+      "seed": 3,
+      "loss_final": 0.015320466831326485,
+      "params": {
+        "pC1": 0.39091306924819946,
+        "pC2": 0.39091306924819946,
+        "b": 0.14924520254135132,
+        "m1": 0.7400113940238953,
+        "m2": 0.7400113940238953
+      },
+      "init_params": {
+        "pC1": 0.5055516958236694,
+        "pC2": 0.5055516958236694,
+        "b": 0.5037974119186401,
+        "m1": 0.5437019467353821,
+        "m2": 0.5437019467353821
+      },
+      "curve": [
+        0.015320466831326485,
+        0.01499762013554573,
+        0.012694387696683407,
+        0.009763144887983799,
+        0.007435483857989311,
+        0.004786222241818905,
+        0.004517969209700823,
+        0.0044777593575417995,
+        0.004477029200643301,
+        0.004476462956517935,
+        0.004476451780647039
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    },
+    {
+      "restart_index": 4,
+      "seed": 4,
+      "loss_final": 0.016906118020415306,
+      "params": {
+        "pC1": 0.3909113109111786,
+        "pC2": 0.3909113109111786,
+        "b": 0.14922963082790375,
+        "m1": 0.7400096654891968,
+        "m2": 0.7400096654891968
+      },
+      "init_params": {
+        "pC1": 0.5121279954910278,
+        "pC2": 0.5121279954910278,
+        "b": 0.4838784635066986,
+        "m1": 0.4927954077720642,
+        "m2": 0.4927954077720642
+      },
+      "curve": [
+        0.016906118020415306,
+        0.016459710896015167,
+        0.013346743769943714,
+        0.010290110483765602,
+        0.008156144060194492,
+        0.005050343461334705,
+        0.004540776833891869,
+        0.004477445501834154,
+        0.004476516041904688,
+        0.004476452711969614,
+        0.004476451314985752
+      ],
+      "status": "success",
+      "rmse": null,
+      "mae": null,
+      "r2": null,
+      "aic": null,
+      "bic": null,
+      "ece_10bin": null
+    }
+  ],
+  "best_restart_index": 1,
+  "best_params": {
+    "pC1": 0.3909114599227905,
+    "pC2": 0.3909114599227905,
+    "b": 0.1492213010787964,
+    "m1": 0.7400192618370056,
+    "m2": 0.7400192618370056
+  },
+  "metrics": {
+    "mae": 0.07843661308288574,
+    "rmse": 0.09461977332830429,
+    "r2": 0.8742385618215349,
+    "r2_task": 0.9318931438464438,
+    "rmse_task": 0.07184857355063363,
+    "ece_10bin": 0.04762654826045036,
+    "sse": 4.297392845153809,
+    "sst": 34.170989990234375,
+    "aic": -2257.5732384798,
+    "bic": -2245.051880168094,
+    "loss": 0.014584275893867016,
+    "cv_rmse": 0.09547536904243012,
+    "cv_r2": 0.8797355752636077
+  },
+  "ranking": {
+    "primary_metric": "aic",
+    "fallbacks": [
+      "rmse",
+      "loss",
+      "bic"
+    ],
+    "selection_rule": "best_loss",
+    "cv_scope": "group_level_only",
+    "restart_loss_median": 0.015222539193928242,
+    "restart_loss_mean": 0.015435496531426906,
+    "restart_loss_min": 0.014584275893867016,
+    "restart_loss_max": 0.016906118020415306,
+    "median_vs_best_rel_diff": 0.0437637977165276
+  },
+  "uncertainty": null,
+  "environment": {
+    "python": "3.12.9",
+    "platform": "macOS-15.6-arm64-arm-64bit",
+    "pytorch_version": "2.8.0"
+  },
+  "provenance": {
+    "legacy_adapter_phase": 2,
+    "num_restarts_captured": 5
+  },
+  "restart_summary": {
+    "count": 5,
+    "loss_mean": 0.015435496531426906,
+    "loss_median": 0.015222539193928242,
+    "loss_var": 7.577022020181616e-07,
+    "loss_std": 0.0008704609135499202,
+    "loss_iqr": 0.0001763841137290001,
+    "loss_min": 0.014584275893867016,
+    "loss_max": 0.016906118020415306,
+    "loss_range": 0.0023218421265482903
+  }
+}

@@ -1,0 +1,7 @@
+spec_hash,short_spec_hash,friendly_name,link,params_tying,optimizer,lr,epochs,restarts,loss,primary_metric,selection_rule,cv_enabled,timestamp_first_seen
+143d19c6976ea76184f6812bf790306e28ca035a733fbb0a95443074151a5414,143d19c6976e,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:41:20.360463+00:00
+3492dd16303918df69c88ec77455d578f6bbfda8a8fb9976a501857b2b489192,3492dd163039,noisy_or-p3-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,3,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:44:38.354422+00:00
+16a1722a65bda4d6f25b47e1e988ddd9c3683c80faca08cf652360239d866ed7,16a1722a65bd,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:49:55.416297+00:00
+a547fd32c317898e5d8314dd0c06d7452e1ed8306506e9fb2e446d0fd6ac3883,a547fd32c317,noisy_or-p4-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,4,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T22:54:18.467759+00:00
+415bfbb77afde1885dd5cda89f4f66547e598ff2e8c781c0cfcf6d63344aad7d,415bfbb77afd,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T23:01:03.171822+00:00
+12eef4ffaf7fcc1d32513e69454154edd2f618ebc7eb19e1db5a4e5154d1cc5a,12eef4ffaf7f,noisy_or-p5-lbfgs-lr0.005-e300-r5-huber-cv,noisy_or,5,lbfgs,0.005,300,5,huber,aic,best_loss,True,2025-08-26T23:06:34.562648+00:00

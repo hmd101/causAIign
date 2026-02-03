@@ -1,0 +1,3 @@
+spec_hash,short_spec_hash,friendly_name,link,params_tying,optimizer,lr,epochs,restarts,loss,primary_metric,selection_rule,cv_enabled,timestamp_first_seen
+c6182a4b5e907ad61c30935f5a7665a15fe569daeaaba9e51b488367ea1e92ec,c6182a4b5e90,noisy_or-p3-lbfgs-lr0.1-e300-r5-huber-cv,noisy_or,3,lbfgs,0.1,300,5,huber,aic,best_loss,True,2025-08-31T13:47:08.012296+00:00
+e54132f1f23c93ff312ffecc3212e4c86745c93983dd5d78146804eab529cce0,e54132f1f23c,noisy_or-p4-lbfgs-lr0.1-e300-r5-huber-cv,noisy_or,4,lbfgs,0.1,300,5,huber,aic,best_loss,True,2025-08-31T14:30:03.685738+00:00
